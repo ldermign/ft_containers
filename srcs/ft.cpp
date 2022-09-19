@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.cpp                                         :+:      :+:    :+:   */
+/*   ft.cpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 13:44:18 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/19 14:02:13 by ldermign         ###   ########.fr       */
+/*   Created: 2022/09/19 14:13:14 by ldermign          #+#    #+#             */
+/*   Updated: 2022/09/19 14:16:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Vector.hpp"
+#include "ft.hpp"
 
 /*
 **	CANONICAL FORM
 */
 
-Vector::Vector( void ) {
+ft::ft( void ) {
 	
 }
 
-Vector	&Vector::operator=( const Vector &rhs ) {
+ft	&ft::operator=( const ft &rhs ) {
 	
 }
 
-Vector::Vector( const Vector &src ) {
+ft::ft( const ft &src ) {
 	
 }
 
-Vector::~Vector( void ) {
+ft::~ft( void ) {
 	
 }
