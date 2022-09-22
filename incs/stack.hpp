@@ -1,58 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Vector.hpp                                         :+:      :+:    :+:   */
+/*   stack.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/19 15:53:33 by ldermign         ###   ########.fr       */
+/*   Created: 2022/09/21 11:01:03 by ldermign          #+#    #+#             */
+/*   Updated: 2022/09/22 12:02:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef STACK_HPP
+# define STACK_HPP
 
 #include "ft_containers.hpp"
 
-class Vector {
-	
+namespace ft {
+
+template< class T, Class Container = deque< T > >
+
+class stack {
+
 public:
 
-//	ITERATORS
+	typedef typename C::value_type value_type;
+	typedef typename C::size_type size_type;
+	typedef C container_type;
 
-	iterator	begin( );
-	
+	explicit	stack( const C &a = C() );
+	bool		empty( void ) const;
+	size_type	size( void ) const;
+	value_type	&top( void ) const;
+	const		value_type &top( void ) const;
+	void		push( const value_type &n );
+	void		pop( void );
 
 //	CANONICAL FORM
 
-	Vector( void );
-	Vector	&operator=( const Vector &rhs );
+	stack( void );
+	stack	&operator=( const stack &rhs );
 	// {
 	// 	if (this == &rhs) 
 	// 		return *this;
-		
 	// 	this->_host = rhs._host;
-	// 	this->_port = rhs._port;
-	// 	this->_serverName = rhs._serverName;
-	// 	this->_defaultServer = rhs._defaultServer;
-	// 	this->_errorPage = rhs._errorPage;
-	// 	this->_clientMaxBodySize = rhs._clientMaxBodySize;
-	// 	this->_location = rhs._location;
-		
 	// 	return *this;
 	// }
-	Vector( const Vector &src );
+	stack( const stack &src );
 	// {
 		// *this = src;
 	// }
-	virtual	~Vector( void );
+	virtual	~stack( void );
 
-private:
 
-	
-	
+protected:
+
+	C c;
+
 };
 
+};
 
 #endif

@@ -1,29 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft.hpp                                             :+:      :+:    :+:   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 14:12:23 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/19 14:17:19 by ldermign         ###   ########.fr       */
+/*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
+/*   Updated: 2022/09/22 13:44:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_HPP
-# define FT_HPP
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
 
 #include "ft_containers.hpp"
 
-class ft {
+namespace ft {
 
+class vector {
+	
 public:
-	ft( void );
-	ft	&operator=( const ft &rhs );
-	ft( const ft &src );
-	~ft( void );
+
+	template< typename T, typename Alloc = allocator< T > >
+	
+
+//	CANONICAL FORM
+
+	vector( void );
+	vector	&operator=( const vector &rhs );
+	// {
+	// 	if (this == &rhs) 
+	// 		return *this;
+	// 	this->_host = rhs._host;
+	// 	return *this;
+	// }
+	vector( const vector &src );
+	// {
+		// *this = src;
+	// }
+	virtual	~vector( void );
 
 private:
+
+	
+	
+};
 
 };
 

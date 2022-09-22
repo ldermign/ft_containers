@@ -15,7 +15,10 @@ OBJSDIR		= objs/
 SRCS		= ${SRCSDIR}ft_containers.cpp \
 
 # vector
-SRCS		+= ${VECDIR}vector.cpp
+SRCS		+= ${VECDIR}vector.cpp \
+
+# stack
+# SRCS		+= ${STACKDIR}stack.cpp
 
 # stack
 # SRCS		+= ${STACKDIR}

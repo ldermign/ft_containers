@@ -6,28 +6,32 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:44:18 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/19 14:02:13 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/22 12:02:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Vector.hpp"
+#include "vector.hpp"
+
+namespace ft {
 
 /*
 **	CANONICAL FORM
 */
 
-Vector::Vector( void ) {
+vector::vector( void ) {
 	
 }
 
-Vector	&Vector::operator=( const Vector &rhs ) {
+vector	&vector::operator=( const vector &rhs ) {
 	
 }
 
-Vector::Vector( const Vector &src ) {
+vector::vector( const vector &src ) {
 	
 }
 
-Vector::~Vector( void ) {
+vector::~vector( void ) {
 	
 }
+
+};
