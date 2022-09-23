@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/22 13:44:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:04:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,25 @@
 
 namespace ft {
 
-class vector {
-	
-public:
+	class vector {
+		
+	public:
 
-	template< typename T, typename Alloc = allocator< T > >
-	
+		template< typename T > class chaipas;
+		
 
-//	CANONICAL FORM
+	//	CANONICAL FORM
 
-	vector( void );
-	vector	&operator=( const vector &rhs );
-	// {
-	// 	if (this == &rhs) 
-	// 		return *this;
-	// 	this->_host = rhs._host;
-	// 	return *this;
-	// }
-	vector( const vector &src );
-	// {
-		// *this = src;
-	// }
-	virtual	~vector( void );
+		vector( void );
+		vector	&operator=( const vector &rhs );
+		vector( const vector &src );
+		virtual	~vector( void );
 
-private:
+	private:
 
-	
-	
-};
+		
+		
+	};
 
 };
 
