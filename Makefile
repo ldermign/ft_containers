@@ -10,6 +10,8 @@ STACKDR		= srcs/stack/
 
 MAPDIR		= srcs/map/
 
+STDDIR		= srcs/std/
+
 OBJSDIR		= objs/
 
 SRCS		= ${SRCSDIR}ft_containers.cpp \
@@ -23,8 +25,11 @@ SRCS		+= ${VECDIR}vector.cpp \
 # stack
 # SRCS		+= ${STACKDIR}
 
-# # map
+# map
 # SRCS		+= ${MAPDIR}
+
+# STD
+# SRCS		+= ${SRDDIR}
 
 OBJS 		= ${SRCS:%.cpp=${OBJSDIR}%.o}
 
