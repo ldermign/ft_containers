@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/28 15:44:43 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:53:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
 #include "ft_containers.hpp"
 
 START
@@ -37,7 +38,7 @@ public:
 	typedef ft::reverse_iterator< iterator > reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator > const_reverse_iterator;
 	explicit vector( const Allocator & = Allocator() );
-	explicit vector( size_type n, const T& value = T(), const Allocator & = Allocator() );
+	explicit vector( size_type n, const T &value = T(), const Allocator & = Allocator() );
 
 	template < class InputIterator >
 	vector( InputIterator first, InputIterator last, const Allocator & = Allocator() );
@@ -51,6 +52,7 @@ public:
 	void assign( size_type n, const T &u );
 	
 	allocator_type get_allocator() const;
+
 	// iterators:
 	iterator begin();
 	const_iterator begin() const;
@@ -88,23 +90,23 @@ public:
 	void clear();
 
 	template < class T, class Allocator >
-	bool operator==( const vector< T, Allocator > &x,
-	const vector< T, Allocator> &y );
+	bool operator==( const vector< T, Allocator > &x, const vector< T, Allocator> &y );
+	
 	template < class T, class Allocator >
-	bool operator< ( const vector< T,Allocator > &x,
-	const vector< T, Allocator > &y );
+	bool operator< ( const vector< T, Allocator > &x, const vector< T, Allocator > &y );
+	
 	template < class T, class Allocator >
-	bool operator!=( const vector< T, Allocator > &x,
-	const vector< T, Allocator > &y);
+	bool operator!=( const vector< T, Allocator > &x, const vector< T, Allocator > &y );
+	
 	template < class T, class Allocator >
-	bool operator> ( const vector< T, Allocator > &x,
-	const vector< T, Allocator> &y );
+	bool operator>( const vector< T, Allocator > &x, const vector< T, Allocator> &y );
+	
 	template < class T, class Allocator >
-	bool operator>=( const vector< T, Allocator > &x,
-	const vector< T, Allocator > &y );
+	bool operator>=( const vector< T, Allocator > &x, const vector< T, Allocator > &y );
+	
 	template < class T, class Allocator >
-	bool operator<=( const vector< T, Allocator > &x,
-	const vector< T, Allocator > &y );
+	bool operator<=( const vector< T, Allocator > &x, const vector< T, Allocator > &y );
+	
 	// specialized algorithms:
 	template< class T, class Allocator >
 	void swap( vector< T, Allocator > &x, vector< T, Allocator > &y);

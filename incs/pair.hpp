@@ -6,12 +6,12 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/28 14:53:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/29 10:15:25 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PAIR.HPP
-# define PAIR.HPP
+#ifndef PAIR_HPP
+# define PAIR_HPP
 
 #include "ft_containers.hpp"
 
