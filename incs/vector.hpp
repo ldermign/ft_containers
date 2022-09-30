@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/29 14:53:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/30 12:54:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define VECTOR_HPP
 
 #include <iostream>
-#include "iterator_traits.hpp"
+#include "iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "ft_containers.hpp"
 
 START
 
 template < class T, class Allocator = std::allocator< T > >
-class vector : public iterator_traits {
+class vector {
 
 public:
 // types:
@@ -34,7 +34,7 @@ public:
 	typedef T value_type;
 	typedef Allocator allocator_type;
 	typedef typename Allocator::pointer pointer;
-	typedef typename Allocator::const_pointer const_pointer
+	typedef typename Allocator::const_pointer const_pointer;
 	typedef ft::reverse_iterator< iterator > reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator > const_reverse_iterator;
 	explicit vector( const Allocator & = Allocator() );

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/29 10:39:01 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/30 11:25:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 # define REVERSE_ITERATOR_HPP
 
 #include "ft_containers.hpp"
+#include "iterator.hpp"
 
 START
 
 template< class Iterator >
 
 class reverse_iterator :
-	public iterator< typename iterator_traits< Iterator >::iterator_category,
+	public ft::iterator<
+	typename iterator_traits< Iterator >::iterator_category,
 	typename iterator_traits< Iterator >::value_type,
 	typename iterator_traits< Iterator >::difference_type,
 	typename iterator_traits< Iterator >::pointer,

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iterator_traits.hpp                                :+:      :+:    :+:   */
+/*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 10:58:43 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/29 14:54:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/09/30 15:15:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ struct input_iterator_tag {};
 // marking output iterators
 struct output_iterator_tag {};
 // forward iterators qui prennent en charge un sur-ensemble d'input iterator
-struct forward_iterator_tag       : public input_iterator_tag {};
+struct forward_iterator_tag			: public input_iterator_tag {};
 // bidirectionnel iterators qui prennent en charge un sur-ensemble d'iterator forward
-struct bidirectional_iterator_tag : public forward_iterator_tag {};
+struct bidirectional_iterator_tag	: public forward_iterator_tag {};
 // random-access iterators qui prennent en charge un sur-ensemble d'iterator bi-directionnel
-struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+struct random_access_iterator_tag	: public bidirectional_iterator_tag {};
 
 // structure template pour definir les iterator traits
 // elle contient tous les types qu'un iterator doit avoir
@@ -59,7 +59,7 @@ template< class T > struct iterator_traits< T * > {
 };
 
 // specialisation partielle pour les pointeurs constant
-template< class T > struct iterator_traits< const T* > {
+template< class T > struct iterator_traits< const T * > {
 	typedef	std::ptrdiff_t difference_type;
 	typedef T value_type;
 	typedef	T *pointer;
