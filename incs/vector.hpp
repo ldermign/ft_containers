@@ -21,16 +21,18 @@
 START
 
 template < class T, class Allocator = std::allocator< T > >
+
 class vector {
 
 public:
 // types:
 	// typedef typename Allocator::reference reference;
 	// typedef typename Allocator::const_reference const_reference;
-	// typedef implementation defined iterator;
-	// typedef implementation defined const_iterator;
-	// typedef implementation defined size_type;
+					// typedef random_access iterator;
+	typedef ft::random_access_iterator< const T > const_iterator;
+	typedef size_t size_type;
 	// typedef implementation defined difference_type;
+
 	typedef T value_type;
 	typedef Allocator allocator_type;
 	typedef typename Allocator::pointer pointer;

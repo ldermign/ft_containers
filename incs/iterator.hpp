@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_TRAITS_HPP
-# define ITERATOR_TRAITS_HPP
+#ifndef ITERATOR_HPP
+# define ITERATOR_HPP
 
 #include <iostream>
 #include "ft_containers.hpp"
@@ -29,6 +29,22 @@ struct forward_iterator_tag			: public input_iterator_tag {};
 struct bidirectional_iterator_tag	: public forward_iterator_tag {};
 // random-access iterators qui prennent en charge un sur-ensemble d'iterator bi-directionnel
 struct random_access_iterator_tag	: public bidirectional_iterator_tag {};
+
+template<
+		class Category,
+		class T,
+		class Distance = std::ptrdiff_t,
+		class Pointer = T*,
+		class Reference = T&
+		>
+struct iterator
+{
+		typedef T			value_type;
+		typedef Distance	difference_type;
+		typedef Pointer		pointer;
+		typedef Reference	reference;
+		typedef Category	iterator_category;
+};
 
 // structure template pour definir les iterator traits
 // elle contient tous les types qu'un iterator doit avoir
