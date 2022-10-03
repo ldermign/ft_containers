@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:44:18 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/26 11:32:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/03 11:09:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@ START
 **	CANONICAL FORM
 */
 
-vector::vector( void ) {
+// vector::vector( void ) {
 	
-}
+// }
 
-vector	&vector::operator=( const vector &rhs ) {
-	if (this == &rhs) 
-		return *this;
-// 	this->_host = rhs._host;
-	return *this;
-}
+// vector	&vector::operator=( const vector &rhs ) {
+// 	if (this == &rhs) 
+// 		return *this;
+// // 	this->_host = rhs._host;
+// 	return *this;
+// }
 
-vector::vector( const vector &src ) {
-	*this = src;
-}
+// vector::vector( const vector &src ) {
+// 	*this = src;
+// }
 
-vector::~vector( void ) {
+// vector::~vector( void ) {
 	
-}
+// }
 
 STOP

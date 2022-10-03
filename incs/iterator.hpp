@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 10:58:43 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/30 15:15:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/03 10:46:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,17 @@ struct bidirectional_iterator_tag	: public forward_iterator_tag {};
 // random-access iterators qui prennent en charge un sur-ensemble d'iterator bi-directionnel
 struct random_access_iterator_tag	: public bidirectional_iterator_tag {};
 
-template<
-		class Category,
-		class T,
-		class Distance = std::ptrdiff_t,
-		class Pointer = T*,
-		class Reference = T&
-		>
+// ???
+template< class Category, class T, class Distance = std::ptrdiff_t, class Pointer = T *, class Reference = T & >
 struct iterator
 {
-		typedef T			value_type;
-		typedef Distance	difference_type;
-		typedef Pointer		pointer;
-		typedef Reference	reference;
-		typedef Category	iterator_category;
+	typedef T			value_type;
+	typedef Distance	difference_type;
+	typedef Pointer		pointer;
+	typedef Reference	reference;
+	typedef Category	iterator_category;
 };
+// ???
 
 // structure template pour definir les iterator traits
 // elle contient tous les types qu'un iterator doit avoir

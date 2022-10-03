@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/30 15:31:11 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/03 10:59:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,84 +14,102 @@
 # define RANDOM_ITERATOR_HPP
 
 #include "ft_containers.hpp"
-#include "iterator_traits.hpp"
+#include "iterator.hpp"
 
 START
 
-template< class T >;
-
+template< class T >
 class random_iterator {
 // on va se suicider ! salut
 private:
 
-	T		*ptr_it;
+	T		*m_iterator;
 
 public:
 
+	// using	iterator	ft::iterator;
 	// using	value_T = T;
-	// using	reference = value_T &;
-	// using	pointer = value_T *;
+	typedef		T reference; // ft::iterator::Reference
+	typedef		T* pointer;
 	// using	iterator_category = std::random_access_iterator_tag;
-	// using	difference_T = std::ptrdiff_t;
+	typedef		std::ptrdiff_t difference_T;
 
-	random_iterator(T *iter = nullptr) : m_iterator{ iter } {}
+	random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
 
-	bool					operator==( const iterator &other ) const noexcept {
+	bool					operator==( const random_iterator &other ) const {
 		return m_iterator == other.m_iterator;
 	}
 	
-	bool					operator!=( const iterator &other ) const noexcept {
+	bool					operator!=( const random_iterator &other ) const {
 		return m_iterator != other.m_iterator;
 	}
 	
-	reference				operator*() const noexcept { return *m_iterator; }
-	
-	pointer					operator->() const noexcept { return m_iterator; }
-	
-	
-	random_iterator&		operator++() noexcept { ++m_iterator; return *this;
+	reference				operator*() const {
+		return *m_iterator;
 	}
 	
-	random_iterator			operator++( int ) noexcept { iterator tmp(*this); ++(*this); return tmp;
+	pointer					operator->() const {
+		return m_iterator;
 	}
 	
-	random_iterator			&operator--() noexcept { --m_iterator; return *this;
+	random_iterator			&operator++() {
+		++m_iterator; return *this;
 	}
 	
-	random_iterator			operator--( int ) noexcept { iterator tmp(*this); --(*this); return tmp;
+	random_iterator			operator++( int ) {
+		random_iterator tmp(*this); ++(*this); return tmp;
 	}
 	
-	random_iterator			&operator+=( const difference_T other ) noexcept { m_iterator += other; return *this;
+	random_iterator			&operator--() {
+		--m_iterator; return *this;
 	}
 	
-	random_iterator			&operator-=( const difference_T other ) noexcept { m_iterator -= other; return *this;
+	random_iterator			operator--( int ) {
+		random_iterator tmp(*this); --(*this); return tmp;
 	}
 	
-	random_iterator			operator+( const difference_T other ) const noexcept { return iterator(m_iterator + other);
+	random_iterator			&operator+=( const difference_T other ) {
+		m_iterator += other; return *this;
 	}
 	
-	random_iterator			operator-( const difference_T other ) const noexcept { return iterator(m_iterator - other);
+	random_iterator			&operator-=( const difference_T other ) {
+		m_iterator -= other; return *this;
 	}
 	
-	random_iterator			operator+( const iterator &other ) const noexcept { return iterator(*this + other.m_iterator);
+	random_iterator			operator+( const difference_T other ) const {
+		return random_iterator(m_iterator + other);
 	}
 	
-	difference_T			operator-( const iterator &other ) const noexcept { return std::distance(m_iterator, other.m_iterator);
+	random_iterator			operator-( const difference_T other ) const {
+		return random_iterator(m_iterator - other);
 	}
 	
-	reference				operator[]( std::size_t index ) const { return m_iterator[index];
+	random_iterator			operator+( const random_iterator &other ) const {
+		return random_iterator(*this + other.m_iterator);
 	}
 	
-	bool					operator<( const iterator &other ) const noexcept { return m_iterator < other.m_iterator;
+	difference_T			operator-( const random_iterator &other ) const {
+		return std::distance(m_iterator, other.m_iterator);
 	}
 	
-	bool					operator>( const iterator &other ) const noexcept { return m_iterator > other.m_iterator;
+	reference				operator[]( std::size_t index ) const {
+		return m_iterator[index];
 	}
 	
-	bool					operator<=( const iterator &other ) const noexcept { return m_iterator <= other.m_iterator;
+	bool					operator<( const random_iterator &other ) const {
+		return m_iterator < other.m_iterator;
 	}
 	
-	bool					operator>=( const iterator &other ) const noexcept { return m_iterator >= other.m_iterator;
+	bool					operator>( const random_iterator &other ) const {
+		return m_iterator > other.m_iterator;
+	}
+	
+	bool					operator<=( const random_iterator &other ) const {
+		return m_iterator <= other.m_iterator;
+	}
+	
+	bool					operator>=( const random_iterator &other ) const {
+		return m_iterator >= other.m_iterator;
 	}
 
 

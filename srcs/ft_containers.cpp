@@ -6,21 +6,13 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/26 10:52:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/03 14:51:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <vector>
+#include "vector.hpp"
 #include <iostream>
-#if 1 //CREATE A REAL STL EXAMPLE
-	// #include <map>
-	// #include <stack>
-	#include <vector>
-	namespace ft = std;
-#else
-	// #include <map.hpp>
-	// #include <stack.hpp>
-	#include <vector.hpp>
-#endif
 
 int	main() {
 
@@ -45,9 +37,24 @@ int	main() {
 
 	}
 	{
-		// using namespace ft;
+		using namespace ft;
+
+		ft::vector< int > myVector(4, 42);
+		// appel de explicit vector( size_type n, const T &value = T(), const Allocator &x = Allocator() )
+
+		// myVector.push_back(42);
+		// myVector.push_back(123);
+		// myVector.push_back(-404);
+		// myVector.push_back(0);
+		// myVector.push_back(1007);
+
 		std::cout << "\n\n\t~~~~~ My Vector ~~~~~" << std::endl;
-		// stack< int > mystack;
+		for (ft::vector< int >::iterator it = myVector.begin() ; it != myVector.end(); ++it) {
+		    std::cout << *it;
+			if (it + 1 != myVector.end())
+				std::cout << " - ";
+		}
+		std::cout << std::endl;
 	}
 	
 	return 0;
