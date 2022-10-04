@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/03 14:51:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:01:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int	main() {
 	{
 		using namespace ft;
 
-		ft::vector< int > myVector(4, 42);
+		ft::vector< int > myVector;
 		// appel de explicit vector( size_type n, const T &value = T(), const Allocator &x = Allocator() )
 
-		// myVector.push_back(42);
-		// myVector.push_back(123);
-		// myVector.push_back(-404);
-		// myVector.push_back(0);
-		// myVector.push_back(1007);
+		myVector.push_back(42);
+		myVector.push_back(123);
+		myVector.push_back(-404);
+		myVector.push_back(0);
+		myVector.push_back(1007);
 
 		std::cout << "\n\n\t~~~~~ My Vector ~~~~~" << std::endl;
 		for (ft::vector< int >::iterator it = myVector.begin() ; it != myVector.end(); ++it) {

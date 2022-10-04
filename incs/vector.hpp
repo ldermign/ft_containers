@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/03 15:46:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:08:22 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@ class vector {
 
 private:
 
-	T 				*_ptrVector;
+	T				*_ptrVector;
+	
 	Allocator		_alloc;
-	unsigned int	_size; // ou type size_type
-	unsigned int	_capacity; // ou type size_type
+	unsigned int	_size; // ou type size_t
+// nombre d'element dans le vector
+	unsigned int	_capacity; // ou type size_t
+// capcite dans la stack possible
+
+// max_size
+// nombre d'element maximum du vector
 
 public:
 // types:
@@ -42,7 +48,8 @@ public:
 	typedef const value_type & const_reference;
 	typedef ft::random_iterator< T > iterator;
 	typedef ft::random_iterator< const T > const_iterator;
-	typedef size_t size_type;
+	// typedef size_t size_type; // -> juste pour dire que size_t correspond a size_type
+	// du code en plus pour rien ?
 	// typedef implementation defined difference_type;
 
 	typedef Allocator allocator_type;
@@ -54,7 +61,7 @@ public:
 	explicit vector( const Allocator &x = Allocator() )
 		: _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {}
 	
-	explicit vector( size_type n, const T &value = T(), const Allocator &x = Allocator() )
+	explicit vector( size_t n, const T &value = T(), const Allocator &x = Allocator() )
 		: _alloc(x), _size(n), _capacity(n) {
 
 		// utiliser une fct d'allocation de alloc pour donner la bonne taille au ptr de vector
@@ -84,73 +91,150 @@ public:
 	~vector( void ) {
 		
 		// detruire avec deallocate ? destroy ?
-		this->_alloc.deallocate(this->_ptrVector, this->_capacity);
 		this->_alloc.destroy(this->_ptrVector);
+		this->_alloc.deallocate(this->_ptrVector, this->_capacity);
 	}
 
 	self &operator=( const self &x );
 	template < class InputIterator >
 	void assign( InputIterator first, InputIterator last );
-	void assign( size_type n, const T &u );
+	void assign( size_t n, const T &u );
 	
 	allocator_type get_allocator() const;
 
-	// iterators:
-	iterator begin( void ) {
+// iterators:
 
+	iterator begin( void ) {
 		return iterator(_ptrVector);
 	}
 	
-	const_iterator begin( void ) const {
-
+	const_iterator cbegin( void ) const {
 		return const_iterator(_ptrVector);
 	}
 	
 	iterator end( void ) {
-
-		return iterator(_ptrVector + _size);
+		return iterator(&_ptrVector[_size]);
 	}
 
-	// const_iterator end( void ) const;
-	// reverse_iterator rbegin( void );
-	// const_reverse_iterator rbegin( void ) const;
-	// reverse_iterator rend( void );
-	// const_reverse_iterator rend( void ) const;
-	// size_type size( void ) const;
-	// size_type max_size( void ) const;
+	const_iterator cend( void ) const {
+		return const_iterator(&_ptrVector[_size]);
+	}
+
+	reverse_iterator rbegin( void ) {
+		return iterator(&_ptrVector[_size]);
+	}
 	
-	// ok ???
-	// void resize( size_type sz, T c = T() ) {
+	const_reverse_iterator crbegin( void ) const {
+		return const_iterator(&_ptrVector[_size]);
+	}
+
+	reverse_iterator rend( void ) {
+		return iterator(_ptrVector);
+	}
+
+	const_reverse_iterator crend( void ) const {
+		return const_iterator(_ptrVector);
+	}
 	
-	// 	if (sz > size())
-	// 		insert(end(), sz - size(), c);
-	// 	else if (sz < size())
-	// 		erase(begin() + sz, end());
+	size_t size( void ) const {
+		return this->_size;
+	}
+	
+	size_t max_size( void ) const {
+		return _alloc.max_size();
+// retourne le nombre d'element maximum que le container peut contenir
+// avec les limitations du system / de la lib
+	}
+	
+// ok ???
+	// void resize( size_t new_nbr_elmt, T c = T() ) {
+
+	// 	if (new_nbr_elmt > this->size())
+	// 		this->insert(this->end(), new_nbr_elmt - this->size(), c);
+	// 	else if (new_nbr_elmt < this->size())
+	// 		this->erase(this->begin() + new_nbr_elmt, this->end());
 	// 	else
 	// 		;
 	// }
 	
-	// size_type capacity( void ) const;
-	// bool empty( void ) const;
-	// void reserve( size_type n );
+	size_t capacity( void ) const {
+		return this->_capacity;
+	}
 	
-	// // element access:
-	// reference operator[]( size_type n );
-	// const_reference operator[]( size_type n ) const;
-	// const_reference at( size_type n ) const;
-	// reference at( size_type n );
+	bool empty( void ) const {
+		return (this->_size() == 0);
+	}
+	
+	void reserve( size_t new_cap ) {
+		
+		if (new_cap > this->max_size())
+			return ;
+			// throw std::length_error(); -> DOIT THROW ERROR
+		else if (new_cap < this->capacity())
+			return ;
+		else {
+			T *new_vector;
+			new_vector = _alloc.allocate(new_cap);
+			for (size_t i = 0 ; i < this->size() ; i++) {
+				this->_alloc.construct(&new_vector[i], _ptrVector[i]);
+				this->_alloc.destroy(&this->_ptrVector[i]);
+			}
+			this->_alloc.deallocate(this->_ptrVector, this->capacity());
+			this->_capacity = new_cap;
+			this->_ptrVector = new_vector;			
+		}
+	}
+	
+// element access: reference
+
+	// reference operator[]( size_t n );
+	// const_reference operator[]( size_t n ) const;
+	// const_reference at( size_t n ) const;
+	// reference at( size_t n );
 	// reference front( void );
 	// const_reference front( void ) const;
 	// reference back( void );
 	// const_reference back( void ) const;
 	
-	// void push_back( const T &x ) {
-		
-	// }
+// operations
+	
+	void push_back( const T &x ) {
+
+		if (this->size() == this->max_size() && this->capacity() != 0)
+			this->insert(this->end(), x);
+
+		// ajouter avec construct ?
+		// changer la capacity ? changer la size ???? tamereeeeeeeeeeeeeeeeeeeeeee
+		// this->_size++;
+	}
+
+// push_back(const _Tp& __x)
+// 	{
+// 		bool __realloc = _M_requires_reallocation(this->size() + 1);
+// 		_Base::push_back(__x);
+// 		if (__realloc)
+// 			this->_M_invalidate_all();
+// 		_M_update_guaranteed_capacity();
+// 	}
 
 	// void pop_back( void );
-	// iterator insert( iterator position, const T &x );
-	// void insert( iterator position, size_type n, const T &x );
+
+	
+	iterator insert( iterator position, const T &x ) {
+		
+		size_t i = 0;
+		iterator itPos = this->begin();
+		this->reserve(this->size() + 1);
+		for (; itPos < position ; itPos++)
+			i++;
+		this->_alloc.construct(&_ptrVector[i], x);
+		// this->_alloc.construct(&_ptrVector[it], x);
+		this->_size++;
+		return (position);
+		// attention ! differe en fonction des cas
+	}
+	
+	// void insert( iterator position, size_t n, const T &x );
 	// template < class InputIterator >
 	// void insert( iterator position,	InputIterator first, InputIterator last);
 	// iterator erase( iterator position );
