@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/04 16:08:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:31:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ public:
 	~vector( void ) {
 		
 		// detruire avec deallocate ? destroy ?
-		this->_alloc.destroy(this->_ptrVector);
+		this->clear();
 		this->_alloc.deallocate(this->_ptrVector, this->_capacity);
 	}
 
@@ -200,12 +200,7 @@ public:
 	
 	void push_back( const T &x ) {
 
-		if (this->size() == this->max_size() && this->capacity() != 0)
-			this->insert(this->end(), x);
-
-		// ajouter avec construct ?
-		// changer la capacity ? changer la size ???? tamereeeeeeeeeeeeeeeeeeeeeee
-		// this->_size++;
+		this->insert(this->end(), x);
 	}
 
 // push_back(const _Tp& __x)
@@ -219,34 +214,67 @@ public:
 
 	// void pop_back( void );
 
-	
+
+// insere l'element a la position precisee
 	iterator insert( iterator position, const T &x ) {
+		(void)x;
+
+		size_t at = position - this->begin();
+		std::cout << at << std::endl;
+		T	next = this->_ptrVector[at];
+
+		if (this->capacity() == 0)
+			reserve(1);
+		else if (this->size() + 1 > this->capacity())
+			reserve(this->capacity() * 2);
 		
-		size_t i = 0;
-		iterator itPos = this->begin();
-		this->reserve(this->size() + 1);
-		for (; itPos < position ; itPos++)
-			i++;
-		this->_alloc.construct(&_ptrVector[i], x);
-		// this->_alloc.construct(&_ptrVector[it], x);
+		// destroy juste avant ?
+		this->_alloc.destroy(&_ptrVector[at]);
+		_alloc.construct(&this->_ptrVector[at], x);
+		at++;
+		for (; at != this->size() ; at++) {
+			next = this->_ptrVector[at];
+			this->_alloc.destroy(&_ptrVector[at]);
+			this->_alloc.construct(&this->_ptrVector[at], next);
+		}
+		// size_t		i = 0;
+		// iterator	itPos = this->begin();
+		// // std::cout << "size = " << this->size() << std::endl;
+		// this->reserve(this->size() + 1);
+
+		// size_t end = position - this->begin();
+		// commencer par la fin
+
 		this->_size++;
 		return (position);
 		// attention ! differe en fonction des cas
 	}
-	
+
+// insere n element avant position 
 	// void insert( iterator position, size_t n, const T &x );
+	
 	// template < class InputIterator >
 	// void insert( iterator position,	InputIterator first, InputIterator last);
+	
 	// iterator erase( iterator position );
+	
 	// iterator erase( iterator first, iterator last );
+
 	// void swap( self & );
-	// void clear( void );
+	
+	void clear( void ) {
+		for (size_t i = 0 ; i != this->size() ; i++)
+			this->_alloc.destroy(&_ptrVector[i]);
+		// this->_alloc.deallocate(this->_ptrVector, this->_capacity);
+		// utiliser aue si on a deja utiliser allocate
+		this->_size = 0;
+	}
 
 	friend
 	bool	operator==( const self &x, const vector< T, Allocator> &y );
 	
 	friend
-	bool	operator< ( const self &x, const self &y );
+	bool	operator<( const self &x, const self &y );
 	
 	friend
 	bool	operator!=( const self &x, const self &y );

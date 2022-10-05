@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/03 10:59:27 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:44:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,35 @@ public:
 	}
 	
 	random_iterator			&operator++() {
-		++m_iterator; return *this;
+		++m_iterator;
+		return *this;
 	}
 	
 	random_iterator			operator++( int ) {
-		random_iterator tmp(*this); ++(*this); return tmp;
+		random_iterator tmp(*this);
+		++(*this);
+		return tmp;
 	}
 	
 	random_iterator			&operator--() {
-		--m_iterator; return *this;
+		--m_iterator;
+		return *this;
 	}
 	
 	random_iterator			operator--( int ) {
-		random_iterator tmp(*this); --(*this); return tmp;
+		random_iterator tmp(*this);
+		--(*this);
+		return tmp;
 	}
 	
 	random_iterator			&operator+=( const difference_T other ) {
-		m_iterator += other; return *this;
+		m_iterator += other;
+		return *this;
 	}
 	
 	random_iterator			&operator-=( const difference_T other ) {
-		m_iterator -= other; return *this;
+		m_iterator -= other;
+		return *this;
 	}
 	
 	random_iterator			operator+( const difference_T other ) const {
@@ -89,7 +97,7 @@ public:
 	}
 	
 	difference_T			operator-( const random_iterator &other ) const {
-		return std::distance(m_iterator, other.m_iterator);
+		return std::distance(other.m_iterator, m_iterator);
 	}
 	
 	reference				operator[]( std::size_t index ) const {

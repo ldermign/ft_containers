@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:31:42 by ldermign          #+#    #+#             */
-/*   Updated: 2022/09/26 11:32:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:30:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,3 +16,6 @@
 
 # define START namespace ft {
 # define STOP };
+
+# define PSTART std::cout <<
+# define PSTOP << std::endl;
