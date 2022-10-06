@@ -1,4 +1,6 @@
-NAME		= ft_containers
+NAMEFT		= ft_containers
+
+NAMESTL		= stl_containers
 
 INCSDIR		= incs/
 
@@ -41,10 +43,10 @@ CFLAGS		= -Wall  -Wextra -Werror --std=c++98 -I ${INCSDIR} -g3
 
 RM			= rm -rf
 
-all:		${NAME}
+all:		${NAMEFT}
 
-${NAME}: 	${OBJS}
-			${CC} ${CFLAGS} -o ${NAME} ${OBJS}
+${NAMEFT}: 	${OBJS}
+			${CC} ${CFLAGS} -o ${NAMEFT} ${OBJS}
 
 -include	${DEPS}
 
@@ -56,7 +58,7 @@ clean:
 			${RM} ${OBJS} ${OBJSDIR} ${DEPS}
 
 fclean:		clean
-			${RM} ${NAME}
+			${RM} ${NAMEFT}
 
 re:			fclean all
 
