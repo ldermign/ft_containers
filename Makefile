@@ -4,22 +4,19 @@ NAMESTL		= stl_containers
 
 INCSDIR		= incs/
 
-SRCSDIR 	= srcs/
+FTDIR 		= srcs/
 
-VECDIR		= srcs/vector/
-
-STACKDR		= srcs/stack/
-
-MAPDIR		= srcs/map/
-
-STDDIR		= srcs/std/
+TESTDIR		= tests/
 
 OBJSDIR		= objs/
 
-SRCS		= ${SRCSDIR}ft_containers.cpp \
+FTSRCS		= ${FTDIR}ft_containers.cpp \
 
 # vector
-SRCS		+= ${VECDIR}vector.cpp \
+FTSRCS		+= ${FTDIR}vector.cpp \
+
+# tests
+FTSRCS		+= ${TESTDIR}vector_iterator.cpp \
 
 # stack
 # SRCS		+= ${STACKDIR}stack.cpp
@@ -33,32 +30,43 @@ SRCS		+= ${VECDIR}vector.cpp \
 # STD
 # SRCS		+= ${SRDDIR}
 
-OBJS 		= ${SRCS:%.cpp=${OBJSDIR}%.o}
+FTOBJS 		= ${FTSRCS:%.cpp=${OBJSDIR}%.o}
 
-DEPS		= ${SRCS:%.cpp=${OBJSDIR}%.d}
+STLOBJS 	= ${STLSRCS:%.cpp=${OBJSDIR}%.o}
+
+FTDEPS		= ${FTSRCS:%.cpp=${OBJSDIR}%.d}
+
+STLDEPS		= ${STLSRCS:%.cpp=${OBJSDIR}%.d}
 
 CC			= c++
 
-CFLAGS		= -Wall  -Wextra -Werror --std=c++98 -I ${INCSDIR} -g3
+CFLAGS		= -Wall -Wextra -Werror --std=c++98 -I ${INCSDIR} -g3
 
 RM			= rm -rf
 
-all:		${NAMEFT}
+all:		${NAMEFT} ${NAMESTL}
 
-${NAMEFT}: 	${OBJS}
-			${CC} ${CFLAGS} -o ${NAMEFT} ${OBJS}
+${NAMEFT}: 	${FTOBJS}
+			${CC} ${CFLAGS} -o ${NAMEFT} ${FTOBJS}
 
--include	${DEPS}
+${NAMESTL}:	${STLOBJS}
+			${CC} ${CFLAGS} -o ${NAMESTL} ${FTOBJS}
 
-${OBJS}:	${OBJSDIR}%.o:%.cpp
+-include	${FTDEPS} ${STLDEPS}
+
+${FTOBJS}:	${OBJSDIR}%.o:%.cpp
 			@mkdir -p $(dir $@)
-			${CC} -I ${INCSDIR} -MMD -MP -o $@ -c $< ${CFLAGS}
+			${CC} -I ${INCSDIR} -MMD -MP -DLIBRARY=ft -o $@ -c $< ${CFLAGS}
+
+${STLOBJS}:	${OBJSDIR}%.o:%.cpp
+			@mkdir -p $(dir $@)
+			${CC} -I ${INCSDIR} -MMD -MP -DLIBRARY=stl -o $@ -c $< ${CFLAGS}
 
 clean:
-			${RM} ${OBJS} ${OBJSDIR} ${DEPS}
+			${RM} ${FTOBJS} ${STLOBJS} ${OBJSDIR} ${FTDEPS} ${STLDEPS}
 
 fclean:		clean
-			${RM} ${NAMEFT}
+			${RM} ${NAMEFT} ${NAMESTL}
 
 re:			fclean all
 

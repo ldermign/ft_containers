@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:31:42 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/05 14:30:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:13:19 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,7 @@
 
 # define PSTART std::cout <<
 # define PSTOP << std::endl;
+
+// tests
+
+void	vector_iterator( void );

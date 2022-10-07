@@ -6,43 +6,18 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/06 14:24:31 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:14:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
 #include "vector.hpp"
+#include "ft_containers.hpp"
 #include <iostream>
 
-int	main() {
+int	main( void ) {
 
-	PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP
-	PSTART "\t~~~~~~~~~~ ITERATOR ~~~~~~~~~~\n" PSTOP
-	PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP
-	{
-		PSTART "-----> REAL vector" PSTOP
-		using namespace std;
-
-		vector< int >	real(4, 42);
-		vector< int >::iterator		first = real.begin();
-		vector< int >::iterator		second = real.begin() + 2;
-
-		PSTART "second - first = " << second - first PSTOP
-		PSTART "first - second = " << first - second PSTOP
-
-
-	}
-	{
-		PSTART "-----> MY vector" PSTOP
-		using namespace ft;
-
-		vector< int >	mine(4, 42);
-		vector< int >::iterator		first = mine.begin();
-		vector< int >::iterator		second = mine.begin() + 2;
-
-		PSTART "second - first = " << second - first PSTOP
-		PSTART "first - second = " << first - second PSTOP
-	}
+	vector_iterator();
 
 
 	// PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP

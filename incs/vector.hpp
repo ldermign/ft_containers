@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/06 14:31:58 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:14:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,11 +254,11 @@ public:
 	// void insert( iterator position, size_t n, const T &x );
 
 //
-	template < class InputIterator >
-	void insert( iterator position,	InputIterator first, InputIterator last) {
+	// template < class InputIterator >
+	// void insert( iterator position,	InputIterator first, InputIterator last) {
 		
 		
-	}
+	// }
 	
 	// iterator erase( iterator position );
 	
