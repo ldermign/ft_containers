@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/07 14:40:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:08:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,87 +36,87 @@ public:
 
 	random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
 
-	bool					operator==( const random_iterator &other ) const {
+	bool			operator==( const random_iterator &other ) const {
 		return m_iterator == other.m_iterator;
 	}
 	
-	bool					operator!=( const random_iterator &other ) const {
+	bool			operator!=( const random_iterator &other ) const {
 		return m_iterator != other.m_iterator;
 	}
-	
-	reference				operator*() const {
+
+	reference		operator*( void ) const {
 		return *m_iterator;
 	}
 	
-	pointer					operator->() const {
+	pointer			operator->( void ) const {
 		return m_iterator;
 	}
 	
-	random_iterator			&operator++() {
+	random_iterator	&operator++( void ) {
 		++m_iterator;
 		return *this;
 	}
 	
-	random_iterator			operator++( int ) {
+	random_iterator	operator++( int ) {
 		random_iterator tmp(*this);
 		++(*this);
 		return tmp;
 	}
 	
-	random_iterator			&operator--() {
+	random_iterator	&operator--( void ) {
 		--m_iterator;
 		return *this;
 	}
 	
-	random_iterator			operator--( int ) {
+	random_iterator	operator--( int ) {
 		random_iterator tmp(*this);
 		--(*this);
 		return tmp;
 	}
 	
-	random_iterator			&operator+=( const difference_T other ) {
+	random_iterator	&operator+=( const difference_T other ) {
 		m_iterator += other;
 		return *this;
 	}
 	
-	random_iterator			&operator-=( const difference_T other ) {
+	random_iterator	&operator-=( const difference_T other ) {
 		m_iterator -= other;
 		return *this;
 	}
 	
-	random_iterator			operator+( const difference_T other ) const {
+	random_iterator	operator+( const difference_T other ) const {
 		return random_iterator(m_iterator + other);
 	}
 	
-	random_iterator			operator-( const difference_T other ) const {
+	random_iterator	operator-( const difference_T other ) const {
 		return random_iterator(m_iterator - other);
 	}
 	
-	random_iterator			operator+( const random_iterator &other ) const {
+	random_iterator	operator+( const random_iterator &other ) const {
 		return random_iterator(*this + other.m_iterator);
 	}
 	
-	difference_T			operator-( const random_iterator &other ) const {
+	difference_T	operator-( const random_iterator &other ) const {
 		return std::distance(other.m_iterator, m_iterator);
 	}
 	
-	reference				operator[]( std::size_t index ) const {
-		return m_iterator[index];
+	reference		operator[]( std::size_t index ) const {
+		return this->m_iterator[index];
 	}
 	
-	bool					operator<( const random_iterator &other ) const {
+	bool			operator<( const random_iterator &other ) const {
 		return m_iterator < other.m_iterator;
 	}
 	
-	bool					operator>( const random_iterator &other ) const {
+	bool			operator>( const random_iterator &other ) const {
 		return m_iterator > other.m_iterator;
 	}
 	
-	bool					operator<=( const random_iterator &other ) const {
+	bool			operator<=( const random_iterator &other ) const {
 		return m_iterator <= other.m_iterator;
 	}
 	
-	bool					operator>=( const random_iterator &other ) const {
+	bool			operator>=( const random_iterator &other ) const {
 		return m_iterator >= other.m_iterator;
 	}
 

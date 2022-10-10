@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:09:13 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/07 14:50:47 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:54:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,31 @@
 
 void	vector_iterator( void ) {
 
+	std::cout << std::endl;
 	PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP
 	PSTART "\t~~~~~~~~~~ VECTOR ITERATOR ~~~~~~~~~~\n" PSTOP
 	PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP
 	{
+		LIBRARY::vector< int >	test;
+		test.push_back(42);
+		test.push_back(123);
+		// test.push_back(0);
+		// test.push_back(1007);
+		LIBRARY::vector< int >::iterator		first = test.begin();
+		LIBRARY::vector< int >::iterator		second = test.begin() + 2;
 
-		ft::vector< int >	real(4, 42);
-		ft::vector< int >::iterator		first = real.begin();
-		ft::vector< int >::iterator		second = real.begin() + 2;
+		for (int i = 0 ; i < 4 ; i++)
+			PSTART RED << first[i] << " " << RESET;
+		std::cout << std::endl;
+		PSTART "operator first == first -> " << (first == first) PSTOP
+		PSTART "operator first != first -> " << (first != first) PSTOP
+		PSTART "operator *first -> " << *(first) PSTOP
+		// PSTART "operator test->begin() -> " << test->begin() PSTOP
+		PSTART "operator *first -> " << *(second) PSTOP
+		PSTART "second - first -> " << (second - first) PSTOP
+		PSTART "first - second -> " << (first - second) PSTOP
 
-		PSTART "operator == -> " << first == first PSTOP
-		PSTART "second - first -> " << second - first PSTOP
-		PSTART "first - second -> " << first - second PSTOP
-
+		std::cout << std::endl;
 
 	}
 }

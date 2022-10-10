@@ -1,6 +1,6 @@
 NAMEFT		= ft_containers
 
-NAMESTL		= stl_containers
+NAMESTD		= std_containers
 
 INCSDIR		= incs/
 
@@ -32,11 +32,11 @@ FTSRCS		+= ${TESTDIR}vector_iterator.cpp \
 
 FTOBJS 		= ${FTSRCS:%.cpp=${OBJSDIR}%.o}
 
-STLOBJS 	= ${STLSRCS:%.cpp=${OBJSDIR}%.o}
+STDOBJS 	= ${FTSRCS:%.cpp=${OBJSDIR}%_std.o}
 
 FTDEPS		= ${FTSRCS:%.cpp=${OBJSDIR}%.d}
 
-STLDEPS		= ${STLSRCS:%.cpp=${OBJSDIR}%.d}
+STDDEPS		= ${FTSRCS:%.cpp=${OBJSDIR}%_std.d}
 
 CC			= c++
 
@@ -44,29 +44,30 @@ CFLAGS		= -Wall -Wextra -Werror --std=c++98 -I ${INCSDIR} -g3
 
 RM			= rm -rf
 
-all:		${NAMEFT} ${NAMESTL}
+all:		${NAMEFT} ${NAMESTD}
 
 ${NAMEFT}: 	${FTOBJS}
 			${CC} ${CFLAGS} -o ${NAMEFT} ${FTOBJS}
 
-${NAMESTL}:	${STLOBJS}
-			${CC} ${CFLAGS} -o ${NAMESTL} ${FTOBJS}
+${NAMESTD}:	${STDOBJS}
+			${CC} ${CFLAGS} -o ${NAMESTD} ${STDOBJS}
 
--include	${FTDEPS} ${STLDEPS}
+-include	${FTDEPS}
+-include	${STDDEPS}
 
 ${FTOBJS}:	${OBJSDIR}%.o:%.cpp
 			@mkdir -p $(dir $@)
 			${CC} -I ${INCSDIR} -MMD -MP -DLIBRARY=ft -o $@ -c $< ${CFLAGS}
 
-${STLOBJS}:	${OBJSDIR}%.o:%.cpp
+${STDOBJS}:	${OBJSDIR}%_std.o:%.cpp
 			@mkdir -p $(dir $@)
-			${CC} -I ${INCSDIR} -MMD -MP -DLIBRARY=stl -o $@ -c $< ${CFLAGS}
+			${CC} -I ${INCSDIR} -MMD -MP -DLIBRARY=std -o $@ -c $< ${CFLAGS}
 
 clean:
-			${RM} ${FTOBJS} ${STLOBJS} ${OBJSDIR} ${FTDEPS} ${STLDEPS}
+			${RM} ${FTOBJS} ${STDOBJS} ${OBJSDIR} ${OBJSDIR} ${FTDEPS} ${STDDEPS}
 
 fclean:		clean
-			${RM} ${NAMEFT} ${NAMESTL}
+			${RM} ${NAMEFT} ${NAMESTD}
 
 re:			fclean all
 

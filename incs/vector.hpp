@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/07 13:14:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:58:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,13 @@ public:
 	
 	void push_back( const T &x ) {
 
-		this->insert(this->end(), x);
+		std::cout << "i = " << this->size() << " x = " << x << std::endl;
+
+		if (this->size() == 0) {
+			this->reserve(1);
+			this->_size++;
+		}
+		this->insert(this->end(), 1, x);
 	}
 
 // push_back(const _Tp& __x)
@@ -217,41 +223,50 @@ public:
 
 // insere l'element a la position precisee
 	iterator insert( iterator position, const T &x ) {
-		(void)x;
-
-		size_t at = position - this->begin();
-		std::cout << at << std::endl;
-		T	next = this->_ptrVector[at];
-
-		if (this->capacity() == 0)
-			reserve(1);
-		else if (this->size() + 1 > this->capacity())
-			reserve(this->capacity() * 2);
-		
-		// destroy juste avant ?
-		this->_alloc.destroy(&_ptrVector[at]);
-		_alloc.construct(&this->_ptrVector[at], x);
-		at++;
-		for (; at != this->size() ; at++) {
-			next = this->_ptrVector[at];
-			this->_alloc.destroy(&_ptrVector[at]);
-			this->_alloc.construct(&this->_ptrVector[at], next);
+	
+		if (this->size() == 0) {
+			this->reserve(1);
+			this->_size++;
 		}
-		// size_t		i = 0;
-		// iterator	itPos = this->begin();
-		// // std::cout << "size = " << this->size() << std::endl;
-		// this->reserve(this->size() + 1);
-
-		// size_t end = position - this->begin();
-		// commencer par la fin
-
-		this->_size++;
-		return (position);
-		// attention ! differe en fonction des cas
+		this->insert(position, x);
 	}
 
 // insere n element avant position 
-	// void insert( iterator position, size_t n, const T &x );
+	void insert( iterator position, size_t n, const T &x ) {
+
+		if (this->size() == 0)
+			this->reserve(1);
+		else if (this->size() + n > this->capacity())
+			this->reserve(this->capacity() * 2 + n);
+		
+		if (position == this->end()) {
+			std::cout << "i = " << this->size() << " n = " << n << " x = " << x << std::endl;
+			for (size_t i = this->size() ; i < n ; i++)
+				this->_alloc.construct(&this->_ptrVector[i], x);
+		}
+		else {
+			// size_t	pos = std::distance(this->begin(), position);
+			size_t pos = position - this->begin();
+			// size_t	next = std::distance(this->begin(), position);
+			// T		ret;
+			for (size_t end = this->size() + n ; end > this->size() ; end--) {
+				this->_alloc.construct(&this->_ptrVector[end], this->_ptrVector[this->size() - n]);
+				this->_alloc.destroy(&this->_ptrVector[this->size() - n]);
+			}
+			for (; pos < n ; pos++) {
+				// ret = _ptrVector[next];
+				// this->_alloc.destroy(&_ptrVector[next]);
+				this->_alloc.construct(&this->_ptrVector[pos], x);
+				// pos++;
+			}
+			// for (; next < this->size() + n ; next++) {
+				
+			// 	this->_alloc.construct(&this->_ptrVector[next], x);
+			// }
+		}
+			
+		this->_size += n;
+	}
 
 //
 	// template < class InputIterator >
