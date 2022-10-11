@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/11 10:18:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:54:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ public:
 // iterators:
 
 	iterator begin( void ) {
+		// iterator test(_ptrVector);
+		// return test;
 		return iterator(_ptrVector);
 	}
 	
@@ -147,15 +149,15 @@ public:
 	}
 	
 // ok ???
-	// void resize( size_t new_nbr_elmt, T c = T() ) {
+	void resize( size_t new_nbr_elmt, T c = T() ) {
 
-	// 	if (new_nbr_elmt > this->size())
-	// 		this->insert(this->end(), new_nbr_elmt - this->size(), c);
-	// 	else if (new_nbr_elmt < this->size())
-	// 		this->erase(this->begin() + new_nbr_elmt, this->end());
-	// 	else
-	// 		;
-	// }
+		if (new_nbr_elmt > this->size())
+			this->insert(this->end(), new_nbr_elmt - this->size(), c);
+		else if (new_nbr_elmt < this->size())
+			this->erase(this->begin() + new_nbr_elmt, this->end());
+		else
+			;
+	}
 	
 	size_t capacity( void ) const {
 		return this->_capacity;
@@ -167,13 +169,18 @@ public:
 	
 	void reserve( size_t new_cap ) {
 		
-		if (new_cap > this->max_size())
+		if (new_cap > this->max_size()) {
+			PSTART "new_cap SUP max_size()" PSTOP
 			return ;
+		}
 			// throw std::length_error(); -> DOIT THROW ERROR
-		else if (new_cap < this->capacity())
+		else if (new_cap < this->capacity()) {
+			PSTART "new_cap INF capacity" PSTOP
 			return ;
+		}
 		else {
-			T *new_vector;
+			// PSTART BLUE "passe" RESET PSTOP
+			T	*new_vector;
 			new_vector = _alloc.allocate(new_cap);
 			for (size_t i = 0 ; i < this->size() ; i++) {
 				this->_alloc.construct(&new_vector[i], _ptrVector[i]);
@@ -183,7 +190,6 @@ public:
 			this->_capacity = new_cap;
 			this->_ptrVector = new_vector;			
 		}
-		this->_size = new_cap;
 	}
 	
 // element access: reference
@@ -201,13 +207,21 @@ public:
 	
 	void push_back( const T &x ) {
 
-		std::cout << "i = " << this->size() << " x = " << x << std::endl;
+		// std::cout << "i = " << this->size() << " x = " << x << std::endl;
 
-		if (this->size() == 0) {
+		if (this->capacity() == 0) {
+			
 			this->reserve(1);
-			// this->_size++;
 		}
-		PSTART "next for i = " << size() PSTOP
+		else if (this->size() + 1 > this->capacity() * 2) {
+			// PSTART "normalement ok" PSTOP
+			this->reserve(this->size() + 1);
+		}
+		else if (this->size() + 1 > this->capacity()) {
+			// PSTART "normalement ok" PSTOP
+			this->reserve(this->capacity() * 2);
+		}
+		// PSTART "next for i = " << size() PSTOP
 		this->insert(this->end(), 1, x);
 	}
 
@@ -226,7 +240,7 @@ public:
 // insere l'element a la position precisee
 	iterator insert( iterator position, const T &x ) {
 	
-		if (this->size() == 0) {
+		if (this->capacity() == 0) {
 			this->reserve(1);
 			// this->_size++;
 		}
@@ -236,26 +250,35 @@ public:
 // insere n element avant position 
 	void insert( iterator position, size_t n, const T &x ) {
 
-		PSTART "au debut" PSTOP
-		if (this->size() == 0)
+		// PSTART "au debut" PSTOP
+		if (this->capacity() == 0) {
+			
 			this->reserve(1);
-		else if (this->size() + n > this->capacity()) {
-			PSTART "normalement ok" PSTOP
-			this->reserve(this->capacity() * 2 + n);
 		}
-		PSTART "position = " << *position << " et this->end() = " << *this->end() PSTOP
+		else if (this->size() + n > this->capacity() * 2) {
+			// PSTART "normalement ok" PSTOP
+			this->reserve(this->size() + n);
+		}
+		else if (this->size() + n > this->capacity()) {
+			// PSTART "normalement ok" PSTOP
+			this->reserve(this->capacity() * 2);
+		}
+		// PSTART "position = " << *position << " et this->end() = " << *this->end() PSTOP
 		if (position == this->end()) {
-			std::cout << "MAIS POURQUOI CA PASSE PAS LA i = " << this->size() << " n = " << n << " x = " << x << std::endl;
-			for (size_t i = this->size() ; i < n ; i++)
+			// std::cout << "MAIS POURQUOI CA PASSE PAS LA i = " << this->size() << " n = " << n << " x = " << x << std::endl;
+			for (size_t i = this->size() ; i < this->size() + n ; i++) {
+				// PSTART "i = " << i << " this->size() = " << this->size() << " n = " << n PSTOP
 				this->_alloc.construct(&this->_ptrVector[i], x);
+				// PSTART "FOR THE FIRST ONE " << this->_ptrVector[i] PSTOP;
+			}
 		}
 		else {
-			PSTART "ca deconne ici" PSTOP
+			// PSTART "ca deconne ici position = " << *position << " et begin = " << *this->begin() PSTOP
 			// size_t	pos = std::distance(this->begin(), position);
 			size_t pos = position - this->begin();
 			// size_t pos = std::distance(this->begin(), position);
-			PSTART "pos = " << pos PSTOP
-			// size_t	next = std::distance(this->begin(), position);
+			// PSTART "pos = " << pos PSTOP
+			// size_t	next = std::distance(position, this->begin());
 			// T		ret;
 			for (size_t end = this->size() + n ; end > this->size() ; end--) {
 				this->_alloc.construct(&this->_ptrVector[end], this->_ptrVector[this->size() - n]);
@@ -273,7 +296,8 @@ public:
 			// }
 		}
 			
-		// this->_size += n;
+		this->_size += n;
+		// PSTART " A LA FFFFFFFFFFFFFFFFFFFFFFIN DE LA BOUCLE = " << this->size() PSTOP
 	}
 
 //

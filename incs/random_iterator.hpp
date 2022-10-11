@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/11 09:43:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:55:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ private:
 
 public:
 
-	// using	iterator	ft::iterator;
-	// using	value_T = T;
+	typedef		std::ptrdiff_t difference_type;
+	typedef		T value_type;
 	typedef		T reference; // ft::iterator::Reference
 	typedef		T* pointer;
-	// using	iterator_category = std::random_access_iterator_tag;
-	typedef		std::ptrdiff_t difference_T;
+	typedef		random_access_iterator_tag iterator_category;
 
 	random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
 
@@ -73,22 +72,22 @@ public:
 		--(*this);
 		return tmp;
 	}
-	
-	random_iterator	&operator+=( const difference_T other ) {
+
+	random_iterator	&operator+=( const difference_type other ) {
 		m_iterator += other;
 		return *this;
 	}
 	
-	random_iterator	&operator-=( const difference_T other ) {
+	random_iterator	&operator-=( const difference_type other ) {
 		m_iterator -= other;
 		return *this;
 	}
-	
-	random_iterator	operator+( const difference_T other ) const {
+		//tests
+	random_iterator	operator+( const difference_type other ) const {
 		return random_iterator(m_iterator + other);
 	}
 	
-	random_iterator	operator-( const difference_T other ) const {
+	random_iterator	operator-( const difference_type other ) const {
 		return random_iterator(m_iterator - other);
 	}
 	
@@ -96,7 +95,7 @@ public:
 		return random_iterator(*this + other.m_iterator);
 	}
 	
-	difference_T	operator-( const random_iterator &other ) const {
+	difference_type	operator-( const random_iterator &other ) const {
 		return std::distance(other.m_iterator, m_iterator);
 	}
 	
