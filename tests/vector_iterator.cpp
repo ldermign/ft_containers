@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:09:13 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/10 15:54:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/11 09:32:49 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	vector_iterator( void ) {
 	{
 		LIBRARY::vector< int >	test;
 		test.push_back(42);
-		test.push_back(123);
+		// test.push_back(123);s
 		// test.push_back(0);
 		// test.push_back(1007);
 		LIBRARY::vector< int >::iterator		first = test.begin();

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/10 15:58:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/11 10:18:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ public:
 			this->_capacity = new_cap;
 			this->_ptrVector = new_vector;			
 		}
+		this->_size = new_cap;
 	}
 	
 // element access: reference
@@ -204,8 +205,9 @@ public:
 
 		if (this->size() == 0) {
 			this->reserve(1);
-			this->_size++;
+			// this->_size++;
 		}
+		PSTART "next for i = " << size() PSTOP
 		this->insert(this->end(), 1, x);
 	}
 
@@ -226,7 +228,7 @@ public:
 	
 		if (this->size() == 0) {
 			this->reserve(1);
-			this->_size++;
+			// this->_size++;
 		}
 		this->insert(position, x);
 	}
@@ -234,19 +236,25 @@ public:
 // insere n element avant position 
 	void insert( iterator position, size_t n, const T &x ) {
 
+		PSTART "au debut" PSTOP
 		if (this->size() == 0)
 			this->reserve(1);
-		else if (this->size() + n > this->capacity())
+		else if (this->size() + n > this->capacity()) {
+			PSTART "normalement ok" PSTOP
 			this->reserve(this->capacity() * 2 + n);
-		
+		}
+		PSTART "position = " << *position << " et this->end() = " << *this->end() PSTOP
 		if (position == this->end()) {
-			std::cout << "i = " << this->size() << " n = " << n << " x = " << x << std::endl;
+			std::cout << "MAIS POURQUOI CA PASSE PAS LA i = " << this->size() << " n = " << n << " x = " << x << std::endl;
 			for (size_t i = this->size() ; i < n ; i++)
 				this->_alloc.construct(&this->_ptrVector[i], x);
 		}
 		else {
+			PSTART "ca deconne ici" PSTOP
 			// size_t	pos = std::distance(this->begin(), position);
 			size_t pos = position - this->begin();
+			// size_t pos = std::distance(this->begin(), position);
+			PSTART "pos = " << pos PSTOP
 			// size_t	next = std::distance(this->begin(), position);
 			// T		ret;
 			for (size_t end = this->size() + n ; end > this->size() ; end--) {
@@ -265,7 +273,7 @@ public:
 			// }
 		}
 			
-		this->_size += n;
+		// this->_size += n;
 	}
 
 //
