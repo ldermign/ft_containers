@@ -10,13 +10,14 @@ TESTDIR		= tests/
 
 OBJSDIR		= objs/
 
-FTSRCS		= ${FTDIR}ft_containers.cpp \
+FTSRCS		= ${FTDIR}main.cpp \
 
 # vector
 FTSRCS		+= ${FTDIR}vector.cpp \
 
 # tests
-FTSRCS		+= ${TESTDIR}vector_iterator.cpp \
+FTSRCS		+=	${TESTDIR}vector_iterator.cpp \
+				${TESTDIR}vector_container.cpp
 
 # stack
 # SRCS		+= ${STACKDIR}stack.cpp
@@ -52,8 +53,7 @@ ${NAMEFT}: 	${FTOBJS}
 ${NAMESTD}:	${STDOBJS}
 			${CC} ${CFLAGS} -o ${NAMESTD} ${STDOBJS}
 
--include	${FTDEPS}
--include	${STDDEPS}
+-include	${FTDEPS} ${STDDEPS}
 
 ${FTOBJS}:	${OBJSDIR}%.o:%.cpp
 			@mkdir -p $(dir $@)

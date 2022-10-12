@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:09:13 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/11 15:54:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:39:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,21 @@ void	vector_iterator( void ) {
 		first = test.begin();
 		PSTART "post incrementation -> before [" << *first << "] - during [" << *first++ << "] - after [" << *first << "]" PSTOP
 		first = test.begin();
-		PSTART "pre decrementation -> before [" << *first << "] - during [" << *--first << "] - after [" << *first << "]" PSTOP
-		first = test.begin();
-		PSTART "post decrementation -> before [" << *first << "] - during [" << *first-- << "] - after [" << *first << "]" PSTOP
-		first = test.begin();
+		PSTART "pre decrementation second -> before [" << *second << "] - during [" << *--second << "] - after [" << *second << "]" PSTOP
+		second = test.begin() + 1;
+		PSTART "post decrementation second -> before [" << *second << "] - during [" << *second-- << "] - after [" << *second << "]" PSTOP
+		second = test.begin() + 1;
 		PSTART "operator second += 2 -> " << *(second += 2) PSTOP
 		PSTART "operator last -= 2 -> " << *(last -= 2) PSTOP
-		
-		PSTART "second - first -> " << (second - first) PSTOP
-		PSTART "first - second -> " << (first - second) PSTOP
+		PSTART "operator first + 1 -> " << *first << " - " << *(first + 1) PSTOP
+		PSTART "operator last - 1 -> " << *last << " - " << *(last + 1) PSTOP
+		PSTART "operator first + last -> " << *first + *last PSTOP
+		PSTART "operator first - last -> " << *first - *last PSTOP
+		PSTART "operator first[0] - first[3] -> " << first[0] << " - " << first[3] PSTOP
+		PSTART "operator first < second -> " << (first < second) PSTOP
+		PSTART "operator first > second -> " << (first > second) PSTOP
+		PSTART "operator first <= second -> " << (first <= second) PSTOP
+		PSTART "operator first >= second -> " << (first >= second) PSTOP
 
 		std::cout << std::endl;
 

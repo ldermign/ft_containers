@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:31:42 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/10 15:47:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:51:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define PSTART std::cout <<
 # define PSTOP << std::endl;
+# define PSAUT std::cout << std::endl;
 
 # ifndef LIBRARY
 # define LIBRARY std
@@ -43,3 +44,4 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 void	vector_iterator( void );
+void	vector_container( void );

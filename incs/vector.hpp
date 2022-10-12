@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/11 14:54:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:59:42 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ public:
 	typedef typename Allocator::const_pointer const_pointer;
 	typedef ft::reverse_iterator< iterator > reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator > const_reverse_iterator;
+
+//cat ft.txt && cat std.txt
+// make && ./ft_containers > ft.txt && ./std_containers > std.txt && diff -y -W 60 --suppress-common-lines ft.txt std.txt
 
 	explicit vector( const Allocator &x = Allocator() )
 		: _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {}
@@ -123,19 +126,19 @@ public:
 	}
 
 	reverse_iterator rbegin( void ) {
-		return iterator(&_ptrVector[_size]);
+		return reverse_iterator(&_ptrVector[_size]);
 	}
 	
 	const_reverse_iterator crbegin( void ) const {
-		return const_iterator(&_ptrVector[_size]);
+		return const_reverse_iterator(&_ptrVector[_size]);
 	}
 
 	reverse_iterator rend( void ) {
-		return iterator(_ptrVector);
+		return reverse_iterator(_ptrVector);
 	}
 
 	const_reverse_iterator crend( void ) const {
-		return const_iterator(_ptrVector);
+		return const_reverse_iterator(_ptrVector);
 	}
 	
 	size_t size( void ) const {
@@ -223,6 +226,7 @@ public:
 		}
 		// PSTART "next for i = " << size() PSTOP
 		this->insert(this->end(), 1, x);
+		// (void)x;
 	}
 
 // push_back(const _Tp& __x)
@@ -239,7 +243,7 @@ public:
 
 // insere l'element a la position precisee
 	iterator insert( iterator position, const T &x ) {
-	
+	// (void)x;(void)position;
 		if (this->capacity() == 0) {
 			this->reserve(1);
 			// this->_size++;

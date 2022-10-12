@@ -1,0 +1,48 @@
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	~~~~~~~~~~ VECTOR ITERATOR ~~~~~~~~~~
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[31m42 [0m[31m123 [0m[31m-99 [0m[31m1007 [0m
+operator first == first -> 1
+operator first != first -> 0
+operator *first -> 42
+pre incrementation -> before [42] - during [123] - after [123]
+post incrementation -> before [42] - during [42] - after [123]
+pre decrementation second -> before [123] - during [42] - after [42]
+post decrementation second -> before [123] - during [123] - after [42]
+operator second += 2 -> 1007
+operator last -= 2 -> 123
+operator first + 1 -> 42 - 123
+operator last - 1 -> 123 - -99
+operator first + last -> 165
+operator first - last -> -81
+operator first[0] - first[3] -> 42 - 1007
+operator first < second -> 1
+operator first > second -> 0
+operator first <= second -> 1
+operator first >= second -> 0
+
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	~~~~~~~~~~ VECTOR CONTAINER ~~~~~~~~~~
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[31mSalut,  [0m[31mc'est  [0m[31mun container [0m[31mrempli de  [0m[31mstd::string !
+ [0m
+~~~~~ BEGIN & END ~~~~~
+begin -> 
+cbegin -> 
+end -> 
+cend -> 
+rbegin -> 
+crbegin -> 
+rend -> 
+crend -> 
+
+~~~~~ UTILS ~~~~~
+

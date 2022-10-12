@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/11 15:55:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/12 09:24:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ public:
 		m_iterator -= other;
 		return *this;
 	}
-		//tests
+
 	random_iterator	operator+( const difference_type other ) const {
 		return random_iterator(m_iterator + other);
 	}
@@ -98,7 +98,9 @@ public:
 	difference_type	operator-( const random_iterator &other ) const {
 		return std::distance(other.m_iterator, m_iterator);
 	}
-	
+
+		//tests
+
 	reference		operator[]( std::size_t index ) const {
 		return this->m_iterator[index];
 	}
