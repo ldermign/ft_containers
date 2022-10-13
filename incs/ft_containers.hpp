@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:31:42 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/12 11:51:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:02:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # define START namespace ft {
 # define STOP };
 
-# define PSTART std::cout <<
-# define PSTOP << std::endl;
-# define PSAUT std::cout << std::endl;
+# define p1 std::cout <<
+# define p2 << std::endl;
+# define p3 std::cout << std::endl;
 
 # ifndef LIBRARY
 # define LIBRARY std

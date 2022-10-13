@@ -6,20 +6,21 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:09:13 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/12 11:39:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:09:16 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
+// #include "reverse_iterator.hpp"
 #include "vector.hpp"
 #include <iostream>
 
 void	vector_iterator( void ) {
 
 	std::cout << std::endl;
-	PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP
-	PSTART "\t~~~~~~~~~~ VECTOR ITERATOR ~~~~~~~~~~\n" PSTOP
-	PSTART "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" PSTOP
+	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
+	p1 "\t~~~~~~~~~~ VECTOR ITERATOR ~~~~~~~~~~\n" p2
+	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 	{
 		LIBRARY::vector< int >	test;
 		test.push_back(42);
@@ -32,30 +33,30 @@ void	vector_iterator( void ) {
 		LIBRARY::vector< int >::iterator		last = test.begin() + 3;
 
 		for (size_t i = 0 ; i < test.size() ; i++)
-			PSTART RED << first[i] << " " << RESET;
+			p1 RED << first[i] << " " << RESET;
 		std::cout << std::endl;
-		PSTART "operator first == first -> " << (first == first) PSTOP
-		PSTART "operator first != first -> " << (first != first) PSTOP
-		PSTART "operator *first -> " << *(first) PSTOP
-		PSTART "pre incrementation -> before [" << *first << "] - during [" << *++first << "] - after [" << *first << "]" PSTOP
+		p1 "operator first == first -> " << (first == first) p2
+		p1 "operator first != first -> " << (first != first) p2
+		p1 "operator *first -> " << *(first) p2
+		p1 "pre incrementation -> before [" << *first << "] - during [" << *++first << "] - after [" << *first << "]" p2
 		first = test.begin();
-		PSTART "post incrementation -> before [" << *first << "] - during [" << *first++ << "] - after [" << *first << "]" PSTOP
+		p1 "post incrementation -> before [" << *first << "] - during [" << *first++ << "] - after [" << *first << "]" p2
 		first = test.begin();
-		PSTART "pre decrementation second -> before [" << *second << "] - during [" << *--second << "] - after [" << *second << "]" PSTOP
+		p1 "pre decrementation second -> before [" << *second << "] - during [" << *--second << "] - after [" << *second << "]" p2
 		second = test.begin() + 1;
-		PSTART "post decrementation second -> before [" << *second << "] - during [" << *second-- << "] - after [" << *second << "]" PSTOP
+		p1 "post decrementation second -> before [" << *second << "] - during [" << *second-- << "] - after [" << *second << "]" p2
 		second = test.begin() + 1;
-		PSTART "operator second += 2 -> " << *(second += 2) PSTOP
-		PSTART "operator last -= 2 -> " << *(last -= 2) PSTOP
-		PSTART "operator first + 1 -> " << *first << " - " << *(first + 1) PSTOP
-		PSTART "operator last - 1 -> " << *last << " - " << *(last + 1) PSTOP
-		PSTART "operator first + last -> " << *first + *last PSTOP
-		PSTART "operator first - last -> " << *first - *last PSTOP
-		PSTART "operator first[0] - first[3] -> " << first[0] << " - " << first[3] PSTOP
-		PSTART "operator first < second -> " << (first < second) PSTOP
-		PSTART "operator first > second -> " << (first > second) PSTOP
-		PSTART "operator first <= second -> " << (first <= second) PSTOP
-		PSTART "operator first >= second -> " << (first >= second) PSTOP
+		p1 "operator second += 2 -> " << *(second += 2) p2
+		p1 "operator last -= 2 -> " << *(last -= 2) p2
+		p1 "operator first + 1 -> " << *first << " - " << *(first + 1) p2
+		p1 "operator last - 1 -> " << *last << " - " << *(last + 1) p2
+		p1 "operator first + last -> " << *first + *last p2
+		p1 "operator first - last -> " << *first - *last p2
+		p1 "operator first[0] - first[3] -> " << first[0] << " - " << first[3] p2
+		p1 "operator first < second -> " << (first < second) p2
+		p1 "operator first > second -> " << (first > second) p2
+		p1 "operator first <= second -> " << (first <= second) p2
+		p1 "operator first >= second -> " << (first >= second) p2
 
 		std::cout << std::endl;
 

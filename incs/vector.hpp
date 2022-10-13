@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/12 13:59:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:18:28 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,22 +167,22 @@ public:
 	}
 	
 	bool empty( void ) const {
-		return (this->_size() == 0);
+		return this->_size() == 0;
 	}
 	
 	void reserve( size_t new_cap ) {
 		
 		if (new_cap > this->max_size()) {
-			PSTART "new_cap SUP max_size()" PSTOP
+			p1 "new_cap SUP max_size()" p2
 			return ;
 		}
 			// throw std::length_error(); -> DOIT THROW ERROR
 		else if (new_cap < this->capacity()) {
-			PSTART "new_cap INF capacity" PSTOP
+			p1 "new_cap INF capacity" p2
 			return ;
 		}
 		else {
-			// PSTART BLUE "passe" RESET PSTOP
+			// p1 BLUE "passe" RESET p2
 			T	*new_vector;
 			new_vector = _alloc.allocate(new_cap);
 			for (size_t i = 0 ; i < this->size() ; i++) {
@@ -197,14 +197,41 @@ public:
 	
 // element access: reference
 
-	// reference operator[]( size_t n );
-	// const_reference operator[]( size_t n ) const;
-	// const_reference at( size_t n ) const;
-	// reference at( size_t n );
-	// reference front( void );
-	// const_reference front( void ) const;
-	// reference back( void );
-	// const_reference back( void ) const;
+	reference operator[]( size_t index ) {
+		return this->_ptrVector[index];
+	}
+	
+	const_reference operator[]( size_t index ) const {
+		return this->_ptrVector[index];
+	}
+
+	reference at( size_t index ) {
+		// if (index < 0 || index > this->size())
+		// 	throw std::out_of_range();
+		return this->_ptrVector[index];
+	}
+
+	const_reference at( size_t index ) const {
+		// if (index < 0 || index > this->size())
+		// 	throw std::out_of_range();
+		return this->_ptrVector[index];
+	}
+	
+	reference front( void ) {
+		return _ptrVector;
+	}
+	
+	const_reference front( void ) const {
+		return _ptrVector;	
+	}
+	
+	reference back( void ) {
+		return &_ptrVector[this->size()];
+	}
+	
+	const_reference back( void ) const {
+		return &_ptrVector[this->size()];
+	}
 	
 // operations
 	
@@ -217,14 +244,14 @@ public:
 			this->reserve(1);
 		}
 		else if (this->size() + 1 > this->capacity() * 2) {
-			// PSTART "normalement ok" PSTOP
+			// p1 "normalement ok" p2
 			this->reserve(this->size() + 1);
 		}
 		else if (this->size() + 1 > this->capacity()) {
-			// PSTART "normalement ok" PSTOP
+			// p1 "normalement ok" p2
 			this->reserve(this->capacity() * 2);
 		}
-		// PSTART "next for i = " << size() PSTOP
+		// p1 "next for i = " << size() p2
 		this->insert(this->end(), 1, x);
 		// (void)x;
 	}
@@ -254,34 +281,34 @@ public:
 // insere n element avant position 
 	void insert( iterator position, size_t n, const T &x ) {
 
-		// PSTART "au debut" PSTOP
+		// p1 "au debut" p2
 		if (this->capacity() == 0) {
 			
 			this->reserve(1);
 		}
 		else if (this->size() + n > this->capacity() * 2) {
-			// PSTART "normalement ok" PSTOP
+			// p1 "normalement ok" p2
 			this->reserve(this->size() + n);
 		}
 		else if (this->size() + n > this->capacity()) {
-			// PSTART "normalement ok" PSTOP
+			// p1 "normalement ok" p2
 			this->reserve(this->capacity() * 2);
 		}
-		// PSTART "position = " << *position << " et this->end() = " << *this->end() PSTOP
+		// p1 "position = " << *position << " et this->end() = " << *this->end() p2
 		if (position == this->end()) {
 			// std::cout << "MAIS POURQUOI CA PASSE PAS LA i = " << this->size() << " n = " << n << " x = " << x << std::endl;
 			for (size_t i = this->size() ; i < this->size() + n ; i++) {
-				// PSTART "i = " << i << " this->size() = " << this->size() << " n = " << n PSTOP
+				// p1 "i = " << i << " this->size() = " << this->size() << " n = " << n p2
 				this->_alloc.construct(&this->_ptrVector[i], x);
-				// PSTART "FOR THE FIRST ONE " << this->_ptrVector[i] PSTOP;
+				// p1 "FOR THE FIRST ONE " << this->_ptrVector[i] p2;
 			}
 		}
 		else {
-			// PSTART "ca deconne ici position = " << *position << " et begin = " << *this->begin() PSTOP
+			// p1 "ca deconne ici position = " << *position << " et begin = " << *this->begin() p2
 			// size_t	pos = std::distance(this->begin(), position);
 			size_t pos = position - this->begin();
 			// size_t pos = std::distance(this->begin(), position);
-			// PSTART "pos = " << pos PSTOP
+			// p1 "pos = " << pos p2
 			// size_t	next = std::distance(position, this->begin());
 			// T		ret;
 			for (size_t end = this->size() + n ; end > this->size() ; end--) {
@@ -301,7 +328,7 @@ public:
 		}
 			
 		this->_size += n;
-		// PSTART " A LA FFFFFFFFFFFFFFFFFFFFFFIN DE LA BOUCLE = " << this->size() PSTOP
+		// p1 " A LA FFFFFFFFFFFFFFFFFFFFFFIN DE LA BOUCLE = " << this->size() p2
 	}
 
 //
