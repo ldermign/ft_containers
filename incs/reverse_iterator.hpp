@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/13 14:57:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:01:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ public:
 	typedef typename ft::iterator_traits< Iterator >::reference reference;
 	typedef typename ft::iterator_traits< Iterator >::pointer pointer;
 	 
-	reverse_iterator( void );
+	reverse_iterator( void ) : current(0) {}
 
 	explicit reverse_iterator( Iterator x ) : current(x) {}
 
-	template< class U > reverse_iterator( const reverse_iterator< U > &u );
-	
-	Iterator			base( void ) const; // explicit
+	template< class U > reverse_iterator( const reverse_iterator< U > &u ); // Effects: Initializes current with u.current.
+	Iterator			base( void ) const {
+		return this->current;
+	}
+	// { current(u.curent) } // explicit
 
 	reference			operator*( void ) const {
 		return *current;

@@ -5,7 +5,7 @@
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[31m42 [0m[31m123 [0m[31m-99 [0m[31m1007 [0m
+[31m42 [0m[31m123 [0m[31m-99 [0m[31m1007 [0m[31m11111 [0m
 operator first == first -> 1
 operator first != first -> 0
 operator *first -> 42
@@ -36,10 +36,9 @@ operator first >= second -> 0
  [0m
 ~~~~~ BEGIN & END ~~~~~
 begin -> Salut, 
-end -> 
+end -> std::string !
 
-~~~~~ UTILS ~~~~~
-size -> 5
-size_max -> 288230376151711743
-capacity -> 8
+rbegin -> std::string !
+
+
 

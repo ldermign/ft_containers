@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/13 14:18:28 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:07:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,19 @@ public:
 		
 	// }
 
-	vector( const self &x ) {
-		// : _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {
-		(void)x;
+	vector( const self &x ) : _alloc(x._alloc) {
+		size_t    i = 0;
+		// this->_allocator = x.get_allocator();
+		this->_ptrVector = this->_alloc.allocate(x.capacity());
+		while (i < x._size)
+		{
+			this->_alloc.construct(&(this->_ptrVector[i]), x._ptrVector[i]);
+			i++;
+		}
+		this->_size = x.size();
+		this->_capacity = x.capacity();
 	}
-	
+
 	~vector( void ) {
 		
 		// detruire avec deallocate ? destroy ?
@@ -108,37 +116,35 @@ public:
 // iterators:
 
 	iterator begin( void ) {
-		// iterator test(_ptrVector);
-		// return test;
-		return iterator(_ptrVector);
+		return iterator(&this->_ptrVector[0]);
 	}
-	
-	const_iterator cbegin( void ) const {
-		return const_iterator(_ptrVector);
-	}
-	
+
 	iterator end( void ) {
-		return iterator(&_ptrVector[_size]);
+		return iterator(&this->_ptrVector[this->_size]);
+	}
+
+	const_iterator cbegin( void ) const {
+		return const_iterator(&this->_ptrVector[0]);
 	}
 
 	const_iterator cend( void ) const {
-		return const_iterator(&_ptrVector[_size]);
+		return const_iterator(&this->_ptrVector[this->_size]);
 	}
 
 	reverse_iterator rbegin( void ) {
-		return reverse_iterator(&_ptrVector[_size]);
+		return reverse_iterator(this->end());
 	}
 	
-	const_reverse_iterator crbegin( void ) const {
-		return const_reverse_iterator(&_ptrVector[_size]);
+	reverse_iterator rend( void ) {
+		return reverse_iterator(this->begin());
 	}
 
-	reverse_iterator rend( void ) {
-		return reverse_iterator(_ptrVector);
+	const_reverse_iterator crbegin( void ) const {
+		return const_reverse_iterator(this->cend());
 	}
 
 	const_reverse_iterator crend( void ) const {
-		return const_reverse_iterator(_ptrVector);
+		return const_reverse_iterator(this->cbegin());
 	}
 	
 	size_t size( void ) const {
@@ -173,25 +179,29 @@ public:
 	void reserve( size_t new_cap ) {
 		
 		if (new_cap > this->max_size()) {
-			p1 "new_cap SUP max_size()" p2
+			// p1 "new_cap SUP max_size()" p2
+			// throw std::length_error(); -> DOIT THROW ERROR
 			return ;
 		}
-			// throw std::length_error(); -> DOIT THROW ERROR
-		else if (new_cap < this->capacity()) {
-			p1 "new_cap INF capacity" p2
+		else if (new_cap <= this->capacity()) {
+			// p1 "new_cap INF capacity" p2
 			return ;
+		}
+		else if (new_cap == 1 && this->capacity() <= this->size()) {
+			this->_ptrVector = this->_alloc.allocate(1);
+			this->_capacity = 1;
 		}
 		else {
 			// p1 BLUE "passe" RESET p2
 			T	*new_vector;
-			new_vector = _alloc.allocate(new_cap);
+			new_vector = this->_alloc.allocate(new_cap);
 			for (size_t i = 0 ; i < this->size() ; i++) {
-				this->_alloc.construct(&new_vector[i], _ptrVector[i]);
+				this->_alloc.construct(&new_vector[i], this->_ptrVector[i]);
 				this->_alloc.destroy(&this->_ptrVector[i]);
 			}
 			this->_alloc.deallocate(this->_ptrVector, this->capacity());
 			this->_capacity = new_cap;
-			this->_ptrVector = new_vector;			
+			this->_ptrVector = new_vector;
 		}
 	}
 	
@@ -218,19 +228,19 @@ public:
 	}
 	
 	reference front( void ) {
-		return _ptrVector;
+		return this->_ptrVector[0];
 	}
 	
 	const_reference front( void ) const {
-		return _ptrVector;	
+		return this->_ptrVector[0];	
 	}
 	
 	reference back( void ) {
-		return &_ptrVector[this->size()];
+		return this->_ptrVector[this->size() - 1];
 	}
 	
 	const_reference back( void ) const {
-		return &_ptrVector[this->size()];
+		return this->_ptrVector[this->size() - 1];
 	}
 	
 // operations
@@ -240,15 +250,17 @@ public:
 		// std::cout << "i = " << this->size() << " x = " << x << std::endl;
 
 		if (this->capacity() == 0) {
-			
+			// p1 "first time : this->size() + 1 = " << this->size() << " et this->capacity() = " << this->capacity() p2
 			this->reserve(1);
 		}
 		else if (this->size() + 1 > this->capacity() * 2) {
 			// p1 "normalement ok" p2
+			// p1 "dernier cas ?" p2
 			this->reserve(this->size() + 1);
 		}
 		else if (this->size() + 1 > this->capacity()) {
 			// p1 "normalement ok" p2
+			// p1 "this->size() + 1 = " << this->size() << " et this->capacity() = " << this->capacity() p2
 			this->reserve(this->capacity() * 2);
 		}
 		// p1 "next for i = " << size() p2
