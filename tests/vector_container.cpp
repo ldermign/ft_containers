@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/14 15:07:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:07:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	vector_container( void ) {
 		test.push_back("rempli de "); // this->size() + 1 = 4 et this->capacity() = 4
 		test.push_back("std::string !\n");
 		LIBRARY::vector< std::string >::iterator		it = test.begin();
+		// LIBRARY::vector< std::string >::const_iterator	itcbegin = test.cbegin();
 
 		for (size_t i = 0 ; i < test.size() ; i++)
 			p1 RED << it[i] << " " << RESET;
@@ -36,12 +37,8 @@ void	vector_container( void ) {
 		p1 "~~~~~ BEGIN & END ~~~~~" p2
 		p1 "begin -> " << *(test.begin()) p2
 		p1 "end -> " << *(test.end() - 1) p2
-		p1 "cbegin -> " << *(test.cbegin()) p2
-		p1 "cend -> " << *(test.cend()) p2 // checker comment tester const
-		p1 "rbegin -> " << *(test.rbegin()) p2 // checker comment tester const
-		p1 "rend -> " << *(test.rend()) p2
-		p1 "crbegin -> " << *(test.crbegin()) p2 // checker comment tester const
-		p1 "crend -> " << *(test.crend()) p2 // checker comment tester const
+		// p1 "rbegin -> " << *(test.rbegin()) p2 // checker comment tester const
+		// p1 "rend -> " << *(test.rend()) p2
 
 		p3
 		// p1 "~~~~~ UTILS ~~~~~" p2

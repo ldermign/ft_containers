@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/13 13:56:25 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:05:08 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,17 @@ private:
 
 public:
 
-	typedef		std::ptrdiff_t difference_type;
-	typedef		T value_type;
-	typedef		T reference; // ft::iterator::Reference
-	typedef		T* pointer;
-	typedef		random_access_iterator_tag iterator_category;
+	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::value_type        value_type;
+	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::iterator_category    iterator_type;
+	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::difference_type    difference_type;
+	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::reference            reference;
+	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::pointer pointer;
+
+	// typedef		std::ptrdiff_t difference_type;
+	// typedef		T value_type;
+	// typedef		T reference; // ft::iterator::Reference
+	// typedef		T* pointer;
+	// typedef		random_access_iterator_tag iterator_category;
 
 	random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
 

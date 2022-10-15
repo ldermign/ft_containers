@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/14 15:07:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:08:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ public:
 	// typedef size_t size_type; // -> juste pour dire que size_t correspond a size_type
 	// du code en plus pour rien ?
 	// typedef implementation defined difference_type;
+
+	// typedef typename	ft::random_iterator< const T >::const_iterator const_iterator;
 
 	typedef Allocator allocator_type;
 	typedef typename Allocator::pointer pointer;
@@ -123,11 +125,11 @@ public:
 		return iterator(&this->_ptrVector[this->_size]);
 	}
 
-	const_iterator cbegin( void ) const {
+	const_iterator begin( void ) const {
 		return const_iterator(&this->_ptrVector[0]);
 	}
 
-	const_iterator cend( void ) const {
+	const_iterator end( void ) const {
 		return const_iterator(&this->_ptrVector[this->_size]);
 	}
 
@@ -137,14 +139,6 @@ public:
 	
 	reverse_iterator rend( void ) {
 		return reverse_iterator(this->begin());
-	}
-
-	const_reverse_iterator crbegin( void ) const {
-		return const_reverse_iterator(this->cend());
-	}
-
-	const_reverse_iterator crend( void ) const {
-		return const_reverse_iterator(this->cbegin());
 	}
 	
 	size_t size( void ) const {
