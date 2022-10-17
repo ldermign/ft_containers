@@ -13,8 +13,9 @@ OBJSDIR		= objs/
 FTSRCS		= ${FTDIR}main.cpp \
 
 # tests
-FTSRCS		+=	${TESTDIR}vector_container.cpp \
-				${TESTDIR}vector_iterator.cpp 
+FTSRCS		+=	${TESTDIR}test_vector_iterator.cpp \
+				${TESTDIR}test_vector_container.cpp \
+				${TESTDIR}test_vector_reverse_iterator.cpp
 
 # stack
 # SRCS		+= ${STACKDIR}stack.cpp

@@ -16,7 +16,7 @@ post decrementation second -> before [123] - during [123] - after [42]
 operator second += 2 -> 1007
 operator last -= 2 -> 123
 operator first + 1 -> 42 - 123
-operator last - 1 -> 123 - -99
+operator last - 1 -> 123 - 42
 operator first + last -> 165
 operator first - last -> -81
 operator first[0] - first[3] -> 42 - 1007
@@ -24,6 +24,33 @@ operator first < second -> 1
 operator first > second -> 0
 operator first <= second -> 1
 operator first >= second -> 0
+
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	~~~~~~~~~~ VECTOR REVERSE ITERATOR ~~~~~~~~~~
+
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[31mdesordre. [0m[31men  [0m[31mC'est  [0m
+operator *first - *second - *last -> desordre. - en  - 
+operator first[0] - first[2] -> desordre. - C'est 
+pre incrementation -> before [desordre.] - during [en ] - after [en ]
+post incrementation -> before [desordre.] - during [desordre.] - after [en ]
+pre decrementation second -> before [en ] - during [desordre.] - after [desordre.]
+post decrementation second -> before [en ] - during [en ] - after [desordre.]
+operator first += 2 -> C'est 
+operator last -= 2 -> en 
+operator last + 1 -> en  - C'est 
+operator first - 1 -> C'est  - en 
+operator first == second -> 0
+operator first != second -> 1
+operator first + second -> C'est en 
+operator first - second -> 1
+operator first < second -> 0
+operator first > second -> 1
+operator first <= second -> 0
+operator first >= second -> 1
 
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,6 +65,5 @@ operator first >= second -> 0
 begin -> Salut, 
 end -> std::string !
 
-rbegin -> 
 
 

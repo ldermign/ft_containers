@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:31:42 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/13 11:02:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:51:14 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-void	vector_iterator( void );
-void	vector_container( void );
+void	test_vector_iterator( void );
+void	test_vector_reverse_iterator( void );
+void	test_vector_container( void );

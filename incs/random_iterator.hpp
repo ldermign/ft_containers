@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/15 17:05:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:18:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ private:
 
 public:
 
-	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::value_type        value_type;
-	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::iterator_category    iterator_type;
-	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::difference_type    difference_type;
-	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::reference            reference;
-	typedef typename ft::iterator<ft::random_access_iterator_tag, T >::pointer pointer;
+	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::value_type        value_type;
+	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::iterator_category    iterator_type;
+	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::difference_type    difference_type;
+	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::reference            reference;
+	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::pointer pointer;
 
-	// typedef		std::ptrdiff_t difference_type;
-	// typedef		T value_type;
-	// typedef		T reference; // ft::iterator::Reference
-	// typedef		T* pointer;
-	// typedef		random_access_iterator_tag iterator_category;
+	typedef		std::ptrdiff_t difference_type;
+	typedef		T value_type;
+	typedef		T reference; // ft::iterator::Reference
+	typedef		T* pointer;
+	typedef		random_access_iterator_tag iterator_category;
 
 	random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
 
@@ -105,8 +105,6 @@ public:
 		return std::distance(other.m_iterator, m_iterator);
 	}
 
-		//tests
-
 	reference		operator[]( std::size_t index ) const {
 		return this->m_iterator[index];
 	}
@@ -126,7 +124,6 @@ public:
 	bool			operator>=( const random_iterator &other ) const {
 		return m_iterator >= other.m_iterator;
 	}
-
 
 };
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/15 17:08:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:58:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define VECTOR_HPP
 
 #include <iostream>
-// #include <new>
 #include "iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "ft_containers.hpp"
@@ -108,10 +107,23 @@ public:
 		this->_alloc.deallocate(this->_ptrVector, this->_capacity);
 	}
 
-	self &operator=( const self &x );
+	self &operator=( const self &x ) {
+		
+	}
+	
 	template < class InputIterator >
-	void assign( InputIterator first, InputIterator last );
-	void assign( size_t n, const T &u );
+	void assign( InputIterator first, InputIterator last ) {
+		// Replaces the contents with copies of those in the range [first, last). The behavior is undefined if either argument is an iterator into *this.
+		// This overload has the same effect as overload (1) if InputIt is an integral type.
+		(void)firstl;(void)last;
+
+	}
+
+	void assign( size_t n, const T &u ) {
+		// Replaces the contents with count copies of value value
+		(void)u;(void)n;
+		
+	}
 	
 	allocator_type get_allocator() const;
 
@@ -141,6 +153,14 @@ public:
 		return reverse_iterator(this->begin());
 	}
 	
+	const_reverse_iterator rbegin( void ) const {
+		return reverse_iterator(this->end());
+	}
+	
+	const_reverse_iterator rend( void ) const {
+		return reverse_iterator(this->begin());
+	}
+
 	size_t size( void ) const {
 		return this->_size;
 	}
@@ -174,7 +194,7 @@ public:
 		
 		if (new_cap > this->max_size()) {
 			// p1 "new_cap SUP max_size()" p2
-			// throw std::length_error(); -> DOIT THROW ERROR
+			// throw std::length_error(); // -> DOIT THROW ERROR
 			return ;
 		}
 		else if (new_cap <= this->capacity()) {
@@ -277,11 +297,11 @@ public:
 // insere l'element a la position precisee
 	iterator insert( iterator position, const T &x ) {
 	// (void)x;(void)position;
-		if (this->capacity() == 0) {
-			this->reserve(1);
-			// this->_size++;
-		}
-		this->insert(position, x);
+		// if (this->capacity() == 0) {
+		// 	this->reserve(1);
+		// 	// this->_size++;
+		// }
+		this->insert(position, 1, x);
 	}
 
 // insere n element avant position 

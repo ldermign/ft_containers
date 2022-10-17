@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_container.cpp                               :+:      :+:    :+:   */
+/*   test_vector_container.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/15 17:07:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:36:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
 #include "vector.hpp"
-// #include "reverse_iterator.hpp"
 #include <iostream>
 
-void	vector_container( void ) {
+void	test_vector_container( void ) {
 
-	std::cout << std::endl;
+	p3
+		
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~ VECTOR CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/12 09:59:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:20:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 
 int	main( void ) {
 
-	vector_iterator();
-	vector_container();
+	test_vector_iterator();
+	test_vector_reverse_iterator();
+	test_vector_container();
 	
 	return 0;
 }
