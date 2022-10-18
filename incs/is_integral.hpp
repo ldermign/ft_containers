@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   is_integral.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/18 14:00:55 by ldermign         ###   ########.fr       */
+/*   Created: 2022/10/18 15:40:01 by ldermign          #+#    #+#             */
+/*   Updated: 2022/10/18 15:48:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
-#include "vector.hpp"
+#ifndef IS_INTEGRAL_HPP
+# define IS_INTEGRAL_HPP
+
 #include "ft_containers.hpp"
-#include <iostream>
 
-int	main( void ) {
+START
 
-	// test_vector_iterator();
-	// test_vector_reverse_iterator();
-	test_vector_container();
-	
-	return 0;
-}
+template<class T, T v >
+struct integral_constant {
+	static constexpr T value = v;
+	using value_type = T;
+	using type = integral_constant; // using injected-class-name
+	constexpr operator value_type() const noexcept { return value; }
+};
+
+STOP
+
+#endif

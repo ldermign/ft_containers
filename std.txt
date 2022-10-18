@@ -1,69 +1,18 @@
 
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-	~~~~~~~~~~ VECTOR ITERATOR ~~~~~~~~~~
-
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[31m42 [0m[31m123 [0m[31m-99 [0m[31m1007 [0m[31m11111 [0m
-operator first == first -> 1
-operator first != first -> 0
-operator *first -> 42
-pre incrementation -> before [42] - during [123] - after [123]
-post incrementation -> before [42] - during [42] - after [123]
-pre decrementation second -> before [123] - during [42] - after [42]
-post decrementation second -> before [123] - during [123] - after [42]
-operator second += 2 -> 1007
-operator last -= 2 -> 123
-operator first + 1 -> 42 - 123
-operator last - 1 -> 123 - 42
-operator first + last -> 165
-operator first - last -> -81
-operator first[0] - first[3] -> 42 - 1007
-operator first < second -> 1
-operator first > second -> 0
-operator first <= second -> 1
-operator first >= second -> 0
-
-
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-	~~~~~~~~~~ VECTOR REVERSE ITERATOR ~~~~~~~~~~
-
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[31mdesordre. [0m[31men  [0m[31mC'est  [0m
-operator *first - *second - *last -> desordre. - en  - 
-operator first[0] - first[2] -> desordre. - C'est 
-pre incrementation -> before [desordre.] - during [en ] - after [en ]
-post incrementation -> before [desordre.] - during [desordre.] - after [en ]
-pre decrementation second -> before [en ] - during [desordre.] - after [desordre.]
-post decrementation second -> before [en ] - during [en ] - after [desordre.]
-operator first += 2 -> C'est 
-operator last -= 2 -> en 
-operator last + 1 -> en  - C'est 
-operator first - 1 -> C'est  - en 
-operator first == second -> 0
-operator first != second -> 1
-operator first + second -> C'est en 
-operator first - second -> 1
-operator first < second -> 0
-operator first > second -> 1
-operator first <= second -> 0
-operator first >= second -> 1
-
-
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	~~~~~~~~~~ VECTOR CONTAINER ~~~~~~~~~~
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[31mSalut,  [0m[31mc'est  [0m[31mun container [0m[31mrempli de  [0m[31mstd::string !
- [0m
-~~~~~ BEGIN & END ~~~~~
-begin -> Salut, 
-end -> std::string !
+[34m[21][0m[34m[18][0m[34m[15][0m[34m[12][0m[34m[9][0m[34m[6][0m[34m[3][0m
+[34m[20][0m[34m[15][0m[34m[10][0m[34m[5][0m
 
+7 - 
+4
+after assign = 
+[34m[20][0m[34m[15][0m[34m[10][0m[34m[5][0m
+	### After assign(): ###
+4 - 
 
 
