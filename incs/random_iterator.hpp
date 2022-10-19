@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/17 09:18:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:06:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,28 @@ public:
 	typedef		T* pointer;
 	typedef		random_access_iterator_tag iterator_category;
 
-	random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
+	// random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
+
+	random_iterator( void ) : m_iterator(NULL) {}
+
+	//explicit random_iterator( pointer it ) : m_iterator(it) {}
+
+	 random_iterator( const pointer& it ) : m_iterator(it) {}
+
+	// random_iterator	&operator=( ) {
+		
+	// }
+	
+	// random_iterator( T *rhs ) : m_iterator(rhs) {}
+	
+	// random_iterator( const random_iterator &rhs ) : m_iterator(rhs.m_iterator) {}
+
+	// template< class U > random_iterator( const random_iterator< U > &u ); // Effects: Initializes _current with u._current.
+	// Iterator			base( void ) const {
+	// 	return this->_current;
+	// }
+
+	virtual ~random_iterator( void ) {}
 
 	bool			operator==( const random_iterator &other ) const {
 		return m_iterator == other.m_iterator;

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/18 15:49:31 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:00:24 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define VECTOR_HPP
 
 #include <iostream>
+#include <stdexcept>
+#include <sstream>
 #include "iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "ft_containers.hpp"
@@ -112,7 +114,8 @@ public:
 		if (rhs._size == 0) {
 			this->_size = 0;
 			this->_capacity = 0;
-			this->_alloc = NULL;
+			// this->_alloc = NULL;
+			// error de compilation pour swap
 			this->_ptrVector = NULL;
 			return *this;
 		}
@@ -129,9 +132,13 @@ public:
 		// Replaces the contents with count copies of valeur value
 		// count 	- 	the new size of the container
 		// value 	- 	the value to initialize elements of the container with
+
+
+		// p1 "ca passe ici ?" p2
 		
 		this->clear();
-		if (count < this->capacity())
+		// p1 RED << count << RESET p2
+		if (count > this->size())
 			this->reserve(count);
 		for (size_t i = 0 ; i < count ; i++)
 			this->_alloc.construct(&(this->_ptrVector[i]), value);
@@ -145,15 +152,23 @@ public:
 		// Replaces the contents with copies of those in the range [first, last).
 		// The behavior is undefined if either argument is an iterator into *this.
 		// This overload has the same effect as overload (1) if InputIt is an int type.
-		(void)first;(void)last;
 
-		size_t	length = first - last;
+		// p1 "normalement non... " << "first = " << *first << " - last - 1 = " << *(last - 1) p2
+
+		size_t	length = last - first;
 		this->clear();
-		if (length < this->size())
+		
+		// p1 RED << "length = " << length << " with size = " << this->size() << RESET p2
+		if (length > this->size()) {
+			// p1 "\t\treserve ?" p2
 			this->reserve(length);
-		p1 "test" p2
-		for (size_t i = 0 ; i < length ; i++) {
-			this->_alloc.construct(&(this->_ptrVector[i]), type);
+		}
+		// p1 RED << "apres reserve" << RESET p2
+		for (size_t i = 0 ; i < length && *first != *last; i++) {
+			// p1 "avant" p2
+			
+			this->_alloc.construct(&(this->_ptrVector[i]), *first);
+			// p1 "test" p2
 			first++;
 		}
 		this->_size = length;
@@ -172,6 +187,7 @@ public:
 	}
 
 	const_iterator begin( void ) const {
+		// p1 "test" p2
 		return const_iterator(&this->_ptrVector[0]);
 	}
 
@@ -265,14 +281,26 @@ public:
 	}
 
 	reference at( size_t index ) {
-		// if (index < 0 || index > this->size())
-		// 	throw std::out_of_range();
+		// pour la phrase de out_of_range
+		// https://en.cppreference.com/w/cpp/container/vector/at
+		// vector::_M_range_check: __n (which is 6) >= this->size() (which is 6)
+		std::stringstream tmp;
+		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
+		
+		std::string string = tmp.str();
+		if (index >= this->size())
+			throw std::out_of_range(string);
 		return this->_ptrVector[index];
 	}
 
 	const_reference at( size_t index ) const {
-		// if (index < 0 || index > this->size())
-		// 	throw std::out_of_range();
+
+		std::stringstream tmp;
+		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
+
+		std::string string = tmp.str();
+		if (index >= this->size())
+			throw std::out_of_range(string);
 		return this->_ptrVector[index];
 	}
 	
@@ -395,8 +423,8 @@ public:
 		
 		self	tmp;
 		tmp = x;
-		x = this;
-		this = tmp;
+		x = *this;
+		*this = tmp;
 		
 	}
 

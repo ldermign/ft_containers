@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/18 15:01:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:51:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,75 +34,38 @@ void	test_vector_container( void ) {
 		// for (size_t i = 0 ; i < test.size() ; i++)
 		// 	p1 BLUE << "[" << it[i] << "]" << RESET;
 		// p3 p3
+			
+		LIBRARY::vector< int > foo(3, 15);
+		LIBRARY::vector< int > bar(5, 42);
 		
-		// p1 "~~~~~ BEGIN & END ~~~~~" p2
-		// p1 "begin -> " << *(test.begin()) p2
-		// p1 "end -> " << *(test.end() - 1) p2
-		// p1 "rbegin -> " << *(test.rbegin()) p2 // checker comment tester const
-		// p1 "rend -> " << *(test.rend()) p2
+		LIBRARY::vector< int >::const_iterator it_foo = foo.begin();
+		// on creer un const_iterator de vector appelle it_foo
+		// LIBRARY::vector< int >::const_iterator it_bar = bar.begin();
 
-		LIBRARY::vector< int > vct(7);
-		LIBRARY::vector< int > vct_two(4);
-		LIBRARY::vector< int > vct_three;
-		LIBRARY::vector< int > vct_four;
+		// std::cout << "BEFORE SWAP" << std::endl;
 
-		for (unsigned long int i = 0; i < vct.size(); ++i)
-			vct[i] = (vct.size() - i) * 3;
-		for (size_t i = 0 ; i < vct.size() ; i++)
-			p1 BLUE << "[" << vct[i] << "]" << RESET;
-		p3
-		for (unsigned long int i = 0; i < vct_two.size(); ++i)
-			vct_two[i] = (vct_two.size() - i) * 5;
-		for (size_t i = 0 ; i < vct_two.size() ; i++)
-			p1 BLUE << "[" << vct_two[i] << "]" << RESET;
-		p3 p3
+		// std::cout << "foo contains:" << std::endl;
+		// p1 "foo size = " << foo.size() p2
+		// std::cout << "bar contains:" << std::endl;
+		// p1 "bar size = " << bar.size() p2
 
-		p1 vct.size() << " - " p2 // ok
-		p1 vct_two.size() p2 // ok
+		// foo.swap(bar);
 
-		// vct_three.assign(vct.begin(), vct.end());
-		vct.assign(vct_two.begin(), vct_two.end());
-		// vct_two.assign(2, 42);
-		// vct_four.assign(4, 21);
+		// std::cout << "AFTER SWAP" << std::endl;
 
-		p1 "after assign = " p2
-		for (size_t i = 0 ; i < vct.size() ; i++)
-			p1 BLUE << "[" << vct[i] << "]" << RESET;
-		p3
+		// std::cout << "foo contains:" << std::endl;
+		// p1 "foo size = " << foo.size() p2
+		// std::cout << "bar contains:" << std::endl;
+		// p1 "bar size = " << bar.size() p2
 
-		std::cout << "\t### After assign(): ###" << std::endl;
-
-		p1 vct.size() << " - " p2
-		// p1 vct_two.size() << " - " p2
-		// p1 vct_three.size() << " - " p2
-		// p1 vct_four.size() p2
-
-
-		// vct_four.assign(6, 84);
-		// p1 vct_four.size() p2
-		
-		// std::cout << "\t### assign() on enough capacity and low size: ###" << std::endl;
-
-		// vct.assign(5, 53);
-		// vct_two.assign(vct_three.begin(), vct_three.begin() + 3);
-
-		// p1 vct.size() << " - " p2
-		// p1 vct_two.size() p2
-
-
-		p3
-		// p1 "~~~~~ UTILS ~~~~~" p2
-		// p1 "size -> " << test.size() p2
-		// p1 "size_max -> " << test.max_size() p2
-		// p1 "capacity -> " << test.capacity() p2
-		
-		// p1 "empty -> " << test.empty() p2 // not working
-		// tests resize
-		// test reserve
+		// std::cout << "Iterator validity:" << std::endl;
+		// std::cout << (it_foo == bar.begin()) << std::endl;
+		// std::cout << (it_bar == foo.begin()) << std::endl;
 
 
 
-		p3
+
+	p3
 
 	}
 }
