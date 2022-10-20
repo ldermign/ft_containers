@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/19 16:06:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:05:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,28 @@ private:
 
 public:
 
-	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::value_type        value_type;
-	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::iterator_category    iterator_type;
-	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::difference_type    difference_type;
-	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::reference            reference;
-	// typedef typename ft::iterator<ft::random_access_iterator_tag, T >::pointer pointer;
+	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::value_type			value_type;
+	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::iterator_category	iterator_type;
+	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::difference_type		difference_type;
+	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::reference			reference;
+	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::pointer				pointer;
 
-	typedef		std::ptrdiff_t difference_type;
-	typedef		T value_type;
-	typedef		T reference; // ft::iterator::Reference
-	typedef		T* pointer;
-	typedef		random_access_iterator_tag iterator_category;
-
-	// random_iterator( T *iter = NULL ) : m_iterator(iter) {} // {};
-
-	random_iterator( void ) : m_iterator(NULL) {}
-
-	//explicit random_iterator( pointer it ) : m_iterator(it) {}
-
-	 random_iterator( const pointer& it ) : m_iterator(it) {}
-
-	// random_iterator	&operator=( ) {
-		
-	// }
+	// typedef		std::ptrdiff_t difference_type;
+	// typedef		T value_type;
+	// typedef		T reference; // ft::iterator::Reference
+	// typedef		T* pointer;
+	// typedef		random_access_iterator_tag iterator_category;
 	
-	// random_iterator( T *rhs ) : m_iterator(rhs) {}
-	
-	// random_iterator( const random_iterator &rhs ) : m_iterator(rhs.m_iterator) {}
+	random_iterator( void ) : m_iterator(0) {}
 
-	// template< class U > random_iterator( const random_iterator< U > &u ); // Effects: Initializes _current with u._current.
-	// Iterator			base( void ) const {
-	// 	return this->_current;
-	// }
+	explicit random_iterator( pointer x ) : m_iterator(x) {}
+
+	template< class U > random_iterator( const random_iterator< U > &u ); // Effects: Initializes m_iterator with u.m_iterator.
+	pointer			base( void ) const {
+		return this->m_iterator;
+	}
+
+	random_iterator( const random_iterator &x ) : m_iterator(x.base()) {}
 
 	virtual ~random_iterator( void ) {}
 
