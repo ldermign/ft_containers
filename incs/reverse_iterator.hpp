@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/20 15:11:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/24 09:05:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ START
 template< class Iterator >
 class reverse_iterator :
 	public ft::iterator<
+	typename ft::iterator_traits< Iterator >::iterator_category,
 	typename ft::iterator_traits< Iterator >::value_type,
 	typename ft::iterator_traits< Iterator >::difference_type,
 	typename ft::iterator_traits< Iterator >::pointer,
-	typename ft::iterator_traits< Iterator >::reference,
-	typename ft::iterator_traits< Iterator >::iterator_category > {
+	typename ft::iterator_traits< Iterator >::reference > {
 		
 protected:
 
