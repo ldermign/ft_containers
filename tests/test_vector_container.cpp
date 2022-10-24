@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/24 09:08:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:19:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,39 @@ void	test_vector_container( void ) {
 		// for (size_t i = 0 ; i < test.size() ; i++)
 		// 	p1 BLUE << "[" << it[i] << "]" << RESET;
 		// p3 p3
-			
-		LIBRARY::vector< int > foo(3, 15);
-		LIBRARY::vector< int > bar(5, 42);
 		
-		LIBRARY::vector< int >::const_iterator it_foo = foo.begin();
-		// on creer un const_iterator de vector appelle it_foo
-		// LIBRARY::vector< int >::const_iterator it_bar = bar.begin();
+		LIBRARY::vector< int > vct(5);
+		LIBRARY::vector< int >::iterator it = vct.begin(), ite = vct.end();
 
-		// std::cout << "BEFORE SWAP" << std::endl;
+		std::cout << "len: " << (ite - it) << std::endl;
+		for (; it != ite; ++it)
+			*it = (ite - it);
 
-		// std::cout << "foo contains:" << std::endl;
-		// p1 "foo size = " << foo.size() p2
-		// std::cout << "bar contains:" << std::endl;
-		// p1 "bar size = " << bar.size() p2
+		it = vct.begin();
+		LIBRARY::vector< int > vct_range(it, --(--ite));
+		for (int i = 0; it != ite; ++it)
+			*it = ++i * 5;
 
-		// foo.swap(bar);
+		it = vct.begin();
+		LIBRARY::vector< int > vct_copy(vct);
+		for (int i = 0; it != ite; ++it)
+			*it = ++i * 7;
+		vct_copy.push_back(42);
+		vct_copy.push_back(21);
 
-		// std::cout << "AFTER SWAP" << std::endl;
+		std::cout << "\t-- PART ONE --" << std::endl;
+		p1 "vct = " << vct.size() p2
+		p1 "vct_range = " << vct_range.size() p2
+		p1 "vct_copy = " << vct_copy.size() p2
 
-		// std::cout << "foo contains:" << std::endl;
-		// p1 "foo size = " << foo.size() p2
-		// std::cout << "bar contains:" << std::endl;
-		// p1 "bar size = " << bar.size() p2
+		vct = vct_copy;
+		vct_copy = vct_range;
+		vct_range.clear();
 
-		// std::cout << "Iterator validity:" << std::endl;
-		// std::cout << (it_foo == bar.begin()) << std::endl;
-		// std::cout << (it_bar == foo.begin()) << std::endl;
-
-
+		std::cout << "\t-- PART TWO --" << std::endl;
+		p1 "vct = " << vct.size() p2
+		p1 "vct_range = " << vct_range.size() p2
+		p1 "vct_copy = " << vct_copy.size() p2
 
 
 	p3

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/20 15:05:57 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/24 11:01:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ private:
 public:
 
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::value_type			value_type;
-	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::iterator_category	iterator_type;
+	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::iterator_category	iterator_category;
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::difference_type		difference_type;
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::reference			reference;
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::pointer				pointer;
@@ -47,6 +47,11 @@ public:
 	pointer			base( void ) const {
 		return this->m_iterator;
 	}
+	
+	operator	random_iterator< const value_type >() const {
+		return (random_iterator< const value_type >(this->m_iterator));
+	};
+	// erreur de cast entre iterator et const_iterator
 
 	random_iterator( const random_iterator &x ) : m_iterator(x.base()) {}
 

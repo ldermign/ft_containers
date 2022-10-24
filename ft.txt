@@ -5,15 +5,13 @@
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-vct.at(): 21 | vct[]: 21
-vct.at(): 18 | vct[]: 18
-vct.at(): 15 | vct[]: 15
-vct.at(): 12 | vct[]: 12
-vct.at(): 9 | vct[]: 9
-vct.at(): 6 | vct[]: 6
-vct.at(): 3 | vct[]: 3
-vct = 7
-front(): 21 21
-back(): 3 3
-Catch out_of_range exception!
+len: 5
+	-- PART ONE --
+vct = 5
+vct_range = 0
+vct_copy = 7
+	-- PART TWO --
+vct = 5
+vct_range = 0
+vct_copy = 7
 

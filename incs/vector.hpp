@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/19 16:00:24 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:36:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ public:
 	typedef ft::reverse_iterator< iterator > reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator > const_reverse_iterator;
 
+	// vector( void ) : _ptrVector(NULL), _alloc(NULL), _size(0), _capacity(0) {}
+
 	explicit vector( const Allocator &x = Allocator() )
 		: _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {}
 	
@@ -82,10 +84,19 @@ public:
 		}
 
 // ne pas utiliser jusqu'a enable_if
-	// template < class InputIterator >
-	// vector( InputIterator first, InputIterator last, const Allocator & = Allocator() ) {
+	template < class InputIterator >
+	vector( InputIterator first, InputIterator last, const Allocator &x = Allocator(),
+		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL )
+		: _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {
+
+		size_t	new_size = last - first;
+		reserve(new_size);
+		for (size_t i = 0 ; i < new_size ; i++) {
+			this->_alloc.construct(&this->_ptrVector[i], *first);
+			first++;
+		}
 		
-	// }
+	}
 
 	vector( const self &x ) : _alloc(x._alloc) {
 		size_t    i = 0;
@@ -179,7 +190,7 @@ public:
 // iterators:
 
 	iterator begin( void ) {
-		return iterator(&this->_ptrVector[0]);
+		return iterator(this->_ptrVector);
 	}
 
 	iterator end( void ) {
@@ -188,7 +199,7 @@ public:
 
 	const_iterator begin( void ) const {
 		// p1 "test" p2
-		return const_iterator(&this->_ptrVector[0]);
+		return const_iterator(this->_ptrVector);
 	}
 
 	const_iterator end( void ) const {
@@ -216,7 +227,7 @@ public:
 	}
 	
 	size_t max_size( void ) const {
-		return _alloc.max_size();
+		return this->_alloc.max_size();
 // retourne le nombre d'element maximum que le container peut contenir
 // avec les limitations du system / de la lib
 	}
@@ -421,11 +432,25 @@ public:
 
 	void swap( self &x ) {
 		
-		self	tmp;
-		tmp = x;
-		x = *this;
-		*this = tmp;
+		// self	tmp;
+		// tmp = x;
+		// x = *this;
+		// *this = tmp;
 		
+		T				*type_tmp = x._ptrVector;
+		Allocator		alloc_tmp = x._alloc;
+		unsigned int	size_tmp = x._size;
+		unsigned int	capacity_tmp = x._capacity;
+
+		x._ptrVector = this->_ptrVector;
+		x._alloc = this->_alloc;
+		x._size = this->_size;
+		x._capacity = this->_capacity;
+
+		this->_ptrVector = type_tmp;
+		this->_alloc = alloc_tmp;
+		this->_size = size_tmp;
+		this->_capacity = capacity_tmp;
 	}
 
 	void clear( void ) {
