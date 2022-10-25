@@ -1,4 +1,16 @@
-vct_range = 		     |	vct_range = 5 4 3 
-SIZE vct_range = 0	     |	SIZE vct_range = 3
-SIZE vct = 5		     |	SIZE vct = 7
-SIZE vct_copy = 7	     |	SIZE vct_copy = 3
+deuxieme return		     |	[0] erase: 2
+[0] erase: 11		     <
+deuxieme return		     |	[1] erase: 0
+[1] erase: 10		     <
+deuxieme return		     |	[2] erase: 7
+[2] erase: 9		     <
+[3] erase: 3		     |	[3] erase: 0
+2 SIZE vct = 7		     |	2 SIZE vct = 4
+[4] erase: 8		     |	[4] erase: 1
+2 SIZE vct = 5		     |	2 SIZE vct = 2
+3 SIZE vct = 7		     |	3 SIZE vct = 4
+[5] erase: 7		     |	[5] erase: 1
+2 SIZE vct = 7		     |	2 SIZE vct = 1
+4 SIZE vct = 11		     |	4 SIZE vct = 5
+[6] erase: 11		     |	[6] erase: 0
+2 SIZE vct = 11		     |	2 SIZE vct = 0

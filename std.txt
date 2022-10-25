@@ -5,16 +5,21 @@
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-len: 5
-vct = 5 4 3 2 1 
-vct_range = 5 4 3 
-vct_copy = 5 10 15 2 1 42 21 
-	-- PART ONE --
-SIZE vct = 5
-SIZE vct_range = 3
-SIZE vct_copy = 7
-	-- PART TWO --
-SIZE vct = 7
-SIZE vct_range = 0
-SIZE vct_copy = 3
+1 SIZE vct = 10
+[0] erase: 2
+2 SIZE vct = 9
+[1] erase: 0
+2 SIZE vct = 8
+[2] erase: 7
+2 SIZE vct = 7
+[3] erase: 0
+2 SIZE vct = 4
+[4] erase: 1
+2 SIZE vct = 2
+3 SIZE vct = 4
+[5] erase: 1
+2 SIZE vct = 1
+4 SIZE vct = 5
+[6] erase: 0
+2 SIZE vct = 0
 

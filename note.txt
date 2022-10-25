@@ -1,0 +1,63 @@
+		// LIBRARY::vector< std::string >	test;
+		// test.push_back("Salut, "); // first time : this->size() + 1 = 0 et this->capacity() = 0
+		// test.push_back("c'est "); // this->size() + 1 = 1 et this->capacity() = 1
+		// test.push_back("un container "); // this->size() + 1 = 2 et this->capacity() = 2
+		// test.push_back("rempli de "); // this->size() + 1 = 4 et this->capacity() = 4
+		// test.push_back("std::string !");
+		// LIBRARY::vector< std::string >::iterator		it = test.begin();
+		// // LIBRARY::vector< std::string >::const_iterator	itcbegin = test.cbegin();
+
+		// for (size_t i = 0 ; i < test.size() ; i++)
+		// 	p1 BLUE << "[" << it[i] << "]" << RESET;
+		// p3 p3
+		
+		LIBRARY::vector< int > vct(5);
+		LIBRARY::vector< int >::iterator it = vct.begin(), ite = vct.end();
+
+		p1 "len: " << (ite - it) p2
+		for (; it != ite; ++it)
+			*it = (ite - it);
+		p1 "vct = ";
+		for (size_t i = 0 ; i < vct.size() ; i++)
+			p1 vct[i] << " ";
+		p3
+
+		it = vct.begin();
+		LIBRARY::vector< int > vct_range(it, --(--ite));
+		for (int i = 0; it != ite; ++it)
+			*it = ++i * 5;
+		p1 "vct_range = ";
+		for (size_t i = 0 ; i < vct_range.size() ; i++)
+			p1 vct_range[i] << " ";
+		p3
+
+		it = vct.begin();
+		LIBRARY::vector< int > vct_copy(vct);
+		for (int i = 0; it != ite; ++it)
+			*it = ++i * 7;
+		vct_copy.push_back(42);
+		vct_copy.push_back(21);
+		p1 "vct_copy = ";
+		for (size_t i = 0 ; i < vct_copy.size() ; i++)
+			p1 vct_copy[i] << " ";
+		p3 p3
+
+		p1 "\t-- PART ONE --" p2
+		p1 "1 SIZE vct = " << vct.size() p2
+		p1 "1 SIZE vct_range = " << vct_range.size() p2 // normalement 3 -> , ici 0
+		p1 "1 SIZE vct_copy = " << vct_copy.size() p2
+
+		// p1 "vct = vct_copy ->" p2
+		vct = vct_copy;
+		// p1 "vct_copy = vct_range ->" p2
+		vct_copy = vct_range;
+		vct_range.clear();
+
+		p3
+		p1 "\t-- PART TWO --" p2
+
+		p1 "2 SIZE vct = " << vct.size() p2 // normalement 7, ici 0
+		p1 "2 SIZE vct_range = " << vct_range.size() p2
+		p1 "2 SIZE vct_copy = " << vct_copy.size() p2 // normalement 3, ici 7
+
+///////////////////////////

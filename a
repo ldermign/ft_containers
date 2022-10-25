@@ -24,6 +24,7 @@ if [ $comp_value -eq 1 ]
 then
     printf $RED"\nSomething's wrong in tests.\n"$BLUE"\n\tFT\t\t\t\tSTD\n-----------------------------|------------------------------\n"$RESET
 	cat results.txt
+	printf "\n"
 else
-    printf $GREEN"\nNo mistake were made!\n"$RESET
+    printf $GREEN"\nNo mistake were made!\n\n"$RESET
 fi

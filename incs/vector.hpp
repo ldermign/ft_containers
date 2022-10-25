@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/24 13:36:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/25 15:18:20 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ public:
 			_alloc.construct(&_ptrVector[i], value);
 			// new(_ptrVector[i]) T(value);
 			// void construct(pointer p, const T& val)    { new(p) T(val); }
-		}
+
+	}
 
 // ne pas utiliser jusqu'a enable_if
 	template < class InputIterator >
@@ -95,14 +96,14 @@ public:
 			this->_alloc.construct(&this->_ptrVector[i], *first);
 			first++;
 		}
-		
+		this->_size = new_size;
 	}
 
 	vector( const self &x ) : _alloc(x._alloc) {
 		size_t    i = 0;
 		// this->_allocator = x.get_allocator();
 		this->_ptrVector = this->_alloc.allocate(x.capacity());
-		while (i < x._size) {
+		while (i < x.size()) {
 			this->_alloc.construct(&(this->_ptrVector[i]), x._ptrVector[i]);
 			i++;
 		}
@@ -118,8 +119,8 @@ public:
 	}
 
 	self &operator=( const self &rhs ) {
-		
-		if (this != &rhs)
+
+		if (this == &rhs)
 			return *this;
 		
 		if (rhs._size == 0) {
@@ -130,8 +131,11 @@ public:
 			this->_ptrVector = NULL;
 			return *this;
 		}
-		this->_size = rhs._size;
+		this->clear();
+		this->_size = rhs.size();
+		this->_capacity = rhs.capacity();
 		this->_ptrVector = this->_alloc.allocate(rhs.capacity());
+		// p1 "this size, capacity = " << this->size() << " " << this->capacity() << "rhs size capacity = " << rhs.size() << " " << this->capacity() p2
 		if (&rhs != this)
 			for (size_t i = 0 ; i < this->_size ; i++)
 				this->_alloc.construct(&(this->_ptrVector[i]), rhs._ptrVector[i]);
@@ -405,29 +409,81 @@ public:
 
 	iterator erase( iterator position ) {
 		
+		// p1 "ouesh" p2
+
+		// for (iterator tmp = position ; tmp != this->end() ; tmp++)
+			// p1 *tmp << " " p2
+		
 		size_t	pos = position - this->begin();
 		
+		// p1 "size = " << this->size() << " - pos = " << pos p2
+		
 		this->_alloc.destroy(&this->_ptrVector[pos]);
+
+				// p1 "0" p2
+
 		for (; pos < this->size() ; pos++) {
-			this->_alloc.construct(&this->_ptrVector[pos], this->_ptrVector[pos + 1]);
-			this->_alloc.destroy(&this->_ptrVector[pos + 1]);
+					// p1 "pos = " << pos << " and " << this->_ptrVector[pos] p2
+			if (iterator(&this->_ptrVector[pos + 1]) != this->end()) {
+				this->_alloc.construct(&this->_ptrVector[pos], this->_ptrVector[pos + 1]);
+						// p1 "pendant" p2
+				this->_alloc.destroy(&this->_ptrVector[pos + 1]);
+			}
+			else
+				this->_alloc.destroy(&this->_ptrVector[pos]);
 		}
+
+				// p1 "1" p2
+
 		this->_size -= 1;
+
+
+		// p1 "2" p2
+
+		if (iterator(&this->_ptrVector[pos]) == this->end()) {
+			p1 "premier return" p2
+			return this->end();
+		}
+
+		p1 "deuxieme return" p2
+		return iterator(&this->_ptrVector[pos + 1]);
+		// laaaaaaaaaaaaaaaaaaa
+		// quel return 
 	}
 
 	iterator erase( iterator first, iterator last ) {
 		
+		// p1 "ouesh" p2
+
+
 		size_t	pos = first - this->begin();
 		size_t	i_last = last - this->begin();
 		size_t	ret = i_last - pos;
 
+		// p1 "0" p2
+
+		if (pos == 0)
+			return last;
 		for (; pos < this->size() ; pos++) {
 			this->_alloc.destroy(&this->_ptrVector[pos]);
 			if (pos <= i_last && i_last + 1 != this->size())
 				this->_alloc.construct(&this->_ptrVector[pos], this->_ptrVector[i_last + 1]);
 		}
 
+		// p1 "1" p2
+		
+		if (last == this->end())
+			return this->end();
+
 		this->_size -= ret;
+
+		// p1 "2" p2
+
+
+		if (iterator(&this->_ptrVector[pos + 1]) == this->end())
+			return this->end();
+
+		return iterator(&this->_ptrVector[pos + 1]);
 	}
 
 	void swap( self &x ) {
