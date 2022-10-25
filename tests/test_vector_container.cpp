@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/24 13:19:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/25 08:57:38 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,19 @@ void	test_vector_container( void ) {
 		std::cout << "len: " << (ite - it) << std::endl;
 		for (; it != ite; ++it)
 			*it = (ite - it);
+		p1 "vct = ";
+		for (size_t i = 0 ; i < vct.size() ; i++)
+			p1 vct[i] << " ";
+		p3
 
 		it = vct.begin();
 		LIBRARY::vector< int > vct_range(it, --(--ite));
 		for (int i = 0; it != ite; ++it)
 			*it = ++i * 5;
+		p1 "vct_range = ";
+		for (size_t i = 0 ; i < vct_range.size() ; i++)
+			p1 vct_range[i] << " ";
+		p3
 
 		it = vct.begin();
 		LIBRARY::vector< int > vct_copy(vct);
@@ -53,20 +61,25 @@ void	test_vector_container( void ) {
 			*it = ++i * 7;
 		vct_copy.push_back(42);
 		vct_copy.push_back(21);
+		p1 "vct_copy = ";
+		for (size_t i = 0 ; i < vct_copy.size() ; i++)
+			p1 vct_copy[i] << " ";
+		p3
 
 		std::cout << "\t-- PART ONE --" << std::endl;
-		p1 "vct = " << vct.size() p2
-		p1 "vct_range = " << vct_range.size() p2
-		p1 "vct_copy = " << vct_copy.size() p2
+		p1 "SIZE vct = " << vct.size() p2
+		p1 "SIZE vct_range = " << vct_range.size() p2 // normalement 3 -> , ici 0
+		p1 "SIZE vct_copy = " << vct_copy.size() p2
 
 		vct = vct_copy;
 		vct_copy = vct_range;
 		vct_range.clear();
 
 		std::cout << "\t-- PART TWO --" << std::endl;
-		p1 "vct = " << vct.size() p2
-		p1 "vct_range = " << vct_range.size() p2
-		p1 "vct_copy = " << vct_copy.size() p2
+
+		p1 "SIZE vct = " << vct.size() p2 // normalement 7, ici 0
+		p1 "SIZE vct_range = " << vct_range.size() p2
+		p1 "SIZE vct_copy = " << vct_copy.size() p2 // normalement 3, ici 7
 
 
 	p3

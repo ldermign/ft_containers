@@ -1,0 +1,4 @@
+vct_range = 		     |	vct_range = 5 4 3 
+SIZE vct_range = 0	     |	SIZE vct_range = 3
+SIZE vct = 5		     |	SIZE vct = 7
+SIZE vct_copy = 7	     |	SIZE vct_copy = 3

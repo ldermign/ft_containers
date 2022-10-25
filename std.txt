@@ -6,12 +6,15 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 len: 5
+vct = 5 4 3 2 1 
+vct_range = 5 4 3 
+vct_copy = 5 10 15 2 1 42 21 
 	-- PART ONE --
-vct = 5
-vct_range = 3
-vct_copy = 7
+SIZE vct = 5
+SIZE vct_range = 3
+SIZE vct_copy = 7
 	-- PART TWO --
-vct = 7
-vct_range = 0
-vct_copy = 3
+SIZE vct = 7
+SIZE vct_range = 0
+SIZE vct_copy = 3
 
