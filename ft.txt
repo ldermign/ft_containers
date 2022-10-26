@@ -6,23 +6,51 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1 SIZE vct = 10
-deuxieme return
-[0] erase: 11
+[0] erase: 2
 2 SIZE vct = 9
-deuxieme return
-[1] erase: 10
-2 SIZE vct = 8
-deuxieme return
+[1] erase: 0
+2 SIZE vct = 10
 [2] erase: 9
-2 SIZE vct = 7
-[3] erase: 3
-2 SIZE vct = 7
-[4] erase: 8
-2 SIZE vct = 5
-3 SIZE vct = 7
-[5] erase: 7
-2 SIZE vct = 7
-4 SIZE vct = 11
-[6] erase: 11
+2 SIZE vct = 9
+[3] erase: 9
+2 SIZE vct = 9
+before = 
+	-> FFFFF
+	-> GGGG
+	-> HHH
+	-> II
+	-> J
+	-> Hello xaxa
+	-> II
+	-> J
+	-> Hello xaxa
+[4] erase: 9
+2 SIZE vct = 9
+3 SIZE vct = 11
+before = 
+	-> FFFFF
+	-> GGGG
+	-> HHH
+	-> II
+	-> J
+	-> Hello xaxa
+	-> Hello xaxa
+	-> J
+	-> Hello xaxa
+	-> Hello
+	-> Hi there
+[5] erase: 11
 2 SIZE vct = 11
+after = 
+	-> FFFFF
+	-> GGGG
+	-> HHH
+	-> II
+	-> J
+	-> Hello xaxa
+	-> Hello xaxa
+	-> J
+	-> Hello xaxa
+	-> Hello
+	-> Hi there
 

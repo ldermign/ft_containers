@@ -9,17 +9,32 @@
 [0] erase: 2
 2 SIZE vct = 9
 [1] erase: 0
-2 SIZE vct = 8
-[2] erase: 7
-2 SIZE vct = 7
+2 SIZE vct = 10
+[2] erase: 9
+2 SIZE vct = 9
 [3] erase: 0
+2 SIZE vct = 6
+before = 
+	-> FFFFF
+	-> GGGG
+	-> HHH
+	-> II
+	-> J
+	-> Hello xaxa
+[4] erase: 3
 2 SIZE vct = 4
-[4] erase: 1
-2 SIZE vct = 2
-3 SIZE vct = 4
-[5] erase: 1
-2 SIZE vct = 1
-4 SIZE vct = 5
-[6] erase: 0
-2 SIZE vct = 0
+3 SIZE vct = 6
+before = 
+	-> FFFFF
+	-> GGGG
+	-> HHH
+	-> Hello xaxa
+	-> Hello
+	-> Hi there
+[5] erase: 3
+2 SIZE vct = 3
+after = 
+	-> FFFFF
+	-> GGGG
+	-> HHH
 
