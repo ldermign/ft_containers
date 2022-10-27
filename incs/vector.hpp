@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/26 16:13:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:14:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 START
 
-template < class T, class Allocator = std::allocator< T > >
+template< class T, class Allocator = std::allocator< T > >
 class vector {
 
 private:
@@ -100,6 +100,7 @@ public:
 	}
 
 	vector( const self &x ) : _alloc(x._alloc) {
+
 		size_t    i = 0;
 		// this->_allocator = x.get_allocator();
 		this->_ptrVector = this->_alloc.allocate(x.capacity());
@@ -235,26 +236,48 @@ public:
 // retourne le nombre d'element maximum que le container peut contenir
 // avec les limitations du system / de la lib
 	}
-	
-// ok ???
-// NOOOONNN REVOIRRRRR
+
+
+
+
+
+/* ~~~~~ RESIZE ~~~~~ */
+
 	void resize( size_t new_nbr_elmt, T c = T() ) {
 
 		if (new_nbr_elmt > this->size())
 			this->insert(this->end(), new_nbr_elmt - this->size(), c);
 		else if (new_nbr_elmt < this->size())
 			this->erase(this->begin() + new_nbr_elmt, this->end());
-		else
-			;
+		// else
+		// 	;
 	}
-	
+
+
+
+
+
+/* ~~~~~ CAPACITY ~~~~~ */
+
 	size_t capacity( void ) const {
 		return this->_capacity;
 	}
+
+
+
+
+
+/* ~~~~~ EMPTY ~~~~~ */
 	
 	bool empty( void ) const {
 		return this->_size() == 0;
 	}
+
+
+
+
+
+/* ~~~~~ RESERVE ~~~~~ */
 	
 	void reserve( size_t new_cap ) {
 		
@@ -284,8 +307,12 @@ public:
 			this->_ptrVector = new_vector;
 		}
 	}
-	
-// element access: reference
+
+
+
+
+
+/* ~~~~~ OPERATOR[] ~~~~~ */
 
 	reference operator[]( size_t index ) {
 		return this->_ptrVector[index];
@@ -294,6 +321,12 @@ public:
 	const_reference operator[]( size_t index ) const {
 		return this->_ptrVector[index];
 	}
+
+
+
+
+
+/* ~~~~~ AT ~~~~~ */
 
 	reference at( size_t index ) {
 		// pour la phrase de out_of_range
@@ -318,7 +351,13 @@ public:
 			throw std::out_of_range(string);
 		return this->_ptrVector[index];
 	}
-	
+
+
+
+
+
+/* ~~~~~ FRONT ~~~~~ */
+
 	reference front( void ) {
 		return this->_ptrVector[0];
 	}
@@ -326,7 +365,13 @@ public:
 	const_reference front( void ) const {
 		return this->_ptrVector[0];	
 	}
-	
+
+
+
+
+
+/* ~~~~~ BACK ~~~~~ */
+
 	reference back( void ) {
 		return this->_ptrVector[this->size() - 1];
 	}
@@ -334,28 +379,30 @@ public:
 	const_reference back( void ) const {
 		return this->_ptrVector[this->size() - 1];
 	}
-	
-// operations
+
+
+
+
+
+/* ~~~~~ PUSH_BACK ~~~~~ */ // --> OK
 	
 	void push_back( const T &x ) {
 
-		// std::cout << "i = " << this->size() << " x = " << x << std::endl;
-
-		if (this->capacity() == 0) {
-			// p1 "first time : this->size() + 1 = " << this->size() << " et this->capacity() = " << this->capacity() p2
+		if (this->capacity() == 0)
 			this->reserve(1);
-		}
-		else if (this->size() + 1 > this->capacity() * 2) {
-			// p1 "normalement ok" p2
+		else if (this->size() + 1 > this->capacity() * 2)
 			this->reserve(this->size() + 1);
-		}
-		else if (this->size() + 1 > this->capacity()) {
-			// p1 "this->size() + 1 = " << this->size() << " et this->capacity() = " << this->capacity() p2
+		else if (this->size() + 1 > this->capacity())
 			this->reserve(this->capacity() * 2);
-		}
-		// p1 "next for i = " << size() p2
-		this->insert(this->end(), 1, x);
+		this->insert(this->end(), x);
+
 	}
+
+
+
+
+
+/* ~~~~~ POP_BACK ~~~~~ */
 
 	void pop_back( void ) {
 		
@@ -363,27 +410,39 @@ public:
 	}
 
 
-// insere l'element a la position precisee
-	iterator insert( iterator position, const T &x ) {
 
-		this->insert(position, 0, x);
+
+
+/* ~~~~~ INSERT ~~~~~ */ // --> OK
+
+	iterator insert( iterator position, const T &value ) {
+
+		size_t	pos = position - this->begin();
+		size_t	last = this->end() - this->begin();
+
+		if (this->capacity() == 0)
+			this->reserve(1);
+		else if (this->size() + 1 > this->capacity())
+			this->reserve(this->size() * 2);
+		for (; last < pos ; last--) {
+			this->_alloc.construct(&this->_ptrVector[last], this->_ptrVector[last - 1]);
+			this->_alloc.destroy(&this->_ptrVector[last - 1]);
+		}
+		this->_alloc.construct(&this->_ptrVector[last], value);
+
+		this->_size += 1;
+		return position;
 	}
 
-// insere n element avant position 
-	void insert( iterator position, size_t n, const T &x ) {
+	iterator insert( iterator position, size_t n, const T &x ) {
 
-		if (this->capacity() == 0) {
-			
+		if (this->capacity() == 0)
 			this->reserve(1);
-		}
-		else if (this->size() + n > this->capacity() * 2) {
-			// p1 "normalement ok" p2
+		else if (this->size() + n > this->capacity() * 2)
 			this->reserve(this->size() + n);
-		}
-		else if (this->size() + n > this->capacity()) {
-			// p1 "normalement ok" p2
+		else if (this->size() + n > this->capacity())
 			this->reserve(this->capacity() * 2);
-		}
+
 		if (position == this->end()) {
 			for (size_t i = this->size() ; i < this->size() + n ; i++)
 				this->_alloc.construct(&this->_ptrVector[i], x);
@@ -399,107 +458,87 @@ public:
 			}
 		}
 		this->_size += n;
+		return position;
 	}
 
-	// template < class InputIterator >
-	// void insert( iterator position,	InputIterator first, InputIterator last) {
+	template < class InputIterator >
+	void insert( iterator position, InputIterator first, InputIterator last) {
 		
+		size_t		endt = this->end() - this->begin() - 1;
+		size_t		pos = position - this->begin() - 1;
+		size_t		lenght = last - first;
+
+		// if (this->capacity() == 0)
+		// 	this->reserve(1);
+		// else 
+		p1 "size at start = " << this->size() p2
+		if ((this->size() + lenght > this->capacity())
+			&& (this->size() + lenght <= this->capacity() * 2))
+			this->reserve(this->capacity() * 2);
+		else if (this->size() + lenght > this->capacity())
+			this->reserve(this->size() + lenght);
 		
-	// }
+		for (; endt > pos ; endt--) {
+
+			this->_alloc.construct(&this->_ptrVector[endt], this->_ptrVector[endt - lenght]);
+			if (this->size() > endt - lenght)
+				this->_alloc.destroy(&this->_ptrVector[endt - lenght]);
+		}
+		for (; first != last ; first++) {
+			
+			if (this->size() > pos)
+				this->_alloc.destroy(&this->_ptrVector[pos]);
+			p1 "construct = [" << *first << "]" p2
+			this->_alloc.construct(&this->_ptrVector[pos], *first);
+			pos++;
+
+		}
+
+		this->_size += lenght;
+		
+		// p1 "\t\t\t\tNOOOOOON" p2
+		
+	}
+
+
+
+
+
+/* ~~~~~ ERASE ~~~~~ */
 
 	iterator erase( iterator position ) {
 		
-		// p1 "ouesh" p2
-
-		// for (iterator tmp = position ; tmp != this->end() ; tmp++)
-		// 	p1 *tmp << " " p2
-		
-		size_t	pos = position - this->begin();
-		
-		// p1 "size = " << this->size() << " - pos = " << pos p2
-		
-		this->_alloc.destroy(&this->_ptrVector[pos]);
-
-				// p1 "0" p2
+		size_t	pos = position - this->begin();\
 
 		for (; pos < this->size() ; pos++) {
-			// p1 "pos = " << pos << " and " << this->_ptrVector[pos] p2
-			if (iterator(&this->_ptrVector[pos + 1]) != this->end()) {
+			this->_alloc.destroy(&this->_ptrVector[pos]);
+			if (iterator(&this->_ptrVector[pos + 1]) != this->end())
 				this->_alloc.construct(&this->_ptrVector[pos], this->_ptrVector[pos + 1]);
-						// p1 "pendant" p2
-				this->_alloc.destroy(&this->_ptrVector[pos + 1]);
-			}
-			else
-				this->_alloc.destroy(&this->_ptrVector[pos]);
+
 		}
-
-				// p1 "1" p2
-
 		this->_size -= 1;
 
-		// p1 "2" p2
-
-		if (iterator(&this->_ptrVector[pos]) == this->end()) {
-			// p1 "premier return" p2
+		if (iterator(&this->_ptrVector[pos]) == this->end())
 			return this->end();
-		}
 
 		return position;
-		// return this->end();
-		// return iterator(&this->_ptrVector[pos + 1]);
 	}
-
-
-
-
-
-
-// suivre les conseils de xaxa :(
-	
 
 	iterator erase( iterator first, iterator last ) {
 
 		size_t	pos = first - this->begin();
 		size_t	i_last = last - this->begin();
-		size_t	lenght = i_last - pos;
+		size_t	ret = i_last - pos;
 
-		// p1 "\t\tFIRST AND LAST" p2
+		for (; pos <= this->size() ; pos++) {
 
-		if (lenght == 0)
-			return last;
-
-		T *tmp = &(*first);
-		(void)tmp;
-
-		for (; first != last ; first++)
-			this->_alloc.destroy(&(*first));
-		for (; first != this->end() ; first++) {
-			this->_alloc.construct(tmp, *first);
-			this->_alloc.destroy(&(*first));
-			tmp++;
+			this->_alloc.destroy(&this->_ptrVector[pos]);
+			if (i_last < this->size()) {
+				this->_alloc.construct(&this->_ptrVector[pos], this->_ptrVector[i_last]);
+				i_last++;
+			}
 		}
-		// p1 "size = " << this->size() << " and pos = " << pos p2
-		// for (; pos <= ret ; pos++) {
-
-		// 	p1 "pos is = " << pos << " " << this->_ptrVector[pos] p2
-		// 	//  << " and i_last is = " << this->_ptrVector[i_last] p2
-		// 	this->_alloc.destroy(&this->_ptrVector[pos]);
-		// 	if (i_last < this->size()) {
-		// 		// p1 "normalement non..." p2
-		// 		this->_alloc.construct(&this->_ptrVector[pos], this->_ptrVector[i_last]);
-		// 		i_last++;
-		// 	}
-		// }
-		// for (; pos < this->size() ; pos++)
-		// 	this->_alloc.destroy(&this->_ptrVector[pos]);
-
-		// if (last == this->end())
-		// 	return this->end();
-
-		// this->_size -= ret;
-		
-		// if (iterator(&this->_ptrVector[pos + 1]) == this->end())
-		// 	return this->end();
+		this->_size -= ret;
 
 		return first;
 	}
@@ -508,18 +547,9 @@ public:
 
 
 
-
-
-
-
-	
+/* ~~~~~ SWAP ~~~~~ */
 
 	void swap( self &x ) {
-		
-		// self	tmp;
-		// tmp = x;
-		// x = *this;
-		// *this = tmp;
 		
 		T				*type_tmp = x._ptrVector;
 		Allocator		alloc_tmp = x._alloc;

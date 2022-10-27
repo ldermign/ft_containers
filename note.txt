@@ -1,3 +1,5 @@
+//////////////////////////////// 
+	
 		// LIBRARY::vector< std::string >	test;
 		// test.push_back("Salut, "); // first time : this->size() + 1 = 0 et this->capacity() = 0
 		// test.push_back("c'est "); // this->size() + 1 = 1 et this->capacity() = 1
@@ -60,4 +62,141 @@
 		p1 "2 SIZE vct_range = " << vct_range.size() p2
 		p1 "2 SIZE vct_copy = " << vct_copy.size() p2 // normalement 3, ici 7
 
-///////////////////////////
+/////////////////////////// CHECK ERASE //////////////////////////////////////////////////
+
+
+
+void	checkErase(LIBRARY::vector< std::string > const &vct,
+					LIBRARY::vector< std::string >::const_iterator const &it)
+{
+
+	// p1 "avant" p2
+	
+	static int	i = 0;
+	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
+	p1 "2 SIZE vct = " << vct.size() p2
+}
+
+/////
+
+	LIBRARY::vector< std::string > vct(10);
+
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = std::string((vct.size() - i), i + 65);
+	p1 "1 SIZE vct = " << vct.size() p2
+
+	// p1 "not ok for now" p2
+
+	// p1 "before = ";
+	// for (size_t i = 0 ; i < vct.size() ; i++)
+	// 	p1 vct[i] << " " p2
+
+	checkErase(vct, vct.erase(vct.begin() + 2));
+
+	// p1 "after = ";
+	// for (size_t i = 0 ; i < vct.size() ; i++)
+	// 	p1 vct[i] << " " p2
+
+	// p1 "first erase is ok" p2
+	vct.push_back("Hello xaxa");
+	vct.push_back("Hi there xaxa");
+	checkErase(vct, vct.erase(vct.begin()));
+	checkErase(vct, vct.erase(vct.end() - 1));
+
+	// p1 "after = ";
+	// for (size_t i = 0 ; i < vct.size() ; i++)
+	// 	p1 vct[i] << " " p2
+
+	// p1 "before = \n";
+	// for (size_t i = 0 ; i < vct.size() ; i++)
+	// 	p1 "\t-> " << vct[i] p2
+	checkErase(vct, vct.erase(vct.begin(), vct.begin() + 3));
+	// p1 "after = \n";
+	// for (size_t i = 0 ; i < vct.size() ; i++)
+	// 	p1 "\t-> " << vct[i] p2
+
+	p1 "before = \n";
+	for (size_t i = 0 ; i < vct.size() ; i++)
+		p1 "\t-> " << vct[i] p2
+	
+	checkErase(vct, vct.erase(vct.end() - 3, vct.end() - 1));
+
+	vct.push_back("Hello");
+	vct.push_back("Hi there");
+	p1 "3 SIZE vct = " << vct.size() p2
+	
+	p1 "before = \n";
+	for (size_t i = 0 ; i < vct.size() ; i++)
+		p1 "\t-> " << vct[i] p2
+	checkErase(vct, vct.erase(vct.end() - 3, vct.end()));
+	p1 "after = \n";
+	for (size_t i = 0 ; i < vct.size() ; i++)
+		p1 "\t-> " << vct[i] p2
+
+	vct.push_back("ONE");
+	vct.push_back("TWO");
+	vct.push_back("THREE");
+	vct.push_back("FOUR");
+	p1 "4 SIZE vct = " << vct.size() p2
+	checkErase(vct, vct.erase(vct.begin(), vct.end()));
+
+/////////////////// CHECK CONSTRUCTOR COPY ////////////////
+
+	LIBRARY::vector< int > vct(5);
+	LIBRARY::vector< int >::iterator it = vct.begin(), ite = vct.end();
+
+	std::cout << "len: " << (ite - it) << std::endl;
+	for (; it != ite; ++it)
+		*it = (ite - it);
+
+	it = vct.begin();
+	LIBRARY::vector< int > vct_range(it, --(--ite));
+	for (int i = 0; it != ite; ++it)
+		*it = ++i * 5;
+
+	it = vct.begin();
+	LIBRARY::vector< int > vct_copy(vct);
+	for (int i = 0; it != ite; ++it)
+		*it = ++i * 7;
+	vct_copy.push_back(42);
+	vct_copy.push_back(21);
+
+	std::cout << "\t-- PART ONE --" << std::endl;
+	printSize(vct);
+	printSize(vct_range);
+	printSize(vct_copy);
+
+	vct = vct_copy;
+	vct_copy = vct_range;
+	vct_range.clear();
+
+	std::cout << "\t-- PART TWO --" << std::endl;
+	printSize(vct);
+	printSize(vct_range);
+	printSize(vct_copy);
+
+
+///////////////////////////////// CHECK INSERT2 ///////////////////////
+
+	LIBRARY::vector< int > vct(5);
+	LIBRARY::vector< int > vct2;
+	const int cut = 3;
+
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = (vct.size() - i) * 7;
+	printSize(vct);
+
+	vct2.insert(vct2.begin(), vct.begin(), vct.begin() + cut);
+	printSize(vct2);
+	vct2.insert(vct2.begin(), vct.begin() + cut, vct.end());
+	printSize(vct2);
+	vct2.insert(vct2.end(), vct.begin(), vct.begin() + cut);
+	printSize(vct2);
+
+	std::cout << "insert return:" << std::endl;
+
+	std::cout << *vct2.insert(vct2.end(), 42) << std::endl;
+	std::cout << *vct2.insert(vct2.begin() + 5, 84) << std::endl;
+	std::cout << "----------------------------------------" << std::endl;
+
+	printSize(vct2);

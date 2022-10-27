@@ -15,7 +15,8 @@ WHITE="\033[37m"
 
 make
 
-./ft_containers > ft.txt && ./std_containers > std.txt
+./ft_containers > ft.txt
+./std_containers > std.txt
 
 diff -y -W 60 --suppress-common-lines ft.txt std.txt > results.txt
 comp_value=$?
@@ -28,3 +29,5 @@ then
 else
     printf $GREEN"\nNo mistake were made!\n\n"$RESET
 fi
+
+# rm -rf ft.txt std.txt

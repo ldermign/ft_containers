@@ -5,52 +5,28 @@
 
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1 SIZE vct = 10
-[0] erase: 2
-2 SIZE vct = 9
-[1] erase: 0
-2 SIZE vct = 10
-[2] erase: 9
-2 SIZE vct = 9
-[3] erase: 9
-2 SIZE vct = 9
-before = 
-	-> FFFFF
-	-> GGGG
-	-> HHH
-	-> II
-	-> J
-	-> Hello xaxa
-	-> II
-	-> J
-	-> Hello xaxa
-[4] erase: 9
-2 SIZE vct = 9
-3 SIZE vct = 11
-before = 
-	-> FFFFF
-	-> GGGG
-	-> HHH
-	-> II
-	-> J
-	-> Hello xaxa
-	-> Hello xaxa
-	-> J
-	-> Hello xaxa
-	-> Hello
-	-> Hi there
-[5] erase: 11
-2 SIZE vct = 11
-after = 
-	-> FFFFF
-	-> GGGG
-	-> HHH
-	-> II
-	-> J
-	-> Hello xaxa
-	-> Hello xaxa
-	-> J
-	-> Hello xaxa
-	-> Hello
-	-> Hi there
+size: 5
+capacity: OK
+max_size: 2305843009213693951
+
+Content is:
+- 35
+- 28
+- 21
+- 14
+- 7
+###############################################
+size at start = 0
+construct = [35]
+construct = [28]
+construct = [21]
+size: 3
+capacity: OK
+max_size: 2305843009213693951
+
+Content is:
+- 28
+- 21
+- 0
+###############################################
 

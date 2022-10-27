@@ -1,23 +1,6 @@
-[3] erase: 9		     |	[3] erase: 0
-2 SIZE vct = 9		     |	2 SIZE vct = 6
-	-> II		     |	[4] erase: 3
-	-> J		     |	2 SIZE vct = 4
-	-> Hello xaxa	     |	3 SIZE vct = 6
-[4] erase: 9		     <
-2 SIZE vct = 9		     <
-3 SIZE vct = 11		     <
-	-> II		     <
-	-> J		     <
-	-> Hello xaxa	     <
-	-> Hello xaxa	     <
-	-> J		     <
-[5] erase: 11		     |	[5] erase: 3
-2 SIZE vct = 11		     |	2 SIZE vct = 3
-	-> II		     <
-	-> J		     <
-	-> Hello xaxa	     <
-	-> Hello xaxa	     <
-	-> J		     <
-	-> Hello xaxa	     <
-	-> Hello	     <
-	-> Hi there	     <
+size at start = 0	     <
+construct = [35]	     <
+construct = [28]	     <
+construct = [21]	     <
+			     >	- 35
+- 0			     <

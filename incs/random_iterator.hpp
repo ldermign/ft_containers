@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/24 11:01:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/27 12:21:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ private:
 
 public:
 
+	typedef random_iterator< T >  self;
+
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::value_type			value_type;
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::iterator_category	iterator_category;
 	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::difference_type		difference_type;
@@ -39,6 +41,7 @@ public:
 	// typedef		T* pointer;
 	// typedef		random_access_iterator_tag iterator_category;
 	
+
 	random_iterator( void ) : m_iterator(0) {}
 
 	explicit random_iterator( pointer x ) : m_iterator(x) {}
@@ -55,7 +58,20 @@ public:
 
 	random_iterator( const random_iterator &x ) : m_iterator(x.base()) {}
 
+//	DESTRUCTOR
+
 	virtual ~random_iterator( void ) {}
+
+	random_iterator	&operator=( const random_iterator &rhs ) {
+		
+		if (this == &rhs)
+			return *this;
+		
+		this->m_iterator = rhs.m_iterator;
+
+		return *this;
+		
+	}
 
 	bool			operator==( const random_iterator &other ) const {
 		return m_iterator == other.m_iterator;
