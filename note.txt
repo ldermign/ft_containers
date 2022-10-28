@@ -1,3 +1,40 @@
+
+template <typename T>
+void	printVector(LIBRARY::vector< T > const &vct, std::string str) {
+
+	p1 str << "\n";
+	for (size_t i = 0 ; i < vct.size() ; i++)
+		p1 "\t-> " << vct[i] p2
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //////////////////////////////// 
 	
 		// LIBRARY::vector< std::string >	test;
@@ -197,6 +234,39 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 
 	std::cout << *vct2.insert(vct2.end(), 42) << std::endl;
 	std::cout << *vct2.insert(vct2.begin() + 5, 84) << std::endl;
+	std::cout << "----------------------------------------" << std::endl;
+
+	printSize(vct2);
+
+
+//////////////////////////// ENCORE INSERT ////////////////
+
+	LIBRARY::vector< int > vct(5);
+	LIBRARY::vector< int > vct2;
+	const int cut = 3;
+
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = (vct.size() - i) * 7;
+	printSize(vct);
+
+	printVector(vct2, "first one =");
+	vct2.insert(vct2.begin(), vct.begin(), vct.begin() + cut);
+	printSize(vct2);
+	printVector(vct2, "before =");
+	vct2.insert(vct2.begin(), vct.begin() + cut, vct.end());
+	printVector(vct2, "after =");
+	printVector(vct2, "before =");
+	printSize(vct2);
+	printVector(vct2, "after =");
+	vct2.insert(vct2.end(), vct.begin(), vct.begin() + cut);
+	printSize(vct2);
+
+	std::cout << "insert return:" << std::endl;
+
+	std::cout << *vct2.insert(vct2.end(), 42) << std::endl;
+	printSize(vct2);
+	std::cout << *vct2.insert(vct2.begin() + 5, 84) << std::endl;
+	printSize(vct2);
 	std::cout << "----------------------------------------" << std::endl;
 
 	printSize(vct2);

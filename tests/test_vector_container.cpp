@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/27 15:32:11 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:55:13 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <iostream>
 
 #define T_SIZE_TYPE typename LIBRARY::vector<T>::value_type
+
+template <typename T>
+void	printVector(LIBRARY::vector< T > const &vct, std::string str) {
+
+	p1 str << "\n";
+	for (size_t i = 0 ; i < vct.size() ; i++)
+		p1 "\t-> " << vct[i] p2
+}
 
 template <typename T>
 void	printSize(LIBRARY::vector<T> const &vct, bool print_content = true)
@@ -31,11 +39,13 @@ void	printSize(LIBRARY::vector<T> const &vct, bool print_content = true)
 	{
 		typename LIBRARY::vector<T>::const_iterator it = vct.begin();
 		typename LIBRARY::vector<T>::const_iterator ite = vct.end();
-		std::cout << std::endl << "Content is:" << std::endl;
+		std::cout << "Content is:" << std::endl;
 		for (; it != ite; ++it)
 			std::cout << "- " << *it << std::endl;
 	}
+	p3
 	std::cout << "###############################################" << std::endl;
+	p3
 }
 
 
@@ -68,20 +78,27 @@ void	test_vector_container( void ) {
 		vct[i] = (vct.size() - i) * 7;
 	printSize(vct);
 
+	printVector(vct2, "first one =");
 	vct2.insert(vct2.begin(), vct.begin(), vct.begin() + cut);
 	printSize(vct2);
-	// vct2.insert(vct2.begin(), vct.begin() + cut, vct.end());
-	// printSize(vct2);
-	// vct2.insert(vct2.end(), vct.begin(), vct.begin() + cut);
-	// printSize(vct2);
+	printVector(vct2, "before =");
+	vct2.insert(vct2.begin(), vct.begin() + cut, vct.end());
+	printVector(vct2, "after =");
+	printVector(vct2, "before =");
+	printSize(vct2);
+	printVector(vct2, "after =");
+	vct2.insert(vct2.end(), vct.begin(), vct.begin() + cut);
+	printSize(vct2);
 
-	// std::cout << "insert return:" << std::endl;
+	std::cout << "insert return:" << std::endl;
 
-	// std::cout << *vct2.insert(vct2.end(), 42) << std::endl;
-	// std::cout << *vct2.insert(vct2.begin() + 5, 84) << std::endl;
-	// std::cout << "----------------------------------------" << std::endl;
+	std::cout << *vct2.insert(vct2.end(), 42) << std::endl;
+	printSize(vct2);
+	std::cout << *vct2.insert(vct2.begin() + 5, 84) << std::endl;
+	printSize(vct2);
+	std::cout << "----------------------------------------" << std::endl;
 
-	// printSize(vct2);
+	printSize(vct2);
 
 
 
