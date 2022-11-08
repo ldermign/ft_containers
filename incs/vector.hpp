@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/28 15:38:26 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:25:56 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ public:
 	typedef const value_type & const_reference;
 	typedef ft::random_iterator< T > iterator;
 	typedef ft::random_iterator< const T > const_iterator;
-	// typedef size_t size_type; // -> juste pour dire que size_t correspond a size_type
+	typedef size_t size_type; // -> juste pour dire que size_t correspond a size_type
 	// du code en plus pour rien ?
 	// typedef implementation defined difference_type;
 
@@ -90,7 +90,7 @@ public:
 		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL )
 		: _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {
 
-		size_t	new_size = last - first;
+		size_t	new_size = ft::distance(first, last);
 		reserve(new_size);
 		for (size_t i = 0 ; i < new_size ; i++) {
 			this->_alloc.construct(&this->_ptrVector[i], *first);
@@ -149,7 +149,7 @@ public:
 
 /* ~~~~~ ASSIGN ~~~~~ */
 /*
- * @brief cette ffonction assign
+ * @brief cette fonction assign
  * @param coutn, value
 */
 	void	assign( size_t count, const T &value ) {
@@ -180,7 +180,7 @@ public:
 
 		// p1 "normalement non... " << "first = " << *first << " - last - 1 = " << *(last - 1) p2
 
-		size_t	length = last - first;
+		size_t	length = ft::distance(first, last);
 		this->clear();
 		
 		// p1 RED << "length = " << length << " with size = " << this->size() << RESET p2
@@ -246,12 +246,12 @@ public:
 	
 	const_reverse_iterator	rbegin( void ) const {
 
-		return reverse_iterator(this->end());
+		return const_reverse_iterator(this->end());
 	}
 	
 	const_reverse_iterator	rend( void ) const {
 
-		return reverse_iterator(this->begin());
+		return const_reverse_iterator(this->begin());
 	}
 
 
@@ -455,8 +455,9 @@ public:
 /* ~~~~~ POP_BACK ~~~~~ */
 
 	void	pop_back( void ) {
-		
-		this->_alloc.destroy(this->end() - 1);
+
+		this->_alloc.destroy(this->_ptrVector + this->size() - 1);
+		this->_size--;
 	}
 
 
@@ -515,10 +516,11 @@ public:
 	}
 
 	template < class InputIterator >
-	void		insert( iterator position, InputIterator first, InputIterator last) {
+	void		insert( iterator position, InputIterator first, InputIterator last,
+		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
 		
 		size_t		pos = position - this->begin();
-		size_t		lenght = last - first;
+		size_t		lenght = ft::distance(first, last);
 		size_t		end_vector = lenght + this->size() - 1;
 
 		if ((this->size() + lenght > this->capacity())

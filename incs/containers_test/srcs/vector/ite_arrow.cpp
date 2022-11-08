@@ -7,40 +7,45 @@ int		main(void)
 	const int size = 5;
 	TESTED_NAMESPACE::vector<TESTED_TYPE> vct(size);
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::iterator it(vct.begin());
+	// (void)it;
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_iterator ite(vct.end());
 
 	for (int i = 1; it != ite; ++i)
 		*it++ = i;
 	printSize(vct, 1);
 
-	it = vct.begin();
-	ite = vct.begin();
+	// for (int i = 1; i < size; ++i)
+	// 	*it++ = i;
+	// printSize(vct, 1);
 
-	std::cout << *(++ite) << std::endl;
-	std::cout << *(ite++) << std::endl;
-	std::cout << *ite++ << std::endl;
-	std::cout << *++ite << std::endl;
+	// it = vct.begin();
+	// ite = vct.begin();
 
-	it->m();
-	ite->m();
+	// std::cout << *(++ite) << std::endl;
+	// std::cout << *(ite++) << std::endl;
+	// std::cout << *ite++ << std::endl;
+	// std::cout << *++ite << std::endl;
 
-	std::cout << *(++it) << std::endl;
-	std::cout << *(it++) << std::endl;
-	std::cout << *it++ << std::endl;
-	std::cout << *++it << std::endl;
+	// it->m();
+	// ite->m();
 
-	std::cout << *(--ite) << std::endl;
-	std::cout << *(ite--) << std::endl;
-	std::cout << *--ite << std::endl;
-	std::cout << *ite-- << std::endl;
+	// std::cout << *(++it) << std::endl;
+	// std::cout << *(it++) << std::endl;
+	// std::cout << *it++ << std::endl;
+	// std::cout << *++it << std::endl;
 
-	(*it).m();
-	(*ite).m();
+	// std::cout << *(--ite) << std::endl;
+	// std::cout << *(ite--) << std::endl;
+	// std::cout << *--ite << std::endl;
+	// std::cout << *ite-- << std::endl;
 
-	std::cout << *(--it) << std::endl;
-	std::cout << *(it--) << std::endl;
-	std::cout << *it-- << std::endl;
-	std::cout << *--it << std::endl;
+	// (*it).m();
+	// (*ite).m();
+
+	// std::cout << *(--it) << std::endl;
+	// std::cout << *(it--) << std::endl;
+	// std::cout << *it-- << std::endl;
+	// std::cout << *--it << std::endl;
 
 	return (0);
 }

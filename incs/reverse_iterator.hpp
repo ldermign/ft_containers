@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/28 09:38:16 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/08 11:28:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "ft_containers.hpp"
 #include "iterator.hpp"
+#include "distance.hpp"
 #include "random_iterator.hpp"
 #include "reverse_iterator.hpp"
 

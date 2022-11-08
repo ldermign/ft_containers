@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/27 12:21:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:39:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,20 @@ public:
 	// typedef		T reference; // ft::iterator::Reference
 	// typedef		T* pointer;
 	// typedef		random_access_iterator_tag iterator_category;
-	
 
 	random_iterator( void ) : m_iterator(0) {}
 
 	explicit random_iterator( pointer x ) : m_iterator(x) {}
 
-	template< class U > random_iterator( const random_iterator< U > &u ); // Effects: Initializes m_iterator with u.m_iterator.
+	template< class U >
+	random_iterator( const random_iterator< U > &u ) {
+		(void)u;
+	} // Effects: Initializes m_iterator with u.m_iterator.
+	
 	pointer			base( void ) const {
 		return this->m_iterator;
 	}
-	
+
 	operator	random_iterator< const value_type >() const {
 		return (random_iterator< const value_type >(this->m_iterator));
 	};
@@ -157,7 +160,53 @@ public:
 		return m_iterator >= other.m_iterator;
 	}
 
+	friend random_iterator operator+( const difference_type &n, const random_iterator &x) {
+		return (random_iterator(x.base() + n));
+	}
+
+
+
 };
+
+// template< class Iterator >
+// bool operator==( const random_iterator &x, const random_iterator &y ) {
+// 	return x.base() == y.base();
+// }
+
+// template< class Iterator >
+// bool operator!=( const random_iterator &x, const random_iterator &y ) {
+// 	return x.base() != y.base();
+// }
+
+// template< class Iterator >
+// bool operator<( const random_iterator &x, const random_iterator &y ) {
+// 	return x.base() > y.base();
+// }
+
+// template< class Iterator >
+// bool operator>( const random_iterator &x, const random_iterator &y ) {
+// 	return x.base() < y.base();
+// }
+
+// template< class Iterator >
+// bool operator>=( const random_iterator &x, const random_iterator &y ) {
+// 	return x.base() <= y.base();
+// }
+
+// template< class Iterator >
+// bool operator<=( const random_iterator &x, const random_iterator &y ) {
+// 	return x.base() >= y.base();
+// }
+
+// template< class Iterator >
+// typename random_iterator::difference_type operator-( const random_iterator &x, const random_iterator &y ) {
+// 	return y.base() - x.base();
+// }
+
+// template< class Iterator >
+// random_iterator operator+( typename random_iterator::difference_type n, const random_iterator &x ) {
+// 	return x.base() - n;
+// }
 
 STOP
 
