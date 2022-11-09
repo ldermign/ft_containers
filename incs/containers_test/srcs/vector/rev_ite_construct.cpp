@@ -5,14 +5,18 @@
 int		main(void)
 {
 	TESTED_NAMESPACE::vector<TESTED_TYPE> vct;
+	(void)vct;
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::iterator it = vct.begin();
+	(void)it;
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_iterator cit = vct.begin();
+	(void)cit;
 
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::reverse_iterator rit(it);
+	(void)rit;
 
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator crit(rit);
-	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator crit_(it);
-	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator crit_2(cit);
+	// TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator crit_(it);
+	// TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator crit_2(cit);
 
 	/* error expected
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::reverse_iterator rit_(crit);
