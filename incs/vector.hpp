@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/11 18:39:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:53:42 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,15 +303,8 @@ public:
 	void
 	resize( size_t nbr_element, T c = T() ) {
 
-		if (this->capacity() == 0)
-			this->reserve(1);
-		else if (this->size() + 1 > this->capacity() * 2)
-			this->reserve(this->size() + 1);
-		else if (this->size() + 1 > this->capacity())
-			this->reserve(this->capacity() * 2);
-
 		if (nbr_element > this->size()) {
-			p1 "test" p2
+			// p1 "test" p2
 			this->insert(this->end(), nbr_element - this->size(), c);
 		}
 		else if (nbr_element < this->size())
@@ -529,6 +522,8 @@ public:
 
 	iterator	insert( iterator position, size_t n, const T &x ) {
 
+		size_t ret = position - this->begin();
+
 		if (this->capacity() == 0)
 			this->reserve(1);
 		else if (this->size() + n > this->capacity() * 2)
@@ -536,8 +531,8 @@ public:
 		else if (this->size() + n > this->capacity())
 			this->reserve(this->capacity() * 2);
 
-		if (position == this->end()) {
-			p1 "eh merde... " p2
+		if (iterator(&this->_ptrVector[ret]) == this->end()) {
+			// p1 "eh merde... " p2
 			for (size_t i = this->size() ; i < this->size() + n ; i++)
 				this->_alloc.construct(&this->_ptrVector[i], x);
 		}

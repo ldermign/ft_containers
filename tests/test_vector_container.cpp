@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/11 18:36:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:53:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,30 +92,30 @@ void	test_vector_container( void ) {
 	vct.resize(18, 43);
 
 	
-	// printSize(vct, true);
-	// vct.resize(10);
-	// printSize(vct, true);
-	// vct.resize(23, 44);
-	// printSize(vct, true);
-	// vct.resize(5);
-	// printSize(vct, true);
-	// vct.reserve(5);
-	// vct.reserve(3);
-	// printSize(vct, true);
-	// vct.resize(87);
-	// vct.resize(5);
-	// printSize(vct, true);
+	printSize(vct, true);
+	vct.resize(10);
+	printSize(vct, true);
+	vct.resize(23, 44);
+	printSize(vct, true);
+	vct.resize(5);
+	printSize(vct, true);
+	vct.reserve(5);
+	vct.reserve(3);
+	printSize(vct, true);
+	vct.resize(87);
+	vct.resize(5);
+	printSize(vct, true);
 
-	// is_empty(vct2);
-	// vct2 = vct;
-	// is_empty(vct2);
-	// vct.reserve(vct.capacity() + 1);
-	// printSize(vct, true);
-	// printSize(vct2, true);
+	is_empty(vct2);
+	vct2 = vct;
+	is_empty(vct2);
+	vct.reserve(vct.capacity() + 1);
+	printSize(vct, true);
+	printSize(vct2, true);
 
-	// vct2.resize(0);
-	// is_empty(vct2);
-	// printSize(vct2, true);
+	vct2.resize(0);
+	is_empty(vct2);
+	printSize(vct2, true);
 
 
 
