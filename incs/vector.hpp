@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/11 18:53:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:56:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -464,7 +464,7 @@ public:
 
 
 
-/* ~~~~~ PUSH_BACK ~~~~~ */ // --> OK
+/* ~~~~~ PUSH_BACK ~~~~~ */
 	
 	void	push_back( const T &x ) {
 
@@ -498,26 +498,26 @@ public:
 
 	iterator	insert( iterator position, const T &value ) {
 
-		// size_t	pos = position - this->begin();
-		// size_t	last = this->end() - this->begin();
+		size_t	pos = position - this->begin();
+		size_t	last = this->end() - this->begin();
 
-		// if (this->capacity() == 0)
-		// 	this->reserve(1);
-		// else if (this->size() + 1 > this->capacity())
-		// 	this->reserve(this->size() * 2);
+		if (this->capacity() == 0)
+			this->reserve(1);
+		else if (this->size() + 1 > this->capacity())
+			this->reserve(this->size() * 2);
 
-		// for (; last > pos ; last--) {
+		for (; last > pos ; last--) {
 
-		// 	this->_alloc.construct(&this->_ptrVector[last], this->_ptrVector[last - 1]);
-		// 	if (last - 1 != 0)
-		// 		this->_alloc.destroy(&this->_ptrVector[last - 1]);
-		// }
-		// this->_alloc.construct(&this->_ptrVector[last], value);
+			this->_alloc.construct(&this->_ptrVector[last], this->_ptrVector[last - 1]);
+			if (last - 1 != 0)
+				this->_alloc.destroy(&this->_ptrVector[last - 1]);
+		}
+		this->_alloc.construct(&this->_ptrVector[last], value);
 
-		// this->_size += 1;
-		// return position;
-		insert(position, 1, value);
+		this->_size += 1;
 		return position;
+		// insert(position, 1, value);
+		// return position;
 	}
 
 	iterator	insert( iterator position, size_t n, const T &x ) {
