@@ -1,8 +1,3 @@
- end = 2 pos = 0	     <
- end = 1 pos = 0	     <
- end = 4 pos = 0	     <
- end = 3 pos = 0	     <
- end = 2 pos = 0	     <
- end = 1 pos = 0	     <
- end = 7 pos = 5	     <
- end = 6 pos = 5	     <
+test			     <
+eh merde... 		     <
+test			     <

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/09 10:34:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:39:29 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ public:
 
 	}
 
-// ne pas utiliser jusqu'a enable_if
 	template < class InputIterator >
 	vector( InputIterator first, InputIterator last, const Allocator &x = Allocator(),
 		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL )
@@ -112,14 +111,8 @@ public:
 		this->_capacity = x.capacity();
 	}
 
-	~vector( void ) { // virtual 
-		
-		// detruire avec deallocate ? destroy ?
-		this->clear();
-		this->_alloc.deallocate(this->_ptrVector, this->_capacity);
-	}
-
-	self &operator=( const self &rhs ) {
+	self
+	&operator=( const self &rhs ) {
 
 		if (this == &rhs)
 			return *this;
@@ -144,6 +137,17 @@ public:
 		return *this;
 	}
 
+/* ~~~~~ DESTRUCTOR ~~~~~ */
+
+	virtual
+	~vector( void ) {
+		
+		// detruire avec deallocate ? destroy ?
+		this->clear();
+		this->_alloc.deallocate(this->_ptrVector, this->_capacity);
+	}
+
+
 
 
 
@@ -152,7 +156,8 @@ public:
  * @brief cette fonction assign
  * @param coutn, value
 */
-	void	assign( size_t count, const T &value ) {
+	void
+	assign( size_t count, const T &value ) {
 
 		// Replaces the contents with count copies of valeur value
 		// count 	- 	the new size of the container
@@ -171,7 +176,8 @@ public:
 	}
 
 	template < class InputIterator >
-	void	assign( InputIterator first, InputIterator last,
+	void
+	assign( InputIterator first, InputIterator last,
 	// typename ft::enable_if< !ft::is_integral< InputIterator >::value >::type * = NULL ) {
 	typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
 		// Replaces the contents with copies of those in the range [first, last).
@@ -205,7 +211,8 @@ public:
 
 /* ~~~~~ ALLOCATOR ~~~~~ */
 
-	allocator_type get_allocator( void ) const;
+	allocator_type
+	get_allocator( void ) const;
 
 
 
@@ -213,43 +220,50 @@ public:
 
 /* ~~~~~ ITERATORS ~~~~~ */
 
-	iterator				begin( void ) {
+	iterator
+	begin( void ) {
 
 		return iterator(this->_ptrVector);
 	}
 
-	iterator				end( void ) {
+	iterator
+	end( void ) {
 
 		return iterator(&this->_ptrVector[this->_size]);
 	}
 
-	const_iterator			begin( void ) const {
+	const_iterator
+	begin( void ) const {
 
-		// p1 "test" p2
 		return const_iterator(this->_ptrVector);
 	}
 
-	const_iterator			end( void ) const {
+	const_iterator
+	end( void ) const {
 
 		return const_iterator(&this->_ptrVector[this->_size]);
 	}
 
-	reverse_iterator		rbegin( void ) {
+	reverse_iterator
+	rbegin( void ) {
 
 		return reverse_iterator(this->end());
 	}
 	
-	reverse_iterator		rend( void ) {
+	reverse_iterator
+	rend( void ) {
 
 		return reverse_iterator(this->begin());
 	}
 	
-	const_reverse_iterator	rbegin( void ) const {
+	const_reverse_iterator
+	rbegin( void ) const {
 
 		return const_reverse_iterator(this->end());
 	}
 	
-	const_reverse_iterator	rend( void ) const {
+	const_reverse_iterator
+	rend( void ) const {
 
 		return const_reverse_iterator(this->begin());
 	}
@@ -260,7 +274,8 @@ public:
 
 /* ~~~~~ SIZE ~~~~~ */
 
-	size_t	size( void ) const {
+	size_t
+	size( void ) const {
 
 		return this->_size;
 	}
@@ -271,7 +286,8 @@ public:
 
 /* ~~~~~ MAX_SIZE ~~~~~ */
 	
-	size_t	max_size( void ) const {
+	size_t
+	max_size( void ) const {
 
 		return this->_alloc.max_size();
 // retourne le nombre d'element maximum que le container peut contenir
@@ -284,14 +300,26 @@ public:
 
 /* ~~~~~ RESIZE ~~~~~ */
 
-	void	resize( size_t new_nbr_elmt, T c = T() ) {
+	void
+	resize( size_t nbr_element, T c = T() ) {
 
-		if (new_nbr_elmt > this->size())
-			this->insert(this->end(), new_nbr_elmt - this->size(), c);
-		else if (new_nbr_elmt < this->size())
-			this->erase(this->begin() + new_nbr_elmt, this->end());
-		// else
-		// 	;
+		if (this->capacity() == 0)
+			this->reserve(1);
+		else if (this->size() + 1 > this->capacity() * 2)
+			this->reserve(this->size() + 1);
+		else if (this->size() + 1 > this->capacity())
+			this->reserve(this->capacity() * 2);
+
+		if (nbr_element > this->size()) {
+			p1 "test" p2
+			this->insert(this->end(), nbr_element - this->size(), c);
+		}
+		else if (nbr_element < this->size())
+			this->erase(this->begin() + nbr_element, this->end());
+		else
+			;
+		
+		this->_size = nbr_element;
 	}
 
 
@@ -300,7 +328,8 @@ public:
 
 /* ~~~~~ CAPACITY ~~~~~ */
 
-	size_t	capacity( void ) const {
+	size_t
+	capacity( void ) const {
 
 		return this->_capacity;
 	}
@@ -311,7 +340,8 @@ public:
 
 /* ~~~~~ EMPTY ~~~~~ */
 	
-	bool	empty( void ) const {
+	bool
+	empty( void ) const {
 
 		return (this->size() == 0);
 	}
@@ -322,7 +352,8 @@ public:
 
 /* ~~~~~ RESERVE ~~~~~ */
 	
-	void	reserve( size_t new_cap ) {
+	void
+	reserve( size_t new_cap ) {
 		
 		if (new_cap > this->max_size()) {
 			// p1 "new_cap SUP max_size()" p2
@@ -357,12 +388,14 @@ public:
 
 /* ~~~~~ OPERATOR [] ~~~~~ */
 
-	reference		operator[]( size_t index ) {
+	reference
+	operator[]( size_t index ) {
 
 		return this->_ptrVector[index];
 	}
 	
-	const_reference	operator[]( size_t index ) const {
+	const_reference
+	operator[]( size_t index ) const {
 
 		return this->_ptrVector[index];
 	}
@@ -373,7 +406,8 @@ public:
 
 /* ~~~~~ AT ~~~~~ */
 
-	reference		at( size_t index ) {
+	reference
+	at( size_t index ) {
 
 		// pour la phrase de out_of_range
 		// https://en.cppreference.com/w/cpp/container/vector/at
@@ -387,7 +421,8 @@ public:
 		return this->_ptrVector[index];
 	}
 
-	const_reference	at( size_t index ) const {
+	const_reference
+	at( size_t index ) const {
 
 		std::stringstream tmp;
 		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
@@ -404,12 +439,14 @@ public:
 
 /* ~~~~~ FRONT ~~~~~ */
 
-	reference		front( void ) {
+	reference
+	front( void ) {
 
 		return this->_ptrVector[0];
 	}
 	
-	const_reference	front( void ) const {
+	const_reference
+	front( void ) const {
 
 		return this->_ptrVector[0];	
 	}
@@ -468,23 +505,25 @@ public:
 
 	iterator	insert( iterator position, const T &value ) {
 
-		size_t	pos = position - this->begin();
-		size_t	last = this->end() - this->begin();
+		// size_t	pos = position - this->begin();
+		// size_t	last = this->end() - this->begin();
 
-		if (this->capacity() == 0)
-			this->reserve(1);
-		else if (this->size() + 1 > this->capacity())
-			this->reserve(this->size() * 2);
+		// if (this->capacity() == 0)
+		// 	this->reserve(1);
+		// else if (this->size() + 1 > this->capacity())
+		// 	this->reserve(this->size() * 2);
 
-		for (; last > pos ; last--) {
+		// for (; last > pos ; last--) {
 
-			this->_alloc.construct(&this->_ptrVector[last], this->_ptrVector[last - 1]);
-			if (last - 1 != 0)
-				this->_alloc.destroy(&this->_ptrVector[last - 1]);
-		}
-		this->_alloc.construct(&this->_ptrVector[last], value);
+		// 	this->_alloc.construct(&this->_ptrVector[last], this->_ptrVector[last - 1]);
+		// 	if (last - 1 != 0)
+		// 		this->_alloc.destroy(&this->_ptrVector[last - 1]);
+		// }
+		// this->_alloc.construct(&this->_ptrVector[last], value);
 
-		this->_size += 1;
+		// this->_size += 1;
+		// return position;
+		insert(position, 1, value);
 		return position;
 	}
 
@@ -498,6 +537,7 @@ public:
 			this->reserve(this->capacity() * 2);
 
 		if (position == this->end()) {
+			p1 "eh merde... " p2
 			for (size_t i = this->size() ; i < this->size() + n ; i++)
 				this->_alloc.construct(&this->_ptrVector[i], x);
 		}
@@ -532,7 +572,7 @@ public:
 		for (; end_vector > pos ; end_vector--) {
 
 		// BUG: invalid read below 
-			p1 " end = " << end_vector << " pos = " << pos p2
+			// p1 " end = " << end_vector << " pos = " << pos p2
 			if (this->size() > 0 && end_vector - lenght >= 0)
 				this->_alloc.construct(&this->_ptrVector[end_vector], this->_ptrVector[end_vector - lenght]);
 			if (this->size() > end_vector - lenght)

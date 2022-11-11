@@ -6,10 +6,12 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/28 14:55:13 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/11 18:36:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <list>
 #include <vector>
 #include "vector.hpp"
 #include <iostream>
@@ -22,6 +24,11 @@ void	printVector(LIBRARY::vector< T > const &vct, std::string str) {
 	p1 str << "\n";
 	for (size_t i = 0 ; i < vct.size() ; i++)
 		p1 "\t-> " << vct[i] p2
+}
+
+void	is_empty(LIBRARY::vector< int > const &vct)
+{
+	std::cout << "is_empty: " << vct.empty() << std::endl;
 }
 
 template <typename T>
@@ -70,35 +77,47 @@ void	test_vector_container( void ) {
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 	{
 
-	LIBRARY::vector< int > vct(5);
+	const int start_size = 7;
+	LIBRARY::vector< int > vct(start_size, 20);
 	LIBRARY::vector< int > vct2;
-	const int cut = 3;
+	LIBRARY::vector< int >::iterator it = vct.begin();
 
-	for (unsigned long int i = 0; i < vct.size(); ++i)
-		vct[i] = (vct.size() - i) * 7;
-	printSize(vct);
+	for (int i = 2; i < start_size; ++i)
+		it[i] = (start_size - i) * 3;
+	printSize(vct, true);
 
-	printVector(vct2, "first one =");
-	vct2.insert(vct2.begin(), vct.begin(), vct.begin() + cut);
-	printSize(vct2);
-	printVector(vct2, "before =");
-	vct2.insert(vct2.begin(), vct.begin() + cut, vct.end());
-	printVector(vct2, "after =");
-	printVector(vct2, "before =");
-	printSize(vct2);
-	printVector(vct2, "after =");
-	vct2.insert(vct2.end(), vct.begin(), vct.begin() + cut);
-	printSize(vct2);
+	vct.resize(10, 42);
+	printSize(vct, true);
 
-	std::cout << "insert return:" << std::endl;
+	vct.resize(18, 43);
 
-	std::cout << *vct2.insert(vct2.end(), 42) << std::endl;
-	printSize(vct2);
-	std::cout << *vct2.insert(vct2.begin() + 5, 84) << std::endl;
-	printSize(vct2);
-	std::cout << "----------------------------------------" << std::endl;
+	
+	// printSize(vct, true);
+	// vct.resize(10);
+	// printSize(vct, true);
+	// vct.resize(23, 44);
+	// printSize(vct, true);
+	// vct.resize(5);
+	// printSize(vct, true);
+	// vct.reserve(5);
+	// vct.reserve(3);
+	// printSize(vct, true);
+	// vct.resize(87);
+	// vct.resize(5);
+	// printSize(vct, true);
 
-	printSize(vct2);
+	// is_empty(vct2);
+	// vct2 = vct;
+	// is_empty(vct2);
+	// vct.reserve(vct.capacity() + 1);
+	// printSize(vct, true);
+	// printSize(vct2, true);
+
+	// vct2.resize(0);
+	// is_empty(vct2);
+	// printSize(vct2, true);
+
+
 
 
 
