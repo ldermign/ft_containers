@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/08 14:25:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/09 10:34:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ public:
 	
 	bool	empty( void ) const {
 
-		return this->_size() == 0;
+		return (this->size() == 0);
 	}
 
 
