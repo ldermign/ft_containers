@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/11 18:53:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:33:03 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@
 #include <iostream>
 
 #define T_SIZE_TYPE typename LIBRARY::vector<T>::value_type
+
+/*
+single element (1)
+	iterator insert (iterator position, const value_type& val);
+
+fill (2)
+    void insert (iterator position, size_type n, const value_type& val);
+
+range (3)
+	template <class InputIterator>
+		void insert (iterator position, InputIterator first, InputIterator last);
+*/
+
 
 template <typename T>
 void	printVector(LIBRARY::vector< T > const &vct, std::string str) {
@@ -77,45 +90,46 @@ void	test_vector_container( void ) {
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 	{
 
-	const int start_size = 7;
-	LIBRARY::vector< int > vct(start_size, 20);
+	LIBRARY::vector< int > vct(10);
 	LIBRARY::vector< int > vct2;
-	LIBRARY::vector< int >::iterator it = vct.begin();
+	LIBRARY::vector< int > vct3;
 
-	for (int i = 2; i < start_size; ++i)
-		it[i] = (start_size - i) * 3;
-	printSize(vct, true);
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = (vct.size() - i) * 3;
+	// printSize(vct);
 
-	vct.resize(10, 42);
-	printSize(vct, true);
+	vct2.insert(vct2.end(), 42);
 
-	vct.resize(18, 43);
+	vct2.insert(vct2.begin(), 2, 21);
 
 	
-	printSize(vct, true);
-	vct.resize(10);
-	printSize(vct, true);
-	vct.resize(23, 44);
-	printSize(vct, true);
-	vct.resize(5);
-	printSize(vct, true);
-	vct.reserve(5);
-	vct.reserve(3);
-	printSize(vct, true);
-	vct.resize(87);
-	vct.resize(5);
-	printSize(vct, true);
+	printSize(vct2);
 
-	is_empty(vct2);
-	vct2 = vct;
-	is_empty(vct2);
-	vct.reserve(vct.capacity() + 1);
-	printSize(vct, true);
-	printSize(vct2, true);
+	p1 "avant = " p2
+	for (size_t i = 0 ; i < vct2.size() ; i++)
+		p1 vct2[i] << " " p2
+	vct2.insert(vct2.end() - 2, 42);
+	printSize(vct2);
+	p1 "apres" p2
+	// for (size_t i = 0 ; i < vct2.size() ; i++)
+	// 	p1 vct2[i] << " " p2
 
-	vct2.resize(0);
-	is_empty(vct2);
-	printSize(vct2, true);
+	// vct2.insert(vct2.end(), 2, 84);
+	// printSize(vct2);
+
+	// vct2.resize(4);
+	// printSize(vct2);
+
+	// vct2.insert(vct2.begin() + 2, vct.begin(), vct.end());
+	// vct.clear();
+	// printSize(vct2);
+
+	// printSize(vct);
+
+	// for (int i = 0; i < 5; ++i)
+	// 	vct3.insert(vct3.end(), i);
+	// vct3.insert(vct3.begin() + 1, 2, 111);
+	// printSize(vct3);
 
 
 

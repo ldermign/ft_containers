@@ -1,0 +1,4 @@
+ a ajouter = 1		     <
+ a ajouter = 2		     <
+- 21			     <
+			     >	- 42
