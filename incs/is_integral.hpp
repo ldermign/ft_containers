@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:40:01 by ldermign          #+#    #+#             */
-/*   Updated: 2022/10/19 10:48:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:49:12 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ typedef integral_const< bool, false > false_type;
 template < class T > struct is_integral : public false_type {};
 // template < class T > struct is_integral : public std::true_type {};
 template<> struct is_integral< unsigned char > : public true_type {};
-template<> struct is_integral< unsigned short > : public true_type{};
-template<> struct is_integral< unsigned int > : public true_type{};
-template<> struct is_integral< unsigned long > : public true_type{};
-template<> struct is_integral< signed char > : public true_type{};
-template<> struct is_integral< short > : public true_type{};
-template<> struct is_integral< int > : public true_type{};
-template<> struct is_integral< long > : public true_type{};
-template<> struct is_integral< char > : public true_type{};
-template<> struct is_integral< bool > : public true_type{};
+template<> struct is_integral< unsigned short > : public true_type {};
+template<> struct is_integral< unsigned int > : public true_type {};
+template<> struct is_integral< unsigned long > : public true_type {};
+template<> struct is_integral< signed char > : public true_type {};
+template<> struct is_integral< short > : public true_type {};
+template<> struct is_integral< int > : public true_type {};
+template<> struct is_integral< long > : public true_type {};
+template<> struct is_integral< char > : public true_type {};
+template<> struct is_integral< bool > : public true_type {};
 
 STOP
 

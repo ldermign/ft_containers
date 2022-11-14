@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:01:03 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 15:17:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:40:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ public:
 	}
 	
 	stack( const stack &src ) : c(src) {
+
 		*this = src;
 	}
 
@@ -67,12 +68,14 @@ public:
 		return this->c.empty();
 	}
 
-	value_type	&top( void ) {
+	value_type
+	&top( void ) {
 
 		return this->c.back();
 	}
 
-	const value_type	&top( void ) const {
+	const value_type
+	&top( void ) const {
 		
 		return this->c.back();
 	}
@@ -89,37 +92,45 @@ public:
 		return this->c.pop_back();
 	}
 
-	friend bool operator==( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	friend bool
+	operator==( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
 
 		return (x.c == y.c);
 	}
 
-	friend bool operator!=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	friend bool
+	operator!=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
 
 		return (x.c != y.c);
 	}
 
-	friend bool operator<( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	friend bool
+	operator<( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
 		
 		return (x.c < y.c);
 	}
 
-	friend bool operator<=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	friend bool
+	operator<=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
 		
 		return (x.c <= y.c);
 	}
 
-	friend bool operator>( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	friend bool
+	operator>( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
 		
 		return (x.c > y.c);
 	}
 
-	friend bool operator>=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	friend bool
+	operator>=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
 		
 		return (x.c >= y.c);
 	}
 
-	void	swap( stack< T, Container > &x, stack< T, Container > &y) {
+	void
+	swap( stack< T, Container > &x, stack< T, Container > &y) {
+
 		x.swap(y);
 	}
 
