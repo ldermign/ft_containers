@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/11 16:39:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/14 09:56:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,46 +265,51 @@ public:
 
 template< class Iterator1, class Iterator2 >
 bool
-operator==(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator<Iterator2> &y ) {
+operator==(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator< Iterator2 > &y ) {
 	return x.base() == y.base();
 }
 
 template< class Iterator1, class Iterator2 >
 bool
-operator!=(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator<Iterator2> &y ) {
+operator!=(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator< Iterator2 > &y ) {
 	return x.base() != y.base();
 }
 
 template< class Iterator1, class Iterator2 >
 bool
-operator<(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator<Iterator2> &y ) {
+operator<(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator< Iterator2 > &y ) {
 	return x.base() < y.base();
 }
 
 template< class Iterator1, class Iterator2 >
 bool
-operator<=(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator<Iterator2> &y ) {
+operator<=(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator< Iterator2 > &y ) {
 	return x.base() <= y.base();
 }
 
 template< class Iterator1, class Iterator2 >
 bool
-operator>(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator<Iterator2> &y ) {
+operator>(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator< Iterator2 > &y ) {
 	return x.base() > y.base();
 }
 
 template< class Iterator1, class Iterator2 >
 bool
-operator>=(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator<Iterator2> &y ) {
+operator>=(	const ft::random_iterator<Iterator1> &x, const ft::random_iterator< Iterator2 > &y ) {
 	return x.base() >= y.base();
 }
 
 template< class Iterator > 
-random_iterator< Iterator > operator+( typename random_iterator< Iterator >::differente_type &n, const random_iterator< Iterator > x ) {
+random_iterator< Iterator > operator+( typename random_iterator< Iterator >::differente_type &n, const ft::random_iterator< Iterator > x ) {
 	x += n;
 	return x;			
 }
 
+template< class Iterator1, class Iterator2 > 
+typename random_iterator< Iterator1 >::difference_type operator-( const ft::random_iterator< Iterator1 > &x, const ft::random_iterator< Iterator2 > &y ) {
+
+	return x.base() - y.base();
+}
 
 STOP
 

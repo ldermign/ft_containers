@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/12 17:32:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:37:30 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ public:
 	typedef const value_type & const_reference;
 	typedef ft::random_iterator< T > iterator;
 	typedef ft::random_iterator< const T > const_iterator;
-	typedef size_t size_type; // -> juste pour dire que size_t correspond a size_type
-	// du code en plus pour rien ?
+	typedef size_t size_type;
 	// typedef implementation defined difference_type;
 
 	typedef Allocator allocator_type;
@@ -484,7 +483,8 @@ public:
 
 /* ~~~~~ POP_BACK ~~~~~ */
 
-	void	pop_back( void ) {
+	void
+	pop_back( void ) {
 
 		this->_alloc.destroy(this->_ptrVector + this->size() - 1);
 		this->_size--;
@@ -498,24 +498,6 @@ public:
 
 	iterator	insert( iterator position, const T &value ) {
 
-		// size_t	pos = position - this->begin();
-		// size_t	last = this->end() - this->begin();
-
-		// if (this->capacity() == 0)
-		// 	this->reserve(1);
-		// else if (this->size() + 1 > this->capacity())
-		// 	this->reserve(this->size() * 2);
-
-		// for (; last > pos ; last--) {
-
-		// 	this->_alloc.construct(&this->_ptrVector[last], this->_ptrVector[last - 1]);
-		// 	if (last - 1 != 0)
-		// 		this->_alloc.destroy(&this->_ptrVector[last - 1]);
-		// }
-		// this->_alloc.construct(&this->_ptrVector[last], value);
-
-		// this->_size += 1;
-		// return position;
 		insert(position, 1, value);
 		return position;
 	}
@@ -532,23 +514,21 @@ public:
 			this->reserve(this->capacity() * 2);
 
 		if (iterator(&this->_ptrVector[ret]) == this->end()) {
-			// p1 "eh merde... x = " << x p2
 			for (size_t i = this->size() ; i < this->size() + n ; i++)
 				this->_alloc.construct(&this->_ptrVector[i], x);
 		}
 		else {
-			size_t	last = this->size() - ret;
-			p1 " a ajouter = " << last p2
-			size_t	ret2 = ret;
-			for (size_t i_end = this->size() + n - 1 ; i_end > last ; i_end--) {
+			size_t	ret2 = this->size() - 1;
+			for (size_t i_end = this->size() + n - 1 ; i_end > ret ; i_end--) {
 				this->_alloc.construct(&this->_ptrVector[i_end], this->_ptrVector[ret2]);
 				this->_alloc.destroy(&this->_ptrVector[ret2]);
-				ret2++;
+				ret2--;
 			}
-			for (; ret < n ; ret++) {
+			for (size_t i = 0 ; i < n ; i++) {
 				this->_alloc.construct(&this->_ptrVector[ret], x);
+				ret++;
 			}
-		}
+		}		
 		this->_size += n;
 		return position;
 	}
@@ -585,8 +565,8 @@ public:
 			pos++;
 
 		}
-		this->_size += lenght;
 
+		this->_size += lenght;
 	}
 
 

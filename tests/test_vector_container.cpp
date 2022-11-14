@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/12 17:33:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:34:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 #include "vector.hpp"
 #include <iostream>
 
-#define T_SIZE_TYPE typename LIBRARY::vector<T>::value_type
+#define TESTED_TYPE std::string
+
+// #define T_SIZE_TYPE typename LIBRARY::vector<T>::value_type
+#define T_SIZE_TYPE size_t
+
+
 
 /*
 single element (1)
@@ -83,54 +88,37 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 
 void	test_vector_container( void ) {
 
+
+
 	p3
 		
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~ VECTOR CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
+	
 	{
 
-	LIBRARY::vector< int > vct(10);
-	LIBRARY::vector< int > vct2;
-	LIBRARY::vector< int > vct3;
+	LIBRARY::vector<TESTED_TYPE> vct(8);
+	LIBRARY::vector<TESTED_TYPE> vct2;
+	LIBRARY::vector<TESTED_TYPE>::iterator it = vct.begin();
 
 	for (unsigned long int i = 0; i < vct.size(); ++i)
-		vct[i] = (vct.size() - i) * 3;
-	// printSize(vct);
+		it[i] = std::string((vct.size() - i), i + 65);
+	printSize(vct, true);
 
-	vct2.insert(vct2.end(), 42);
+	std::cout << "push_back():\n" << std::endl;
 
-	vct2.insert(vct2.begin(), 2, 21);
+	vct.push_back("One long string");
+	vct2.push_back("Another long string");
 
-	
+	printSize(vct);
 	printSize(vct2);
 
-	p1 "avant = " p2
-	for (size_t i = 0 ; i < vct2.size() ; i++)
-		p1 vct2[i] << " " p2
-	vct2.insert(vct2.end() - 2, 42);
+	vct.pop_back();
+	vct2.pop_back();
+
+	printSize(vct);
 	printSize(vct2);
-	p1 "apres" p2
-	// for (size_t i = 0 ; i < vct2.size() ; i++)
-	// 	p1 vct2[i] << " " p2
-
-	// vct2.insert(vct2.end(), 2, 84);
-	// printSize(vct2);
-
-	// vct2.resize(4);
-	// printSize(vct2);
-
-	// vct2.insert(vct2.begin() + 2, vct.begin(), vct.end());
-	// vct.clear();
-	// printSize(vct2);
-
-	// printSize(vct);
-
-	// for (int i = 0; i < 5; ++i)
-	// 	vct3.insert(vct3.end(), i);
-	// vct3.insert(vct3.begin() + 1, 2, 111);
-	// printSize(vct3);
-
 
 
 
