@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 11:34:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:57:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 
 
 void	test_vector_container( void ) {
-
-
 
 	p3
 		

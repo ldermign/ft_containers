@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 13:37:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:56:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,7 @@ public:
 		}
 		else if (nbr_element < this->size())
 			this->erase(this->begin() + nbr_element, this->end());
-		else
+		else {}
 			;
 		
 		this->_size = nbr_element;

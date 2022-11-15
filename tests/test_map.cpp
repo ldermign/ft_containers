@@ -1,49 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   test_map.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/15 11:57:08 by ldermign         ###   ########.fr       */
+/*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
+/*   Updated: 2022/11/15 11:57:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
-#include "vector.hpp"
-#include "ft_containers.hpp"
+#include <stdlib.h>
+#include <map>
+#include "map.hpp"
 #include <iostream>
 
-int	main( void ) {
+void	test_map( void ) {
 
-	// test_vector_iterator();
-	// test_vector_reverse_iterator();
-	// test_vector_container();
-	// test_stack();
-	test_map();
-	
-	return 0;
+	p3
+		
+	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
+	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
+	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
+
+
 }
-
-// ft
-/*
-- 0
-- 111
-- 111
-- 3
-- 2
-- 3
-- 4
-*/
-
-// std = 
-/*
-- 0
-- 111
-- 111
-- 1
-- 2
-- 3
-- 4
-*/

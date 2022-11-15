@@ -16,7 +16,8 @@ FTSRCS		= ${FTDIR}main.cpp \
 FTSRCS		+=	${TESTDIR}test_vector_iterator.cpp \
 				${TESTDIR}test_vector_container.cpp \
 				${TESTDIR}test_vector_reverse_iterator.cpp \
-				${TESTDIR}test_stack.cpp
+				${TESTDIR}test_stack.cpp \
+				${TESTDIR}test_map.cpp
 
 # stack
 # SRCS		+= ${STACKDIR}stack.cpp
