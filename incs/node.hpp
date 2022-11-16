@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:27:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/15 14:28:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:25:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,47 @@
 
 START
 
+template< class T >
+struct node {
 
+public:
+
+	typedef T value_type;
+	typedef size_t size_type;
+
+	T		data;
+ 	size_t	color;
+ 	node	*parent; // (except root node)
+ 	node	*left;
+ 	node	*right;
+
+/* ~~~~~ CANONICAL FORM ~~~~~ */
+
+	node( void )
+	: data(0), color(N_BLACK), parent(NULL), left(NULL), right(NULL) {}
+
+	node( const T &src )
+	: data(src.data), color(src.color), parent(src.parent), left(src.left), right(src.right) {}
+
+	node
+	&operator=( const T &rhs ) {
+
+		if (&rhs == this)
+			retun *this;
+
+		rhs.data = this->data;
+		rhs.color = this->color;
+		rhs.parent = this->parent;
+		rhs.left = this->left;
+		rhs.right = this->right;
+
+		return *this;
+	}
+
+	virtual
+	~node( void ) {}
+
+};
 
 STOP
 
