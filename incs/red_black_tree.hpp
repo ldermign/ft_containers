@@ -21,22 +21,38 @@ START
 template< class T, class node = ft::node< T >, class Allocator = std::allocator< node > >
 class RedBlackTree {
 
+public:
+
+	typedef typename ft::node< T >	node_type;
+
 private:
 
-	typename Allocator::pointer	_ptrNode;
-	typename Allocator::pointer	_last;
+	node_type	_ptrNode;
+	node_type	_last;
 
 public:
 
-	typedef ft::node						node_type;
 // le node a 3 pointeurs : le parents (pour remonter l'arbre), gauche et droite pour naviguer
-//
+// couleur + pair entre 2 element de la map
+/*
+
+	rbt = constructeur par copie, par default et sur plage d'ite
+	par defaut, on va creer un node (new) -> ca sera toutes les extremitees,
+	des noeuds qui ne contiennent rien et va delimitee l'arbre binaire, 
+	il va pointer vers end (last pour moi).
+	C'est le last qu'on retourne pour end().
+	Des qu'on incremente les iterateurs, on va aller sur cet elements 
+	(pour voir si on arrive a la fin)
+	On est censee l'alouer des le debut, avec le constructeur par default
+
+
+*/
 
 	typedef T								value_type;
 	typedef value_type&						reference;
 	typedef const value_type&				const_reference;
-	typedef ft::random_iterator< T >		iterator;
-	typedef ft::random_iterator< const T >	const_iterator;
+	// typedef ft::random_iterator< T >		iterator;
+	// typedef ft::random_iterator< const T >	const_iterator;
 	typedef size_t							size_type;
 
 	typedef Allocator							allocator_type;
@@ -46,26 +62,26 @@ public:
 
 /* ~~~~~ CONSTRUCTOR ~~~~~ */
 
-	RedBlackTree( void ) {
+	// RedBlackTree( void ) {
 
-		_last = new node;
-	    _last->color = N_BLACK;
-	    _last->left = NULL;
-	    _last->right = NULL;
-	    _ptrNode = _last;
-	}
+	// 	_last = new node;
+	//     _last->color = N_BLACK;
+	//     _last->left = NULL;
+	//     _last->right = NULL;
+	//     _ptrNode = _last;
+	// }
 
 	virtual
 	~RedBlackTree( void ) {}
 
 	// void
-	// initializeNULLNode(pointer node, pointer parent) {
+	// initializeNULLNode( node_type here, node_type parent ) {
 
-	// 	node->data = 0;
-	// 	node->parent = parent;
-	// 	node->left = NULL;
-	// 	node->right = NULL;
-	// 	node->color = 0;
+	// 	here->data = 0;
+	// 	here->parent = parent;
+	// 	here->left = NULL;
+	// 	here->right = NULL;
+	// 	here->color = 0;
 	// }
 
   // Preorder
