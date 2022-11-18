@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/16 11:48:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:44:45 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,75 +16,100 @@
 #include <iostream>
 #include "ft_containers.hpp"
 #include "reverse_iterator.hpp" // ?????
+#include "red_black_tree.hpp"
 #include "pair.hpp"
 #include "less.hpp"
 
 START
 
-// template<
-// 	class Key,
-// 	class T,
-// 	class Compare = ft::less< Key >,
-// 	class Allocator = std::allocator< ft::pair< const Key, T > > >
-// class map : public ft::iterator< ft::bidirectional_iterator_tag, T > {
-
-// private:
-
-
-
-// public:
-// // types:
-// 	typedef Key									key_type;
-// 	typedef T									mapped_type;
-// 	typedef ft::pair< const Key, T >			value_type;
-// 	typedef Compare								key_compare;
-
-// 	typedef Allocator							allocator_type;
-// 	typedef value_type&					reference;
-// 	typedef const value_type&	const_reference;
-
-// 	// typedef iterator; // See 23.1
-// 	// typedef const_iterator; // See 23.1
-// 	// typedef size_type; // See 23.1
-// 	// typedef difference_type;// See 23.1
-
-// 	typedef typename Allocator::pointer					pointer;
-// 	typedef typename Allocator::const_pointer			const_pointer;
-
+/*
+	Cest un container qui est de type clef-valeur.
+	C'est pourquoi on ne l'utilise qu'avec pair.
 	
-// 	typedef ft::reverse_iterator< iterator >		reverse_iterator;
-// 	typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;
-// // creer iterator bibdirectionnel et faire un typename
+*/
 
-// 	class value_compare : public binary_function< value_type, value_type, bool > {
+template<
+	class Key,
+	class T,
+	class Compare = ft::less< Key >,
+	class Allocator = std::allocator< ft::pair< const Key, T > > >
+class map {
 
-// 		friend class map;
-
-// 		protected:
-
-// 			Compare comp;
-// 			value_compare( key_compare c ) : comp(c) {}
-
-// 		public:
-
-// 			bool operator()( const value_type &x, const value_type &y ) const {
-// 				return comp(x.first, y.first);
-// 			}
-// 	};
-
-// // 23.3.1.1 construct/copy/destroy:
-// 	explicit map( const Compare &comp = Compare(), const Allocator &t = Allocator() );
+public:
+// types:
+	typedef Key							key_type;
+	typedef T							mapped_type;
+	typedef ft::pair< const Key, T >	value_type;
+	typedef std::size_t					size_type;
+	typedef std::ptrdiff_t				difference_type;
 	
-// 	template< class InputIterator >
-// 	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &t = Allocator() );
-	
-// 	map( const map< Key, T, Compare, Allocator > &x );
-	
-// 	virtual	~map( void ) {}
+	typedef Compare				key_compare;
+	typedef Allocator			allocator_type;
+	typedef value_type&			reference;
+	typedef const value_type&	const_reference;
 
-// 	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &x );
+	typedef typename Allocator::pointer			pointer;
+	typedef typename Allocator::const_pointer	const_pointer;
 
-// // iterators:
+/* ~~~~~ RedBlackTree ~~~~~ */
+/*
+	On cree un typedef du RedBlackTree
+	value_type = ft::pair< const Key, T >
+	key_compare = Compare
+	Les clefs (value_type) sont triees en utilisant la fonction Compare.
+*/
+	typedef ft::RedBlackTree< value_type, key_compare >	tree;
+
+/* ~~~~~ ITERATOR ~~~~~ */
+	// typedef	ft::bidirectional_iterator_tag			iterator;
+	// typedef const_iterator;
+//  les 2 sont des iterators a creer pour map
+// pour l'instant, on en a pas besoin pour tester
+
+// eux, ok ?
+	// typedef ft::reverse_iterator< iterator >		reverse_iterator;
+	// typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;	
+
+private:
+
+	tree	_t;
+
+public:
+
+/* ~~~~~ ~~~~~ */
+	class value_compare : public binary_function< value_type, value_type, bool > {
+
+		friend class map;
+
+		protected:
+
+			Compare comp;
+			value_compare( key_compare c ) : comp(c) {}
+
+		public:
+
+			bool operator()( const value_type &x, const value_type &y ) const {
+				return comp(x.first, y.first);
+			}
+	};
+
+// 23.3.1.1 construct/copy/destroy:
+// Complexity: Constant.
+	explicit map( const Compare &comp = Compare(), const Allocator &t = Allocator() );
+	
+	template< class InputIterator >
+	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &t = Allocator() );
+	
+	map( const map< Key, T, Compare, Allocator > &x ) : _t() {
+		
+		(void)x;
+	}
+	
+	virtual	~map( void ) {}
+
+	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &x );
+
+// iterators:
 // 	iterator
 // 	begin( void );
 
@@ -185,7 +210,7 @@ START
 // 		ft::pair< const_iterator, const_iterator >
 // 		equal_range( const key_type &x ) const;
 	
-// 	};
+	};
 
 // 	template< class Key, class T, class Compare, class Allocator >
 // 	bool
@@ -216,7 +241,6 @@ START
 // 	void
 // 	swap( map< Key, T, Compare, Allocator > &x, map< Key, T, Compare, Allocator > &y );
 
-// }
 
 STOP
 

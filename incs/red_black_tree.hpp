@@ -14,21 +14,16 @@
 # define RED_BLACK_TREE_HPP
 
 #include "ft_containers.hpp"
+#include "less.hpp"
 #include "node.hpp"
 
 START
 
-template< class T, class node = ft::node< T >, class Allocator = std::allocator< node > >
+template< 	class T,
+			class Compare,
+			class node = ft::node< T >,
+			class Allocator = std::allocator< node > > // CHECKEEERRR
 class RedBlackTree {
-
-public:
-
-	typedef typename ft::node< T >	node_type;
-
-private:
-
-	node_type	_ptrNode;
-	node_type	_last;
 
 public:
 
@@ -45,20 +40,34 @@ public:
 	(pour voir si on arrive a la fin)
 	On est censee l'alouer des le debut, avec le constructeur par default
 
-
 */
 
-	typedef T								value_type;
-	typedef value_type&						reference;
-	typedef const value_type&				const_reference;
-	// typedef ft::random_iterator< T >		iterator;
-	// typedef ft::random_iterator< const T >	const_iterator;
-	typedef size_t							size_type;
+/* ~~~~~ ARGUMENTS TEMPLATE ~~~~~ */
+	typedef T						value_type;
+	typedef Compare					value_compare;
+	typedef typename ft::node< T >	node_type;
+	typedef Allocator				allocator_type;
 
-	typedef Allocator							allocator_type;
+/* ~~~~~ REFERENCES / POINTERS ~~~~~ */
+	typedef value_type&							reference;
+	typedef const value_type&					const_reference;
 	typedef typename Allocator::pointer			pointer;
 	typedef typename Allocator::const_pointer	const_pointer;
 
+/* ~~~~~ ~~~~~ */
+	// typedef ft::random_iterator< T >		iterator;
+	// typedef ft::random_iterator< const T >	const_iterator;
+	typedef typename Allocator::difference_type	difference_type;
+	typedef size_t								size_type;
+
+
+private:
+
+	node_type	_ptrNode;
+	node_type	_last;
+	size_t		_size; // a faire
+
+public:
 
 /* ~~~~~ CONSTRUCTOR ~~~~~ */
 
@@ -70,6 +79,8 @@ public:
 	//     _last->right = NULL;
 	//     _ptrNode = _last;
 	// }
+
+	RedBlackTree( void ) {}
 
 	virtual
 	~RedBlackTree( void ) {}
@@ -447,19 +458,20 @@ public:
 
 
 /* ~~~~~ INSERT NODE ~~~~~ */
-
+// insert the key to the tree in its appropriate position
+	// and fix the tree
 	void
 	insert( int key ) {
 
-		pointer tmp = new node;
+		node_type tmp = new node;
 		tmp->parent = NULL;
 		tmp->data = key;
 		tmp->left = NULL;
 		tmp->right = NULL;
 		tmp->color = 1;
 
-		pointer y = NULL;
-		pointer x = this->_ptrNode;
+		node_type y = NULL;
+		node_type x = this->_ptrNode;
 
 		while (x != NULL) {
 			y = x;

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:27:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/17 15:25:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:55:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ struct node {
 
 public:
 
-	typedef T value_type;
-	typedef size_t size_type;
+	typedef T		value_type;
+	typedef size_t	size_type;
 
 	T		data;
  	size_t	color;

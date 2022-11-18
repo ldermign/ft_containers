@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/17 15:19:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:27:45 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,16 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	ft::node< std::string >	noeud1;
-	ft::node< std::string >	noeud2(noeud1);
+	ft::node< int >	noeud1;
+	// ft::node< std::string >	noeud2(noeud1);
 	
 	// ft::RedBlackTree< std::string > test(noeud1);
-	ft::RedBlackTree< int > test;
-	test.insert(42);
-	test.insert(0);
-	test.insert(-111);
+	// ft::RedBlackTree test;
+	// test.insert(42);
+	// test.insert(0);
+	// test.insert(-111);
+
+	ft::map< int, int >	test;
 
 	// ft::RedBlackTree	tree();
     // for (int x = 0 ; x < 52 ; x++)
