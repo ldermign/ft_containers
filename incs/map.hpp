@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/21 15:28:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/21 21:37:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ public:
 private:
 
 	tree			_t;
+	node< T >		*_ptrRBT;
+	node< T >		*_endNode;
 	value_compare	new_compare;
 	allocator_type	new_alloc;
 
@@ -103,11 +105,12 @@ public:
 	
 	template< class InputIterator >
 	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &t = Allocator() );
-	
+
 	map( const map< Key, T, Compare, Allocator > &x )
 		: _t(), new_compare(), new_alloc(x) {}
-	
-	virtual	~map( void ) {}
+
+	virtual
+	~map( void ) {}
 
 	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &rhs ) {
 
@@ -123,7 +126,11 @@ public:
 	iterator
 	begin( void ) {
 
-		return this->_t[0];
+		// node *tmp = _ptrRBT;
+		// while (tmp->_left != nil)
+		// 	tmp = tmp->_left;
+		return iterator(tmp, _endNode, _ptrRBT);
+
 	}
 
 	// const_iterator
