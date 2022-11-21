@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/18 14:44:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:28:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 #include <iostream>
 #include "ft_containers.hpp"
-#include "reverse_iterator.hpp" // ?????
 #include "red_black_tree.hpp"
+#include "RedBlackTreeIterator.hpp"
+#include "reverse_iterator.hpp"
 #include "pair.hpp"
 #include "less.hpp"
 
@@ -36,10 +37,11 @@ template<
 class map {
 
 public:
-// types:
+
 	typedef Key							key_type;
 	typedef T							mapped_type;
 	typedef ft::pair< const Key, T >	value_type;
+	typedef ft::node< value_type >		node_type;
 	typedef std::size_t					size_type;
 	typedef std::ptrdiff_t				difference_type;
 	
@@ -61,18 +63,11 @@ public:
 	typedef ft::RedBlackTree< value_type, key_compare >	tree;
 
 /* ~~~~~ ITERATOR ~~~~~ */
-	// typedef	ft::bidirectional_iterator_tag			iterator;
-	// typedef const_iterator;
-//  les 2 sont des iterators a creer pour map
-// pour l'instant, on en a pas besoin pour tester
 
-// eux, ok ?
-	// typedef ft::reverse_iterator< iterator >		reverse_iterator;
-	// typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;	
-
-private:
-
-	tree	_t;
+	typedef ft::RedBlackTreeIterator< value_type, node_type >		iterator;
+	typedef ft::RedBlackTreeIterator< const value_type, node_type >	const_iterator;
+	typedef ft::reverse_iterator< iterator >						reverse_iterator;
+	typedef ft::reverse_iterator< const_iterator >					const_reverse_iterator;
 
 public:
 
@@ -93,31 +88,55 @@ public:
 			}
 	};
 
+private:
+
+	tree			_t;
+	value_compare	new_compare;
+	allocator_type	new_alloc;
+
+public:
+
 // 23.3.1.1 construct/copy/destroy:
 // Complexity: Constant.
-	explicit map( const Compare &comp = Compare(), const Allocator &t = Allocator() );
+	explicit map( const Compare &comp = Compare(), const Allocator &t = Allocator() )
+		: _t(), new_compare(value_compare(comp)), new_alloc(t) {}
 	
 	template< class InputIterator >
 	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &t = Allocator() );
 	
-	map( const map< Key, T, Compare, Allocator > &x ) : _t() {
-		
-		(void)x;
-	}
+	map( const map< Key, T, Compare, Allocator > &x )
+		: _t(), new_compare(), new_alloc(x) {}
 	
 	virtual	~map( void ) {}
 
-	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &x );
+	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &rhs ) {
 
-// iterators:
-// 	iterator
-// 	begin( void );
+		if (&rhs == this)
+			return *this;
+		
+		this->_t = rhs._t;
+		this->new_alloc = rhs.new_alloc;
+		this->new_compare = rhs.new_compare;
+	}
 
-// 	const_iterator
-// 	begin( void ) const;
+/* ~~~~~ ITERATORS ~~~~~ */
+	iterator
+	begin( void ) {
 
-// 	iterator
-// 	end( void );
+		return this->_t[0];
+	}
+
+	// const_iterator
+	// begin( void ) const {
+
+	// 	return const_iterator(this->_t[0]);
+	// }
+
+	// iterator
+	// end( void ) {
+
+	// 	// return ;
+	// }
 
 // 	const_iterator
 // 	end( void ) const;
@@ -134,33 +153,52 @@ public:
 // 	const_reverse_iterator
 // 	rend( void ) const;
 
-// // capacity:
-// 	bool
-// 	empty( void ) const;
+// capacity:
+	bool
+	empty( void ) const {
+
+		return (this->_t._size() == 0);
+	}
+
+	size_type
+	size( void ) const {
+
+		return this->_t.size();
+	}
 
 // 	size_type
-// 	size( void ) const;
+// 	max_size( void ) const {
+// // voir ca plus tard -> taille de la RAM divise par le nombre de nodes ?? 
+// 		return 1;
+// 	}
 
-// 	size_type
-// 	max_size( void ) const;
 
-
-// // 23.3.1.2 element access:
+// //  element access:
 // 	T &operator[]( const key_type &x );
 
-// // modifiers:
-// 	ft::pair< iterator, bool >
-// 	insert( const value_type &x );
+// modifiers:
+	// ft::pair< iterator, bool >
+	// insert( const value_type &x ) {
 
-// 	iterator
-// 	insert( iterator position, const value_type &x );
+	// 	this->_t.insert(x);
+
+	// 	return 
+	// }
+
+	// iterator
+	// insert( iterator position, const value_type &x ) {
+
+	// 	this->_t.insert()
+	// }
 
 // 	template< class InputIterator >
 // 	void
 // 	insert( InputIterator first, InputIterator last );
 
-// 	void
-// 	erase( iterator position );
+	// void
+	// erase( iterator position ) {
+		
+	// }
 
 // 	size_type
 // 	erase( const key_type &x );
@@ -212,34 +250,41 @@ public:
 	
 	};
 
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	bool
-// 	operator==( const map< Key, T, Compare, Allocator > &x, const map< Key, T, Compare, Allocator > &y);
+	template< class Key, class T, class Compare, class Allocator >
+	bool
+	operator==( const ft::map< Key, T, Compare, Allocator > &x, const ft::map< Key, T, Compare, Allocator > &y);
 
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	bool
-// 	operator!=( const map< Key, T, Compare, Allocator > &x, const map< Key, T, Compare, Allocator > &y);
+	template< class Key, class T, class Compare, class Allocator >
+	bool
+	operator!=( const ft::map< Key, T, Compare, Allocator > &x, const ft::map< Key, T, Compare, Allocator > &y) {
 
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	bool
-// 	operator<( const map< Key, T, Compare, Allocator > &x, const map< Key, T, Compare, Allocator > &y);
+		return !(x == y);
+	}
 
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	bool
-// 	operator>( const map< Key, T, Compare, Allocator > &x, const map< Key, T, Compare, Allocator > &y);
+	template< class Key, class T, class Compare, class Allocator >
+	bool
+	operator<( const ft::map< Key, T, Compare, Allocator > &x, const ft::map< Key, T, Compare, Allocator > &y);
 
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	bool
-// 	operator>=( const map< Key, T, Compare, Allocator > &x, const map< Key, T, Compare, Allocator > &y);
+	template< class Key, class T, class Compare, class Allocator >
+	bool
+	operator>( const ft::map< Key, T, Compare, Allocator > &x, const ft::map< Key, T, Compare, Allocator > &y);
+	// {
+// 
+		// // return (x > y);
+	// }
 
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	bool
-// 	operator<=( const map< Key, T, Compare, Allocator > &x, const map< Key, T, Compare, Allocator > &y);
+	template< class Key, class T, class Compare, class Allocator >
+	bool
+	operator>=( const ft::map< Key, T, Compare, Allocator > &x, const ft::map< Key, T, Compare, Allocator > &y);
 
-// // specialized algorithms:
-// 	template< class Key, class T, class Compare, class Allocator >
-// 	void
-// 	swap( map< Key, T, Compare, Allocator > &x, map< Key, T, Compare, Allocator > &y );
+	template< class Key, class T, class Compare, class Allocator >
+	bool
+	operator<=( const ft::map< Key, T, Compare, Allocator > &x, const ft::map< Key, T, Compare, Allocator > &y);
+
+// specialized algorithms:
+	template< class Key, class T, class Compare, class Allocator >
+	void
+	swap( ft::map< Key, T, Compare, Allocator > &x, ft::map< Key, T, Compare, Allocator > &y );
 
 
 STOP
