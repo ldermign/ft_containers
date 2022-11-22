@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 13:53:34 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:57:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,6 @@ public:
 	iterator
 	begin( void ) {
 
-		// node *tmp = _ptrRBT;
-		// while (tmp->_left != nil)
-		// 	tmp = tmp->_left;
-		// return iterator(tmp, _endNode, _ptrRBT);
 		return NULL;
 
 	}
