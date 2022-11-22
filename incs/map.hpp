@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/21 21:37:39 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:50:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ class map {
 
 public:
 
-	typedef Key							key_type;
-	typedef T							mapped_type;
-	typedef ft::pair< const Key, T >	value_type;
-	typedef ft::node< value_type >		node_type;
-	typedef std::size_t					size_type;
-	typedef std::ptrdiff_t				difference_type;
+	typedef Key										key_type;
+	typedef T										mapped_type;
+	typedef ft::pair< const key_type, mapped_type >	value_type;
+	typedef ft::node< value_type >					node_type;
+	typedef std::size_t								size_type;
+	typedef std::ptrdiff_t							difference_type;
 	
 	typedef Compare				key_compare;
 	typedef Allocator			allocator_type;
@@ -91,8 +91,8 @@ public:
 private:
 
 	tree			_t;
-	node< T >		*_ptrRBT;
-	node< T >		*_endNode;
+	// node< T >		*_ptrRBT;
+	// node< T >		*_endNode;
 	value_compare	new_compare;
 	allocator_type	new_alloc;
 
@@ -101,13 +101,18 @@ public:
 // 23.3.1.1 construct/copy/destroy:
 // Complexity: Constant.
 	explicit map( const Compare &comp = Compare(), const Allocator &t = Allocator() )
-		: _t(), new_compare(value_compare(comp)), new_alloc(t) {}
-	
-	template< class InputIterator >
-	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &t = Allocator() );
+		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(t) {}
 
-	map( const map< Key, T, Compare, Allocator > &x )
-		: _t(), new_compare(), new_alloc(x) {}
+/* CONSTRUCTOR WITH RANGE OF ITERATORS */
+	template< class InputIterator >
+	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &alloc = Allocator() )
+		: _t(), new_compare(comp), new_alloc(alloc) {
+
+		this->insert(first, last);
+	}
+
+	// map( const map< Key, T, Compare, Allocator > &alloc )
+	// 	: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {}
 
 	virtual
 	~map( void ) {}
@@ -129,7 +134,8 @@ public:
 		// node *tmp = _ptrRBT;
 		// while (tmp->_left != nil)
 		// 	tmp = tmp->_left;
-		return iterator(tmp, _endNode, _ptrRBT);
+		// return iterator(tmp, _endNode, _ptrRBT);
+		return NULL;
 
 	}
 
@@ -161,17 +167,17 @@ public:
 // 	rend( void ) const;
 
 // capacity:
-	bool
-	empty( void ) const {
+	// bool
+	// empty( void ) const {
 
-		return (this->_t._size() == 0);
-	}
+	// 	return (this->_t._size() == 0);
+	// }
 
-	size_type
-	size( void ) const {
+	// size_type
+	// size( void ) const {
 
-		return this->_t.size();
-	}
+	// 	return this->_t.size();
+	// }
 
 // 	size_type
 // 	max_size( void ) const {
@@ -183,24 +189,37 @@ public:
 // //  element access:
 // 	T &operator[]( const key_type &x );
 
-// modifiers:
+/* ~~~~~ INSERT ~~~~~ */
 	// ft::pair< iterator, bool >
 	// insert( const value_type &x ) {
 
-	// 	this->_t.insert(x);
-
-	// 	return 
+	// 	(void)x;
+	// 	return NULL;
+	// 	// return (ft::make_pair(find(x.first), this->_t.insert(x)));
 	// }
 
-	// iterator
-	// insert( iterator position, const value_type &x ) {
+// 	iterator
+// 	insert( iterator position, const value_type &x ) {
+// (void)position;(void)x;
+// 		p1 "test" p2
+// 		// this->insert(x);
+// // 			return this->find(x.first);
+// 		// this->_t.insert()
+// 		return NULL;
+// 	}
 
-	// 	this->_t.insert()
-	// }
+	template< class InputIterator >
+	void
+	insert( InputIterator first, InputIterator last ) {
+	// call 1 insert
 
-// 	template< class InputIterator >
-// 	void
-// 	insert( InputIterator first, InputIterator last );
+		for (; first != last ; first++) {
+			// p1 "test" p2
+			this->insert(*first);
+		}
+	}
+
+
 
 	// void
 	// erase( iterator position ) {
@@ -227,9 +246,11 @@ public:
 // 	value_comp( void ) const;
 
 
-// 		// 23.3.1.3 map operations:
-// 		iterator
-// 		find( const key_type &x );
+/* ~~~~~ OPERATIONS ~~~~~ */
+		// iterator
+		// find( const key_type &x ) {
+			
+		// }
 
 // 		const_iterator
 // 		find( const key_type & x) const;

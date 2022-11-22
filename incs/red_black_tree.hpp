@@ -82,6 +82,7 @@ public:
 	// }
 
 	RedBlackTree( void ) {}
+		// : _last(new node), _last->color(N_BLACK), _last->left(NULL), _last->right(NULL), _ptrNode(_last) {}
 
 	virtual
 	~RedBlackTree( void ) {}
@@ -216,10 +217,10 @@ private:
 	void
 	deleteNodeHelper( pointer tmp, int key ) {
 
-		pointer z = NULL;
+		pointer z = this->_last;
 		pointer x, y;
 
-		while (tmp != NULL) {
+		while (tmp != this->_last) {
 			if (tmp->data == key)
 				z = tmp;
 
@@ -228,14 +229,14 @@ private:
 			else
 				tmp = tmp->left;
 		}
-		if (z == NULL) {
+		if (z == this->_last) {
 			p1 "Key not found in the tree" p2;
 			return;
 		}
 
 		y = z;
 		int y_original_color = y->color;
-		if (z->left == NULL) {
+		if (z->left == this->_last) {
 			x = z->right;
 			rbTransplant(z, z->right);
 		}
@@ -317,7 +318,7 @@ private:
 	void
 	printHelper( pointer root, std::string indent, bool last ) {
 	
-		if (root != NULL) {
+		if (root != this->_last) {
 			p1 indent;
 			if (last) {
 				p1 "R----";
@@ -363,7 +364,7 @@ public:
 	pointer
 	minimum( pointer tmp ) {
 
-		while (tmp->left != NULL)
+		while (tmp->left != this->_last)
 			tmp = tmp->left;
 		return tmp;
 	}
@@ -371,7 +372,7 @@ public:
 	pointer
 	maximum( pointer tmp ) {
 
-		while (tmp->right != NULL) {
+		while (tmp->right != this->_last) {
 			tmp = tmp->right;
 		}
 		return tmp;
@@ -380,11 +381,11 @@ public:
 	pointer
 	successor( pointer x ) {
 
-		if (x->right != NULL)
+		if (x->right != this->_last)
 			return minimum(x->right);
 
 		pointer y = x->parent;
-		while (y != NULL && x == y->right) {
+		while (y != this->_last && x == y->right) {
 			x = y;
 			y = y->parent;
 		}
@@ -394,12 +395,12 @@ public:
 	pointer
 	predecessor( pointer x ) {
 
-		if (x->left != NULL) {
+		if (x->left != this->_last) {
 			return maximum(x->left);
 		}
 
 		pointer y = x->parent;
-		while (y != NULL && x == y->left) {
+		while (y != this->_last && x == y->left) {
 			x = y;
 			y = y->parent;
 		}
@@ -418,7 +419,7 @@ public:
 
 		pointer y = x->right; // set y
 		x->right = y->left; // turn y’s left subtree into x’s right subtree
-		if (y->left != NULL)
+		if (y->left != this->_last)
 			y->left->parent = x;
 		y->parent = x->parent; // link x’s parent to y
 		if (x->parent == NULL)
@@ -438,7 +439,7 @@ public:
 		pointer y = x->left;
 		x->left = y->right;
 
-		if (y->right != NULL)
+		if (y->right != this->_last)
 			y->right->parent = x;
 		y->parent = x->parent;
 
@@ -467,14 +468,14 @@ public:
 		node_type tmp = new node;
 		tmp->parent = NULL;
 		tmp->data = key;
-		tmp->left = NULL;
-		tmp->right = NULL;
+		tmp->left = this->_last;
+		tmp->right = this->_last;
 		tmp->color = 1;
 
 		node_type y = NULL;
 		node_type x = this->_ptrNode;
 
-		while (x != NULL) {
+		while (x != this->_last) {
 			y = x;
 			if (tmp->data < x->data)
 				x = x->left;

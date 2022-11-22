@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/21 21:08:29 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:33:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ struct pair {
 	virtual
 	~pair( void ) {}
 
-/* MAKE PAIR */
-	pair< T1, T2 > make_pair( T1 x, T2 y ) {
+};
 
-		return (pair< T1, T2 > (x,y) );
-	}
+/* ~~~~~ MAKE PAIR ~~~~~ */
+template< class T1, class T2 >
+ft::pair< T1, T2 > make_pair( T1 x, T2 y ) {
 
+	return (ft::pair< T1, T2 > (x,y));
 };
 
 template< class T1, class T2 >
