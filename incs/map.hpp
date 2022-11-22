@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 13:57:06 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:46:49 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "red_black_tree.hpp"
 #include "RedBlackTreeIterator.hpp"
 #include "reverse_iterator.hpp"
+#include "enable_if.hpp"
 #include "pair.hpp"
 #include "less.hpp"
 
@@ -41,7 +42,7 @@ public:
 	typedef Key										key_type;
 	typedef T										mapped_type;
 	typedef ft::pair< const key_type, mapped_type >	value_type;
-	typedef ft::node< value_type >					node_type;
+	typedef ft::Node< value_type >					node_type;
 	typedef std::size_t								size_type;
 	typedef std::ptrdiff_t							difference_type;
 	
@@ -117,6 +118,8 @@ public:
 	virtual
 	~map( void ) {}
 
+
+/* CONSTRUCTORS BY COPY */
 	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &rhs ) {
 
 		if (&rhs == this)
@@ -127,15 +130,15 @@ public:
 		this->new_compare = rhs.new_compare;
 	}
 
-/* ~~~~~ ITERATORS ~~~~~ */
-	iterator
-	begin( void ) {
-
-		return NULL;
-
-	}
-
-	// const_iterator
+	// map
+	// &operator=( const map &rhs )
+	// {
+	// 	if (&rhs == this)
+	// 		return *this;
+		
+	// 	this->~map();
+	// 	this->_t = ft::RedBlackTree< value_type, value_compare >(value_compare(key_compare()));
+	// 	insert(rhs.begin(), rhs.end())get_root
 	// begin( void ) const {
 
 	// 	return const_iterator(this->_t[0]);
@@ -191,8 +194,8 @@ public:
 
 		(void)x;
 		p1 "bah non en fait" p2
-		return NULL;
-	// 	// return (ft::make_pair(find(x.first), this->_t.insert(x)));
+		// return NULL;
+		return (ft::make_pair(this->find(x.first), this->_t.insert(x)));
 	}
 
 // 	iterator
@@ -208,6 +211,7 @@ public:
 			// p1 "test" p2
 			this->insert(*first);
 		}
+
 	}
 
 
@@ -238,10 +242,12 @@ public:
 
 
 /* ~~~~~ OPERATIONS ~~~~~ */
-		// iterator
-		// find( const key_type &x ) {
-			
-		// }
+	iterator
+	find( const key_type &x ) {
+		(void)x;
+// revoir ->>>>>>>
+		// return iterator(this->_t, this->_t._last, this->_t.searchTree(ft::make_pair(x, mapped_type())));
+	}
 
 // 		const_iterator
 // 		find( const key_type & x) const;

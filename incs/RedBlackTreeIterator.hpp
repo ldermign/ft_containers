@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/21 15:07:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:42:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 #include "iterator.hpp"
 #include "ft_containers.hpp"
-#include "node.hpp"
+#include "Node.hpp"
 
 // template
 // https://cdmana.com/2021/12/202112300642463009.html
 
 START
 
-template< class T, class node >
+template< class T, class Node >
 struct RedBlackTreeIterator : public ft::iterator< ft::bidirectional_iterator_tag, T > {
 
 public:
 
 	typedef RedBlackTreeIterator	Self;
-	typedef ft::node< T >			Node;
+	// typedef ft::Node< T >			Node;
 
 private:
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 13:34:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:25:40 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	printReverse(LIBRARY::map<T1, T2> &mp)
 
 #define T1 char
 #define T2 int
-typedef std::pair<const T1, T2> T3;
+typedef _pair<const T1, T2> T3;
 
 template <class T>
 void	is_empty(T const &mp)

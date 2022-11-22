@@ -14,16 +14,17 @@
 # define RED_BLACK_TREE_HPP
 
 #include "ft_containers.hpp"
+#include "nullptr.hpp"
 #include "less.hpp"
-#include "node.hpp"
+#include "Node.hpp"
 #include "RedBlackTreeIterator.hpp"
 
 START
 
 template< 	class T,
 			class Compare,
-			class node = ft::node< T >,
-			class Allocator = std::allocator< node > > // CHECKEEERRR
+			class Node = ft::Node< T >,
+			class Allocator = std::allocator< Node > > // CHECKEEERRR
 class RedBlackTree {
 
 public:
@@ -46,7 +47,7 @@ public:
 /* ~~~~~ ARGUMENTS TEMPLATE ~~~~~ */
 	typedef T						value_type;
 	typedef Compare					value_compare;
-	typedef typename ft::node< T >	node_type;
+	typedef typename ft::Node< T >	node_type;
 	typedef Allocator				allocator_type;
 
 /* ~~~~~ REFERENCES / POINTERS ~~~~~ */
@@ -64,24 +65,24 @@ public:
 
 private:
 
-	node_type	_ptrNode;
-	node_type	_last;
-	size_t		_size; // a faire
+	Node	*_ptrNode;
+	Node	*_last;
+	size_t	_size; // a faire
 
 public:
 
 /* ~~~~~ CONSTRUCTOR ~~~~~ */
 
-	// RedBlackTree( void ) {
+	RedBlackTree( void ) {
 
-	// 	_last = new node;
-	//     _last->color = N_BLACK;
-	//     _last->left = NULL;
-	//     _last->right = NULL;
-	//     _ptrNode = _last;
-	// }
+		this->_last = new Node;
+		this->_last->color = N_BLACK;
+		this->_last->left = nullptr_t;
+		this->_last->right = nullptr_t;
+		_ptrNode = _last;
+	}
 
-	RedBlackTree( void ) {}
+	// RedBlackTree( void ) {}
 		// : _last(new node), _last->color(N_BLACK), _last->left(NULL), _last->right(NULL), _ptrNode(_last) {}
 
 	virtual
@@ -124,10 +125,11 @@ public:
 // }
 // }
 
-// pointer searchTreeHelper(pointer node, int key) {
-// if (node == NULL || key == node->data) {
-// return node;
-// }
+	pointer searchTreeHelper(pointer node, int key) {
+		if (node == nullptr_t || key == node->data) {
+			return node;
+		}
+	}
 
 // if (key < node->data) {
 // return searchTreeHelper(node->left, key);
@@ -135,38 +137,37 @@ public:
 // return searchTreeHelper(node->right, key);
 // }
 
-private:
-
+// private:
   // For balancing the tree after deletion
 	void
 	deleteFix( pointer x ) {
 
 		pointer s;
 
-		while (x != _ptrNode && x->color == 0) {
+		while (x != _ptrNode && x->color == N_BLACK) {
 
 			if (x == x->parent->left) {
 				s = x->parent->right;
-				if (s->color == 1) {
-					s->color = 0;
-					x->parent->color = 1;
+				if (s->color == N_RED) {
+					s->color = N_BLACK;
+					x->parent->color = N_RED;
 					leftRotate(x->parent);
 					s = x->parent->right;
 				}
-				if (s->left->color == 0 && s->right->color == 0) {
-					s->color = 1;
+				if (s->left->color == N_BLACK && s->right->color == N_BLACK) {
+					s->color = N_RED;
 					x = x->parent;
 				}
 				else {
-					if (s->right->color == 0) {
-						s->left->color = 0;
-						s->color = 1;
+					if (s->right->color == N_BLACK) {
+						s->left->color = N_BLACK;
+						s->color = N_RED;
 						rightRotate(s);
 						s = x->parent->right;
 					}
 					s->color = x->parent->color;
-					x->parent->color = 0;
-					s->right->color = 0;
+					x->parent->color = N_BLACK;
+					s->right->color = N_BLACK;
 					leftRotate(x->parent);
 					x = _ptrNode;
 				}
@@ -205,7 +206,7 @@ private:
 	void
 	rbTransplant( pointer u, pointer v ) {
 
-		if (u->parent == NULL)
+		if (u->parent == nullptr_t)
 			_ptrNode = v;
 		else if (u == u->parent->left)
 			u->parent->left = v;
@@ -240,7 +241,7 @@ private:
 			x = z->right;
 			rbTransplant(z, z->right);
 		}
-		else if (z->right == NULL) {
+		else if (z->right == this->_last) {
 			x = z->left;
 			rbTransplant(z, z->left);
 		}
@@ -422,8 +423,8 @@ public:
 		if (y->left != this->_last)
 			y->left->parent = x;
 		y->parent = x->parent; // link x’s parent to y
-		if (x->parent == NULL)
-			this->root = y;
+		if (x->parent == nullptr_t)
+			this->_ptrNode = y;
 		else if (x == x->parent->left)
 			x->parent->left = y;
 		else
@@ -443,8 +444,8 @@ public:
 			y->right->parent = x;
 		y->parent = x->parent;
 
-		if (x->parent == NULL)
-			this->root = y;
+		if (x->parent == nullptr_t)
+			this->_ptrNode = y;
 
 		else if (x == x->parent->right)
 			x->parent->right = y;
@@ -464,16 +465,16 @@ public:
 	// and fix the tree
 	void
 	insert( int key ) {
-
-		node_type tmp = new node;
-		tmp->parent = NULL;
+// Ordinary Binary Search Insertion
+		Node *tmp = new Node;
+		tmp->parent = nullptr_t;
 		tmp->data = key;
 		tmp->left = this->_last;
 		tmp->right = this->_last;
-		tmp->color = 1;
+		tmp->color = N_RED; // new node must be red
 
-		node_type y = NULL;
-		node_type x = this->_ptrNode;
+		Node *y = nullptr_t;
+		Node *x = this->_ptrNode;
 
 		while (x != this->_last) {
 			y = x;
@@ -483,20 +484,26 @@ public:
 				x = x->right;
 		}
 
+		// y is parent of x
 		tmp->parent = y;
-		if (y == NULL)
+		if (y == nullptr_t)
 			_ptrNode = tmp;
 		else if (tmp->data < y->data)
 			y->left = tmp;
 		else
 			y->right = tmp;
-		if (tmp->parent == NULL) {
-			tmp->color = 0;
+
+		// if new node is a root node, simply return
+		if (tmp->parent == nullptr_t) {
+			tmp->color = N_BLACK;
 			return;
 		}
-		if (tmp->parent->parent == NULL)
-			return;
 
+		// if the grandparent is null, simply return
+		if (tmp->parent->parent == nullptr_t)
+			return ;
+
+		// Fix the tree
 		insertFix(tmp);
 	}
 
@@ -520,8 +527,6 @@ public:
 		if (_ptrNode)
 			printHelper(this->_ptrNode, "", true);
 	}
-
-
 
 };
 

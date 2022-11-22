@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node.hpp                                           :+:      :+:    :+:   */
+/*   Node.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:27:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/18 14:55:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:40:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 START
 
 template< class T >
-struct node {
+struct Node {
 
 public:
 
@@ -28,22 +28,22 @@ public:
 
 	T		data;
  	size_t	color;
- 	node	*parent; // (except root node)
- 	node	*left;
- 	node	*right;
+ 	Node	*parent; // (except root node)
+ 	Node	*left;
+ 	Node	*right;
 
 /* ~~~~~ CANONICAL FORM ~~~~~ */
 
-	node( void )
+	Node( void )
 		: data(), color(N_BLACK), parent(NULL), left(NULL), right(NULL) {}
 
-	node( T *new_data )
+	Node( T *new_data )
 		: data(new_data), color(N_BLACK), parent(NULL), left(NULL), right(NULL) {}
 
-	node( const T &src )
+	Node( const T &src )
 		: data(src.data), color(src.color), parent(src.parent), left(src.left), right(src.right) {}
 
-	node
+	Node
 	&operator=( const T &rhs ) {
 
 		if (&rhs == this)
@@ -59,7 +59,7 @@ public:
 	}
 
 	virtual
-	~node( void ) {}
+	~Node( void ) {}
 
 };
 

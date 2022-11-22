@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 11:33:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:41:43 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,17 @@ struct pair {
 /* CONSTRUCTEUR */
 	pair( void ) : first(), second() {}
 
+	pair ( const first_element &a, const second_element &b )
+		: first(a), second(b) {}
+
 /* CONSTRUCTEUR */
 	template< class T, class U >
-	pair( const pair< T, U > &src ) : first(src.first), second(src.second) {} 
+	pair( const pair< T, U > &src )
+		: first(src.first), second(src.second) {} 
 
 /* CONSTRUCTEUR PAR COPIE */
 	pair
-	&operator=( pair const &y ) {
+	&operator=( const pair &y ) {
 
 		if (&y == this)
 			return *this;
@@ -63,8 +67,8 @@ struct pair {
 template< class T1, class T2 >
 ft::pair< T1, T2 > make_pair( T1 x, T2 y ) {
 
-	return (ft::pair< T1, T2 > (x,y));
-};
+	return (ft::pair< T1, T2 >(x,y));
+}
 
 template< class T1, class T2 >
 bool
@@ -78,25 +82,25 @@ operator!=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return !(x == y);
 }
 
-template<class T1, class T2>
+template< class T1, class T2 >
 bool
 operator<( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return x.first < y.first || (!(y.first < x.first) && x.second < y.second);
 }
 
-template<class T1, class T2>
+template< class T1, class T2 >
 bool
 operator<=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return !(y < x);
 }
 
-template<class T1, class T2>
+template< class T1, class T2 >
 bool
 operator>( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return y < x;
 }
 
-template<class T1, class T2>
+template< class T1, class T2 >
 bool
 operator>=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return !(x < y);

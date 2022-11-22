@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enable_if.hpp                                      :+:      :+:    :+:   */
+/*   nullptr.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 14:57:09 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 14:00:02 by ldermign         ###   ########.fr       */
+/*   Created: 2022/11/22 15:02:16 by ldermign          #+#    #+#             */
+/*   Updated: 2022/11/22 15:28:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENABLE_IF_HPP
-# define ENABLE_IF_HPP
+#ifndef NULLPTR_HPP
+# define NULLPTR_HPP
+
+// https://stackoverflow.com/questions/1282295/what-exactly-is-nullptr
 
 #include "ft_containers.hpp"
 
 START
 
-template< bool B, class T = void >
-struct enable_if {};
- 
-template< class T >
-struct enable_if< true, T > {
+struct nullptr_ {
 
-	typedef T type;
+	nullptr_( void ) {}
+
+    void operator &() const;  // Can't take address of nullptr
+
+    template< class T >
+    inline operator T*() const {
+		return 0;
+	}
+
+    template< class C, class T >
+    inline operator T C::*() const {
+		return 0;
+	}
 };
+
+nullptr_ nullptr_t;
 
 STOP
 
