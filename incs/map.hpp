@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 13:50:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:53:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,22 +190,17 @@ public:
 // 	T &operator[]( const key_type &x );
 
 /* ~~~~~ INSERT ~~~~~ */
-	// ft::pair< iterator, bool >
-	// insert( const value_type &x ) {
+	ft::pair< iterator, bool >
+	insert( const value_type &x ) {
 
-	// 	(void)x;
-	// 	return NULL;
+		(void)x;
+		p1 "bah non en fait" p2
+		return NULL;
 	// 	// return (ft::make_pair(find(x.first), this->_t.insert(x)));
-	// }
+	}
 
 // 	iterator
 // 	insert( iterator position, const value_type &x ) {
-// (void)position;(void)x;
-// 		p1 "test" p2
-// 		// this->insert(x);
-// // 			return this->find(x.first);
-// 		// this->_t.insert()
-// 		return NULL;
 // 	}
 
 	template< class InputIterator >
