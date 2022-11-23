@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 15:41:43 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:08:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 // https://clickhouse.com/codebrowser/ClickHouse/contrib/libcxx/include/__utility/pair.h.html#std::pair
 // pour les operateurs relationnels
 // https://cplusplus.com/reference/utility/pair/operators/
+// pour les types membres
+// https://en.cppreference.com/w/cpp/utility/pair
 
 
 START
@@ -27,16 +29,16 @@ START
 template< class T1, class T2 >
 struct pair {
 
-	typedef T1	first_element;
-	typedef T2	second_element;
+	typedef T1	first_type;
+	typedef T2	second_type;
 
-	first_element	first;
-	second_element	second;
+	first_type	first;
+	second_type	second;
 
 /* CONSTRUCTEUR */
 	pair( void ) : first(), second() {}
 
-	pair ( const first_element &a, const second_element &b )
+	pair ( const first_type &a, const second_type &b )
 		: first(a), second(b) {}
 
 /* CONSTRUCTEUR */
@@ -45,16 +47,20 @@ struct pair {
 		: first(src.first), second(src.second) {} 
 
 /* CONSTRUCTEUR PAR COPIE */
-	pair
-	&operator=( const pair &y ) {
+	pair &operator=( const pair &other ) {
 
-		if (&y == this)
+		if (&other == this)
 			return *this;
 
-        this->first = y.first;
-        this->second = y.second;
+        this->first = other.first;
+        this->second = other.second;
 
         return *this;
+	}
+
+	operator	pair< const T1, const T2 > (void) const {
+
+		return pair< const T1, const T2 >(first, second);
 	}
 
 /* DESTRUCTCEUR */

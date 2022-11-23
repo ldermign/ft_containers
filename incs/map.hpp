@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 15:46:49 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:38:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ public:
 	key_compare = Compare
 	Les clefs (value_type) sont triees en utilisant la fonction Compare.
 */
-	typedef ft::RedBlackTree< value_type, key_compare >	tree;
 
 /* ~~~~~ ITERATOR ~~~~~ */
 
@@ -88,13 +87,15 @@ public:
 				return comp(x.first, y.first);
 			}
 	};
+	
+	typedef ft::RedBlackTree< value_type, value_compare >	tree;
 
 private:
 
+	value_compare	new_compare;
 	tree			_t;
 	// node< T >		*_ptrRBT;
 	// node< T >		*_endNode;
-	value_compare	new_compare;
 	allocator_type	new_alloc;
 
 public:
@@ -107,7 +108,7 @@ public:
 /* CONSTRUCTOR WITH RANGE OF ITERATORS */
 	template< class InputIterator >
 	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &alloc = Allocator() )
-		: _t(), new_compare(comp), new_alloc(alloc) {
+		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {
 
 		this->insert(first, last);
 	}
@@ -139,16 +140,19 @@ public:
 	// 	this->~map();
 	// 	this->_t = ft::RedBlackTree< value_type, value_compare >(value_compare(key_compare()));
 	// 	insert(rhs.begin(), rhs.end())get_root
-	// begin( void ) const {
 
-	// 	return const_iterator(this->_t[0]);
-	// }
+/* ~~~~~ ITERATORS ~~~~~ */
+	iterator
+	begin( void ) const {
 
-	// iterator
-	// end( void ) {
+		return iterator(this->_t.getPtrNode(), this->_t.getLast(), this->_t.getMinimum());
+	}
 
-	// 	// return ;
-	// }
+	iterator
+	end( void ) {
+
+		return iterator(this->_t.getPtrNode(), this->_t.getLast(), this->_t.getMaximum());
+	}
 
 // 	const_iterator
 // 	end( void ) const;
@@ -192,10 +196,9 @@ public:
 	ft::pair< iterator, bool >
 	insert( const value_type &x ) {
 
-		(void)x;
-		p1 "bah non en fait" p2
 		// return NULL;
-		return (ft::make_pair(this->find(x.first), this->_t.insert(x)));
+		return (ft::make_pair(this->find(x), this->_t.insert(x)));
+
 	}
 
 // 	iterator
@@ -243,10 +246,14 @@ public:
 
 /* ~~~~~ OPERATIONS ~~~~~ */
 	iterator
-	find( const key_type &x ) {
+	find( const value_type &x ) {
+
 		(void)x;
 // revoir ->>>>>>>
-		// return iterator(this->_t, this->_t._last, this->_t.searchTree(ft::make_pair(x, mapped_type())));
+		// const bool	r = this->_t.insert(x);
+		// return ft::make_pair(this->find(x), r);
+		return (iterator(this->_t.search(x), this->_t.getPtrNode(), this->_t.getLast()));
+		// return iterator(this->_t, this->_t.getLast(), this->_t.searchTree(ft::make_pair(x, mapped_type())));
 	}
 
 // 		const_iterator

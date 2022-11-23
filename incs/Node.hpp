@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:27:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 14:40:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:13:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ public:
 
 	Node( T *new_data )
 		: data(new_data), color(N_BLACK), parent(NULL), left(NULL), right(NULL) {}
+
+	Node( value_type v, Node *p, Node* l, Node *r, size_t c )
+		: data(v), color(c), parent(p), left(l), right(r) {}
 
 	Node( const T &src )
 		: data(src.data), color(src.color), parent(src.parent), left(src.left), right(src.right) {}

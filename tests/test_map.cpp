@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 14:25:40 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:38:19 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ void	test_map( void ) {
 		lst.push_back(T3(lst_size - i, i));
 
 	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
-	// LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
 
-	// LIBRARY::map<T1, T2> mp_range(it, --(--ite));
-	// for (int i = 0; it != ite; ++it)
-	// 	it->second = ++i * 5;
+	LIBRARY::map<T1, T2> mp_range(it, --(--ite));
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 5;
 
 	// it = mp.begin(); ite = --(--mp.end());
 	// LIBRARY::map<T1, T2> mp_copy(mp);

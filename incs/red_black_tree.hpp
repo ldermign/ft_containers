@@ -65,15 +65,16 @@ public:
 
 private:
 
-	Node	*_ptrNode;
-	Node	*_last;
-	size_t	_size; // a faire
+	value_compare	comp;
+	Node			*_ptrNode;
+	Node			*_last;
+	size_t			_size; // a faire
 
 public:
 
 /* ~~~~~ CONSTRUCTOR ~~~~~ */
 
-	RedBlackTree( void ) {
+	RedBlackTree( const value_compare & c ) : comp(c) {
 
 		this->_last = new Node;
 		this->_last->color = N_BLACK;
@@ -87,6 +88,32 @@ public:
 
 	virtual
 	~RedBlackTree( void ) {}
+
+/* ~~~~~ ACCESSORS ~~~~~ */
+
+	value_compare	getComp( void ) const { return this->comp; }
+	Node			*getPtrNode( void ) const { return this->_ptrNode; }
+	Node			*getLast( void ) const { return this->_last; }
+	size_t			getSize( void ) const { return this->_size; }
+	pointer			getMinimum( void ) const { return this->minimum(this->_ptrNode); }
+	pointer			getMaximum( void ) const { return this->maximum(this->_ptrNode); }
+
+	pointer
+	search( const value_type &value ) {
+
+		pointer	idx = _ptrNode;
+
+		while (idx != this->_last) {
+			if (idx->data == value)
+				return (idx);
+			if (comp(idx->left->data, value))
+				idx = idx->left;
+			else
+				idx = idx->right;
+		}
+
+		return (nullptr_t);
+	}
 
 	// void
 	// initializeNULLNode( node_type here, node_type parent ) {
@@ -125,17 +152,7 @@ public:
 // }
 // }
 
-	pointer searchTreeHelper(pointer node, int key) {
-		if (node == nullptr_t || key == node->data) {
-			return node;
-		}
-	}
 
-// if (key < node->data) {
-// return searchTreeHelper(node->left, key);
-// }
-// return searchTreeHelper(node->right, key);
-// }
 
 // private:
   // For balancing the tree after deletion
@@ -174,26 +191,26 @@ public:
 			}
 			else {
 				s = x->parent->left;
-				if (s->color == 1) {
-					s->color = 0;
-					x->parent->color = 1;
+				if (s->color == N_RED) {
+					s->color = N_BLACK;
+					x->parent->color = N_RED;
 					rightRotate(x->parent);
 					s = x->parent->left;
 				}
-				if (s->right->color == 0 && s->right->color == 0) {
-					s->color = 1;
+				if (s->right->color == N_BLACK && s->right->color == N_BLACK) {
+					s->color = N_RED;
 					x = x->parent;
 				}
 				else {
-					if (s->left->color == 0) {
-						s->right->color = 0;
-						s->color = 1;
+					if (s->left->color == N_BLACK) {
+						s->right->color = N_BLACK;
+						s->color = N_RED;
 						leftRotate(s);
 						s = x->parent->left;
 					}
 					s->color = x->parent->color;
-					x->parent->color = 0;
-					s->left->color = 0;
+					x->parent->color = N_BLACK;
+					s->left->color = N_BLACK;
 					rightRotate(x->parent);
 					x = _ptrNode;
 				}
@@ -262,7 +279,7 @@ public:
 			y->color = z->color;
 		}
 		delete z;
-		if (y_original_color == 0)
+		if (y_original_color == N_BLACK)
 			deleteFix(x);
 	}
 
@@ -271,14 +288,14 @@ public:
 	insertFix( pointer k ) {
 
 		pointer u;
-		while (k->parent->color == 1) {
+		while (k->parent->color == N_RED) {
 
 			if (k->parent == k->parent->parent->right) {
 				u = k->parent->parent->left;
-				if (u->color == 1) {
-					u->color = 0;
-					k->parent->color = 0;
-					k->parent->parent->color = 1;
+				if (u->color == N_RED) {
+					u->color = N_BLACK;
+					k->parent->color = N_BLACK;
+					k->parent->parent->color = N_RED;
 					k = k->parent->parent;
 				}
 				else {
@@ -286,17 +303,17 @@ public:
 						k = k->parent;
 						rightRotate(k);
 					}
-					k->parent->color = 0;
-					k->parent->parent->color = 1;
+					k->parent->color = N_BLACK;
+					k->parent->parent->color = N_RED;
 					leftRotate(k->parent->parent);
 				}
 			}
 			else {
 				u = k->parent->parent->right;
-				if (u->color == 1) {
-					u->color = 0;
-					k->parent->color = 0;
-					k->parent->parent->color = 1;
+				if (u->color == N_RED) {
+					u->color = N_BLACK;
+					k->parent->color = N_BLACK;
+					k->parent->parent->color = N_RED;
 					k = k->parent->parent;
 				}
 				else {
@@ -304,8 +321,8 @@ public:
 						k = k->parent;
 						leftRotate(k);
 					}
-				k->parent->color = 0;
-				k->parent->parent->color = 1;
+				k->parent->color = N_BLACK;
+				k->parent->parent->color = N_RED;
 				rightRotate(k->parent->parent);
 				}
 			}
@@ -357,25 +374,23 @@ public:
 	}
 
 	pointer
-	searchTree( int k ) {
+	minimum( pointer tmp ) const {
 
-		return searchTreeHelper(this->root, k);
-	}
-
-	pointer
-	minimum( pointer tmp ) {
-
+		if (!tmp || tmp == this->_last)
+			return this->_last;
 		while (tmp->left != this->_last)
 			tmp = tmp->left;
 		return tmp;
 	}
 
 	pointer
-	maximum( pointer tmp ) {
+	maximum( pointer tmp ) const {
 
-		while (tmp->right != this->_last) {
+		if (!tmp || tmp == this->_last)
+			return this->_last;
+		while (tmp->right != this->_last)
 			tmp = tmp->right;
-		}
+
 		return tmp;
 	}
 
@@ -463,32 +478,29 @@ public:
 /* ~~~~~ INSERT NODE ~~~~~ */
 // insert the key to the tree in its appropriate position
 	// and fix the tree
-	void
-	insert( int key ) {
+	bool
+	insert( const value_type key ) {
 // Ordinary Binary Search Insertion
-		Node *tmp = new Node;
-		tmp->parent = nullptr_t;
-		tmp->data = key;
-		tmp->left = this->_last;
-		tmp->right = this->_last;
-		tmp->color = N_RED; // new node must be red
+		Node *tmp = new Node(key, nullptr_t, this->_last, this->_last, N_RED);
 
 		Node *y = nullptr_t;
 		Node *x = this->_ptrNode;
 
 		while (x != this->_last) {
 			y = x;
-			if (tmp->data < x->data)
+			if (this->comp(tmp->data, x->data)) //
 				x = x->left;
-			else
+			else if (this->comp(x->data, tmp->data))
 				x = x->right;
+			else
+				return false;
 		}
 
 		// y is parent of x
 		tmp->parent = y;
 		if (y == nullptr_t)
 			_ptrNode = tmp;
-		else if (tmp->data < y->data)
+		else if (this->comp(tmp->data, y->data)) //
 			y->left = tmp;
 		else
 			y->right = tmp;
@@ -496,24 +508,24 @@ public:
 		// if new node is a root node, simply return
 		if (tmp->parent == nullptr_t) {
 			tmp->color = N_BLACK;
-			return;
+			return true;
 		}
 
 		// if the grandparent is null, simply return
 		if (tmp->parent->parent == nullptr_t)
-			return ;
+			return true;
 
 		// Fix the tree
 		insertFix(tmp);
+		return true; //
 	}
 
 
+	// pointer
+	// getRoot( void ) {
 
-	pointer
-	getRoot( void ) {
-
-		return this->_ptrNode;
-	}
+	// 	return this->_ptrNode;
+	// }
 
 	void
 	deleteNode( int data ) {

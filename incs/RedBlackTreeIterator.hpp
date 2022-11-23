@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 14:42:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:04:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ struct RedBlackTreeIterator : public ft::iterator< ft::bidirectional_iterator_ta
 public:
 
 	typedef RedBlackTreeIterator	Self;
-	// typedef ft::Node< T >			Node;
 
 private:
 
@@ -38,7 +37,8 @@ private:
 
 public:
 
-	RedBlackTreeIterator( Node *n = NULL ) : _current(n), _root(), _last() {}
+	RedBlackTreeIterator( Node *c, Node *r, Node *l )
+		: _current(c), _root(r), _last(l) {}
 
 	virtual
 	~RedBlackTreeIterator( void ) {}
@@ -46,100 +46,118 @@ public:
 	T
 	&operator*( void ) {
 
-		return this->_pNode->data;
+		return this->_current->data;
 	}
 	
 	T
 	*operator->( void ) {
 
-		return &(this->_pNode->data);
+		return &(this->_current->data);
 	}
 
-	Self
+	RedBlackTreeIterator
 	&operator++( void ) {
 
 		Increment();
 		return *this;
 	}
 
-	Self
-	&operator++( int ) {
+	RedBlackTreeIterator
+	operator++( int ) {
 
-		Self tmp = this;
+		RedBlackTreeIterator tmp = *this;
 		Increment();
 		return tmp;
 	}
 
-	Self
+	RedBlackTreeIterator
 	&operator--( void ) {
 
 		Decrement();
 		return *this;
 	}
 
-	Self
-	&operator--( int ) {
+	RedBlackTreeIterator
+	operator--( int ) {
 
-		Self tmp = this;
+		RedBlackTreeIterator tmp = *this;
 		Decrement();
 		return tmp;
 	}
 
 	bool
-	operator==( const Self &s ) {
+	operator==( const RedBlackTreeIterator &s ) {
 
-		return this->_pNode == s._pNode;
+		return this->_current == s._current;
 	}
 
 	bool
-	operator!=( const Self &s ) {
+	operator!=( const RedBlackTreeIterator &s ) {
 
-		return this->_pNode != s._pNode;
+		return this->_current != s._current;
 	}
 
 private:
 
 	void Increment( void ) {
 
-		if (this->_pNode->right) {
-			Node *temp = this->_pNode->right;
+		if (this->_current->right) {
+			Node *temp = this->_current->right;
+			// this->_current = temp;
 			while (temp->left)
 				temp = temp->left;
-			this->_pNode = temp;
+			this->_current = temp;
 
 		}
 		else
 		{
-			Node *tmp = this->_pNode->parent;
-			if (tmp->right == this->_pNode) {
-				while (this->_pNode == tmp->right) {
-					this->_pNode = tmp;
+			Node *tmp = this->_current->parent;
+			if (tmp->right == this->_current) {
+				while (this->_current == tmp->right) {
+					this->_current = tmp;
 					tmp = tmp->parent;
 				}
 			}
-			if (this->_pNode->right != tmp)
-				this->_pNode = tmp;
+			if (this->_current->right != tmp)
+				this->_current = tmp;
 		}
 	}
 
 	void Decrement( void ) {
 
-		if (this->_pNode->parent->parent == this->_pNode && this->_pNode->color == N_RED)
-			this->_pNode = this->_pNode->left;
+		if (this->_current->parent->parent == this->_current && this->_current->color == N_RED)
+			// this->_current = this->_current->left;
+			this->_current = this->_current->right;
 
-		else if (this->_pNode->left) {
-			    while (this->_pNode->right)
-				    this->_pNode = this->_pNode->right;
+		if (this->_current->left) {
+			this->_current = this->_current->left;
+		    while (this->_current->right)
+			    this->_current = this->_current->right;
 		}
 		else {
-			Node *parent = this->_pNode->parent;
-			while (parent->left == this->_pNode) {
-				this->_pNode = parent;
+			Node *parent = this->_current->parent;
+			while (parent && parent->left == this->_current) {
+				this->_current = parent;
 				parent = parent->parent;
 			}
-			this->_pNode = parent;
+			this->_current = parent;
 		}
+
+		
 	}
+
+/*
+
+			else {
+				Node* parent = _pnode->_parent;
+				while (parent != nil && _pnode == parent->_left) {
+					_pnode = parent;
+					parent = parent->_parent;
+				}
+				_pnode = parent;
+			}
+
+*/
 
 };
 
