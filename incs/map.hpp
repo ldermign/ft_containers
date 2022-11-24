@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/23 14:38:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:30:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ START
 /*
 	Cest un container qui est de type clef-valeur.
 	C'est pourquoi on ne l'utilise qu'avec pair.
-	
 */
 
 template<
@@ -141,52 +140,81 @@ public:
 	// 	this->_t = ft::RedBlackTree< value_type, value_compare >(value_compare(key_compare()));
 	// 	insert(rhs.begin(), rhs.end())get_root
 
+
+
 /* ~~~~~ ITERATORS ~~~~~ */
 	iterator
+	begin( void ) {
+
+		return iterator(this->_t.getMinimum(), this->_t.getPtrNode(), this->_t.getLast());
+	}
+
+	const_iterator
 	begin( void ) const {
 
-		return iterator(this->_t.getPtrNode(), this->_t.getLast(), this->_t.getMinimum());
+		return const_iterator(this->_t.getMinimum(), this->_t.getPtrNode(), this->_t.getLast());
 	}
 
 	iterator
 	end( void ) {
 
-		return iterator(this->_t.getPtrNode(), this->_t.getLast(), this->_t.getMaximum());
+		return iterator(this->_t.getMaximum(), this->_t.getPtrNode(), this->_t.getLast());
 	}
 
-// 	const_iterator
-// 	end( void ) const;
+	const_iterator
+	end( void ) const {
 
-// 	reverse_iterator
-// 	rbegin( void );
+		return const_iterator(this->_t.getMaximum(), this->_t.getPtrNode(), this->_t.getLast());
+	}
 
-// 	const_reverse_iterator
-// 	rbegin( void ) const;
+	reverse_iterator
+	rbegin( void ) {
 
-// 	reverse_iterator
-// 	rend( void );
+		return reverse_iterator(this->end());
+	}
 
-// 	const_reverse_iterator
-// 	rend( void ) const;
+	const_reverse_iterator
+	rbegin( void ) const {
 
-// capacity:
+		return const_reverse_iterator(this->end());
+	}
+
+	reverse_iterator
+	rend( void ) {
+
+		return reverse_iterator(this->begin());
+	}
+
+	const_reverse_iterator
+	rend( void ) const {
+
+		return const_reverse_iterator(this->begin());
+	}
+
+
+
+
+
+/* ~~~~~ CAPACITY ~~~~~ */
+
 	// bool
 	// empty( void ) const {
 
 	// 	return (this->_t._size() == 0);
 	// }
 
-	// size_type
-	// size( void ) const {
+	size_type
+	size( void ) const {
 
-	// 	return this->_t.size();
-	// }
+		return this->_t.getSize();
+	}
 
-// 	size_type
-// 	max_size( void ) const {
-// // voir ca plus tard -> taille de la RAM divise par le nombre de nodes ?? 
-// 		return 1;
-// 	}
+	size_type
+	max_size( void ) const {
+// voir ca plus tard -> taille de la RAM divise par le nombre de nodes ?? 
+// juste la taille dans le rbt avec l'allocator
+		return this->_t.getMaxSize();
+	}
 
 
 // //  element access:

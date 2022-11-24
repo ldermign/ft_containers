@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/23 15:38:19 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:35:03 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,17 @@ void	test_map( void ) {
 
 	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
 	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-
 	LIBRARY::map<T1, T2> mp_range(it, --(--ite));
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 5;
 
-	// it = mp.begin(); ite = --(--mp.end());
-	// LIBRARY::map<T1, T2> mp_copy(mp);
-	// for (int i = 0; it != ite; ++it)
-	// 	it->second = ++i * 7;
+	it = mp.begin(); ite = --(--mp.end());
+	LIBRARY::map<T1, T2> mp_copy(mp);
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 7;
 
-	// std::cout << "\t-- PART ONE --" << std::endl;
-	// printSize(mp);
+	std::cout << "\t-- PART ONE --" << std::endl;
+	printSize(mp);
 	// printSize(mp_range);
 	// printSize(mp_copy);
 

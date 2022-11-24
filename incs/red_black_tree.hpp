@@ -65,10 +65,12 @@ public:
 
 private:
 
+	// allocator_type	alloc;
 	value_compare	comp;
 	Node			*_ptrNode;
 	Node			*_last;
-	size_t			_size; // a faire
+	size_type		_size; // a faire
+	// size_type		_maxSize;
 
 public:
 
@@ -81,6 +83,7 @@ public:
 		this->_last->left = nullptr_t;
 		this->_last->right = nullptr_t;
 		_ptrNode = _last;
+		_size++;
 	}
 
 	// RedBlackTree( void ) {}
@@ -94,9 +97,12 @@ public:
 	value_compare	getComp( void ) const { return this->comp; }
 	Node			*getPtrNode( void ) const { return this->_ptrNode; }
 	Node			*getLast( void ) const { return this->_last; }
-	size_t			getSize( void ) const { return this->_size; }
+	size_type		getSize( void ) const { return this->_size; }
+	size_type		getMaxSize( void ) const { return allocator_type().max_size(); }
 	pointer			getMinimum( void ) const { return this->minimum(this->_ptrNode); }
 	pointer			getMaximum( void ) const { return this->maximum(this->_ptrNode); }
+
+/* ~~~~~ ~~~~~ */
 
 	pointer
 	search( const value_type &value ) {
@@ -161,7 +167,7 @@ public:
 
 		pointer s;
 
-		while (x != _ptrNode && x->color == N_BLACK) {
+		while (x != this->_ptrNode && x->color == N_BLACK) {
 
 			if (x == x->parent->left) {
 				s = x->parent->right;
@@ -321,9 +327,9 @@ public:
 						k = k->parent;
 						leftRotate(k);
 					}
-				k->parent->color = N_BLACK;
-				k->parent->parent->color = N_RED;
-				rightRotate(k->parent->parent);
+					k->parent->color = N_BLACK;
+					k->parent->parent->color = N_RED;
+					rightRotate(k->parent->parent);
 				}
 			}
 			if (k == _ptrNode)
@@ -376,7 +382,7 @@ public:
 	pointer
 	minimum( pointer tmp ) const {
 
-		if (!tmp || tmp == this->_last)
+		if (tmp == nullptr_t || tmp == this->_last)
 			return this->_last;
 		while (tmp->left != this->_last)
 			tmp = tmp->left;
@@ -386,7 +392,7 @@ public:
 	pointer
 	maximum( pointer tmp ) const {
 
-		if (!tmp || tmp == this->_last)
+		if (tmp == nullptr_t || tmp == this->_last)
 			return this->_last;
 		while (tmp->right != this->_last)
 			tmp = tmp->right;
@@ -485,6 +491,7 @@ public:
 
 		Node *y = nullptr_t;
 		Node *x = this->_ptrNode;
+		this->_size++;
 
 		while (x != this->_last) {
 			y = x;
