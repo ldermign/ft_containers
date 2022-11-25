@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/24 13:35:03 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:19:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,20 @@ void	test_map( void ) {
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 5;
 
+	p1 "avant = " p2
+	for (size_t i = 0 ; i < mp.size() ; i++)
+		p1 mp[i] << " ";
+	p3
+
 	it = mp.begin(); ite = --(--mp.end());
 	LIBRARY::map<T1, T2> mp_copy(mp);
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 7;
+
+	p1 "apres = " p2
+	for (size_t i = 0 ; i < mp.size() ; i++)
+		p1 mp[i] << " ";
+	p3
 
 	std::cout << "\t-- PART ONE --" << std::endl;
 	printSize(mp);

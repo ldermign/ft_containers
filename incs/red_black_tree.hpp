@@ -15,8 +15,7 @@
 
 #include "ft_containers.hpp"
 #include "nullptr.hpp"
-#include "less.hpp"
-#include "Node.hpp"
+
 #include "RedBlackTreeIterator.hpp"
 
 START
@@ -98,7 +97,7 @@ public:
 	Node			*getPtrNode( void ) const { return this->_ptrNode; }
 	Node			*getLast( void ) const { return this->_last; }
 	size_type		getSize( void ) const { return this->_size; }
-	size_type		getMaxSize( void ) const { return allocator_type().max_size(); }
+	// size_type		getMaxSize( void ) const { std::numeric_limits<difference_type>::max(); }
 	pointer			getMinimum( void ) const { return this->minimum(this->_ptrNode); }
 	pointer			getMaximum( void ) const { return this->maximum(this->_ptrNode); }
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/24 15:30:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:51:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "enable_if.hpp"
 #include "pair.hpp"
 #include "less.hpp"
+#include <limits>
 
 START
 
@@ -211,21 +212,34 @@ public:
 
 	size_type
 	max_size( void ) const {
-// voir ca plus tard -> taille de la RAM divise par le nombre de nodes ?? 
-// juste la taille dans le rbt avec l'allocator
-		return this->_t.getMaxSize();
+
+		return (static_cast< unsigned long >(std::numeric_limits< difference_type >::max() / sizeof(ft::Node< int >)));
 	}
 
 
-// //  element access:
-// 	T &operator[]( const key_type &x );
+
+
+
+/* ~~~~~ ELEMENT ACCESS ~~~~~ */
+
+	T
+	&operator[]( const key_type &to_add ) {
+	
+		iterator	tmp = this->_t.search(to_add);
+		if (tmp == this->_t.getLast())
+			ft::make_pair(this->insert(to_add), T());
+		return tmp;// tamere
+	}
+
+
+
+
 
 /* ~~~~~ INSERT ~~~~~ */
 	ft::pair< iterator, bool >
-	insert( const value_type &x ) {
+	insert( const value_type &to_add ) {
 
-		// return NULL;
-		return (ft::make_pair(this->find(x), this->_t.insert(x)));
+		return (ft::make_pair(this->find(to_add), this->_t.insert(to_add)));
 
 	}
 
@@ -274,18 +288,20 @@ public:
 
 /* ~~~~~ OPERATIONS ~~~~~ */
 	iterator
-	find( const value_type &x ) {
+	find( const value_type &to_find ) {
 
-		(void)x;
-// revoir ->>>>>>>
 		// const bool	r = this->_t.insert(x);
 		// return ft::make_pair(this->find(x), r);
-		return (iterator(this->_t.search(x), this->_t.getPtrNode(), this->_t.getLast()));
+		return (iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
 		// return iterator(this->_t, this->_t.getLast(), this->_t.searchTree(ft::make_pair(x, mapped_type())));
 	}
 
-// 		const_iterator
-// 		find( const key_type & x) const;
+	const_iterator
+	find( const value_type &to_find ) const {
+
+		return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
+		// return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
+	}
 
 // 		size_type
 // 		count( const key_type & x) const;
@@ -305,8 +321,10 @@ public:
 // 		ft::pair< iterator, iterator >
 // 		equal_range( const key_type &x );
 		
-// 		ft::pair< const_iterator, const_iterator >
-// 		equal_range( const key_type &x ) const;
+	// 	ft::pair< const_iterator, const_iterator >
+	// this->insert(ft::make_pair(to_add, T()));
+	// 	return (this->find(to_add)->second);
+	// 	equal_range( const key_type &x ) const;
 	
 	};
 

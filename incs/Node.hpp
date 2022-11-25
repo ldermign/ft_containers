@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:27:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/23 14:13:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/25 13:27:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 START
 
 template< class T >
-struct Node {
+struct Node { // sizeof 28 
 
 public:
 
@@ -28,9 +28,9 @@ public:
 
 	T		data;
  	size_t	color;
- 	Node	*parent; // (except root node)
- 	Node	*left;
- 	Node	*right;
+	Node	*parent; // (except root node) 8
+	Node	*left; // 8
+	Node	*right; // 8
 
 /* ~~~~~ CANONICAL FORM ~~~~~ */
 
@@ -40,7 +40,7 @@ public:
 	Node( T *new_data )
 		: data(new_data), color(N_BLACK), parent(NULL), left(NULL), right(NULL) {}
 
-	Node( value_type v, Node *p, Node* l, Node *r, size_t c )
+	Node( T v, Node *p, Node* l, Node *r, size_t c )
 		: data(v), color(c), parent(p), left(l), right(r) {}
 
 	Node( const T &src )
@@ -61,7 +61,7 @@ public:
 		return *this;
 	}
 
-	virtual
+	// virtual -> prend plus de place, la vie de oim
 	~Node( void ) {}
 
 };

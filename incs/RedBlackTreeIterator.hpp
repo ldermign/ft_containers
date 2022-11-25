@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/24 15:34:30 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/25 12:46:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ public:
 	}
 	
 	pointer
-	operator->( void ) {
+	operator->( void ) const {
 
 		return &(this->_current->data);
 	}
