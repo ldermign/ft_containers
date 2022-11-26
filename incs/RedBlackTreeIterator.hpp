@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/25 12:46:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/26 19:20:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ public:
 
 private:
 
-	Node			*_current;
-	Node			*_root;
-	Node			*_last;
+	ft::Node< T >			*_current;
+	ft::Node< T >			*_root;
+	ft::Node< T >			*_last;
 
 public:
 
@@ -49,7 +49,12 @@ public:
 	@param { end red black tree } l
 */
 	RedBlackTreeIterator( Node *c, Node *r, Node *l )
-		: _current(c), _root(r), _last(l) {}
+		: _current(c), _root(r), _last(l) {
+			// p1 "current = " << _current << " - _last = " << _last p2
+		}
+
+	RedBlackTreeIterator( void )
+		: _current(), _root(), _last() {}
 
 	virtual
 	~RedBlackTreeIterator( void ) {}
@@ -74,20 +79,11 @@ public:
 	RedBlackTreeIterator
 	&operator++( void ) {
 
-		// Increment();
-		if (_current == maximum(_root))
-			{
-				_current = _last;
-				return *this;
-			}
-			else if (_current == _last)
-			{
-				_current = nullptr_t;
-				return *this;
-			}
-			_current = Increment(_current);
-			return *this;
-		// return *this;
+		// if (_current == maximum(_root))
+		// 	{
+		// 		_current = _last;		this->
+		Increment();
+		return *this;
 	}
 
 	RedBlackTreeIterator
@@ -112,37 +108,50 @@ public:
 	RedBlackTreeIterator
 	&operator--( void ) {
 
-		// Decrement();
-		// return *this;
+		// p1 "4" p2
+		if (this->_current == this->_last) {
+			// p1 "avant max" p2
+			this->_current = maximum(_root);
+			// p1 "segfault ?" p2
+		}
+		else
+			Decrement();
+		return *this;
 
 
-			if (_current == _last)
-			{
-				_current = maximum(_root);
-				return *this;
-			}
-			_current = Decrement(_current);
+			// if (_current == _last)
+			// {
+			// 	_current = maximum(_root);
+			// 	return *this;
+			// }
+			// _current = Decrement(_current);
 
-			return *this;
+			// return *this;
 	}
 
 	Node
 	*maximum( Node *tmp ) const {
 
+	// p1 "1" p2
 		if (tmp == nullptr_t || tmp == this->_last)
 			return this->_last;
+		// p1 "2" p2
 		while (tmp->right != this->_last)
 			tmp = tmp->right;
-
+		// p1 "3" p2
 		return tmp;
 	}
 
 	RedBlackTreeIterator
 	operator--( int ) {
 
+		// p1 "la ????????" p2
 		RedBlackTreeIterator tmp = *this;
-		// Decrement();
-		operator--();
+		if (this->_current == this->_last)
+			this->_current = maximum(_root);
+		else
+			Decrement();
+		// operator--();
 		return tmp;
 	}
 
@@ -160,12 +169,41 @@ public:
 
 private:
 
-	Node *Increment( Node *x ) {
+	void Increment( void ) {
 
-		// if (this->_current != this->_last && this->_current->right) {
+		if (_current->right != _last)
+		{
+			ft::Node<T> *temp = _current->right;
+			while (temp->left != _last)
+				temp = temp->left;
+			_current = temp;
+
+		}
+		else
+		{
+			ft::Node<T> *tmp = _current->parent;
+			if (tmp == _last)
+			{
+				_current = _last;
+				return ;
+			}
+			if (tmp->right ==_current)
+			{
+				while (_current == tmp->right)
+				{
+					_current = tmp;
+					tmp = tmp->parent;
+				}
+			}
+			if (_current->right != tmp)
+				_current = tmp;
+		}
+
+		// if (this->_current != this->_last
+		// && this->_current->right != this->_last) {
 		// 	Node *temp = this->_current->right;
 		// 	// this->_current = temp;
-		// 	while (temp->left)
+		// 	while (temp->left != this->_last)
 		// 		temp = temp->left;
 		// 	this->_current = temp;
 
@@ -183,32 +221,51 @@ private:
 		// 		this->_current = tmp;
 		// }
 
-		if (x->right != _last)
-				return minimum(x->right);
+		// if (x->right != _last)
+		// 		return minimum(x->right);
 
-			Node	*tmp = x->parent;
-			while (tmp != _last && x == tmp->right)
-			{
-				x = tmp;
-				tmp = tmp->parent;
-			}
-			return tmp;
+		// 	Node	*tmp = x->parent;
+		// 	while (tmp != _last && x == tmp->right)
+		// 	{
+		// 		x = tmp;
+		// 		tmp = tmp->parent;
+		// 	}
+		// 	return tmp;
 	}
 
-	Node *Decrement( Node *x ) {
+	void Decrement( void ) {
+
+		// p1 "[" << _current->data << "] [" p2
+		// << _current->parent->data << "] [" p2
+        if (_current->parent->parent == _current
+			&& _current->color == 1)
+			_current = _current->left;
+		else if (_current->left != _last)
+		{
+			_current = _current->left;
+			while (_current->right != _last)
+				_current = _current->right;
+		}
+		else
+		{
+			ft::Node<T> *parent = _current->parent;
+			while (parent->left == _current)
+			{
+				_current = parent;
+				parent = parent->parent;
+			}
+			_current = parent;
+		}
 
 		// p1 "+1" p2
-		// if (
-		// 	// this->_current->parent != this->_root
-		// 	// && this->_current->parent->parent != this->_root
-		// 	this->_current->parent->parent == this->_current
+		// if (this->_current->parent->parent == this->_current
 		// 	&& this->_current->color == N_RED)
 		// 	this->_current = this->_current->left;
 		// 	// this->_current = this->_current->right;
 
-		// if (this->_current->left) {
+		// if (this->_current->left != this->_last) {
 		// 	this->_current = this->_current->left;
-		//     while (this->_current->right)
+		//     while (this->_current->right != this->_last)
 		// 	    this->_current = this->_current->right;
 		// }
 		// else {
@@ -220,19 +277,19 @@ private:
 		// 	this->_current = parent;
 		// }
 
-			{
-				if (x->left != this->_last) {
-					return maximum(x->left);
-				}
+			// {
+			// 	if (x->left != this->_last) {
+			// 		return maximum(x->left);
+			// 	}
 
-				Node *y = x->parent;
-				while (y != this->_last && x == y->left) {
-					x = y;
-					y = y->parent;
-				}
+			// 	Node *y = x->parent;
+			// 	while (y != this->_last && x == y->left) {
+			// 		x = y;
+			// 		y = y->parent;
+			// 	}
 
-				return y;
-			}
+			// 	return y;
+			// }
 		
 	}
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/25 15:19:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/26 19:20:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "map.hpp"
 #include <iostream>
 #include "red_black_tree.hpp"
+#include "pair.hpp"
 
 
 #define _pair LIBRARY::pair
@@ -78,25 +79,38 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	// ft::node< int >	noeud1;
-	// ft::node< std::string >	noeud2(noeud1);
-	
-	// ft::RedBlackTree< std::string > test(noeud1);
-	// ft::RedBlackTree test;
-	// test.insert(42);
-	// test.insert(0);
-	// test.insert(-111);
+	// ft::RedBlackTree< int, std::less< int > > elisa;
+	// elisa.insert(42);
+	// elisa.insert(1);
+	// elisa.insert(-111);
+	// elisa.insert(123);
+	// elisa.insert(-2);
 
-	// ft::map< int, int >	test;
+	// elisa.printTree();
+
 	
+
+	////////////////////////////////////////////
+	// ft::map< int, int > elisa2;
+	// elisa2.insert(ft::pair< int, int >(42, 57));
+	// elisa2.insert(ft::pair< int, int >(-123, 0));
+	// elisa2.insert(ft::pair< int, int >(4, 9898));
+	
+	// elisa2.printTree();
+
 	std::list<T3> lst;
 	unsigned int lst_size = 7;
 	for (unsigned int i = 0; i < lst_size; ++i)
 		lst.push_back(T3(lst_size - i, i));
 
 	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
+		p1 "~~~~~~~~~~~~~~~~~~~~~LA ??~~~~~~~~~~~~~~~~~~~" p2
 	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-	LIBRARY::map<T1, T2> mp_range(it, --(--ite));
+	(void)ite; (void)it;
+	p1 "~~~~~~~~~~~~~~~~~~~~~MERDE~~~~~~~~~~~~~~~~~~~" p2
+	// ft::pair< T1, T2 > wesh = *(--(--ite));
+	LIBRARY::map<T1 , T2> mp_range(it, --(--ite));
+		p1 "~~~~~~~~~~~~~~~~~~~~~EUHHH~~~~~~~~~~~~~~~~~~~" p2
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 5;
 
@@ -104,6 +118,8 @@ void	test_map( void ) {
 	for (size_t i = 0 ; i < mp.size() ; i++)
 		p1 mp[i] << " ";
 	p3
+
+	
 
 	it = mp.begin(); ite = --(--mp.end());
 	LIBRARY::map<T1, T2> mp_copy(mp);

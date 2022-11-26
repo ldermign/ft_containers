@@ -15,7 +15,6 @@
 
 #include "ft_containers.hpp"
 #include "nullptr.hpp"
-
 #include "RedBlackTreeIterator.hpp"
 
 START
@@ -64,7 +63,7 @@ public:
 
 private:
 
-	// allocator_type	alloc;
+	allocator_type	alloc;
 	value_compare	comp;
 	Node			*_ptrNode;
 	Node			*_last;
@@ -75,14 +74,21 @@ public:
 
 /* ~~~~~ CONSTRUCTOR ~~~~~ */
 
-	RedBlackTree( const value_compare & c ) : comp(c) {
+	RedBlackTree( const value_compare &c = Compare() ) : comp(c) {
 
-		this->_last = new Node;
+		// alloc = allocate(1);
+
+
+		this->_last = alloc.allocate(1);
+		alloc.construct(_last, Node());
 		this->_last->color = N_BLACK;
-		this->_last->left = nullptr_t;
-		this->_last->right = nullptr_t;
+		this->_last->left = _last;
+		this->_last->right = _last;
+		_last->parent = _last;
+		// p1 _last p2 ////
+		// << "] [" << _ptrNode->parent p2
 		_ptrNode = _last;
-		_size++;
+		_size = 0;
 	}
 
 	// RedBlackTree( void ) {}
@@ -100,63 +106,41 @@ public:
 	// size_type		getMaxSize( void ) const { std::numeric_limits<difference_type>::max(); }
 	pointer			getMinimum( void ) const { return this->minimum(this->_ptrNode); }
 	pointer			getMaximum( void ) const { return this->maximum(this->_ptrNode); }
+	// pointer			searchConst( const pointer start_point, const value_type &key_to_find ) const {
+	// 	return search(start_point, key_to_find);
+	// }
+	pointer			searchConst( const value_type &key_to_find ) const { return search(this->getPtrNode(), key_to_find); }
 
 /* ~~~~~ ~~~~~ */
 
 	pointer
-	search( const value_type &value ) {
+	search( pointer start_point, const value_type &key_to_find ) const {
 
-		pointer	idx = _ptrNode;
+		// pointer	idx = _ptrNode;
 
-		while (idx != this->_last) {
-			if (idx->data == value)
-				return (idx);
-			if (comp(idx->left->data, value))
-				idx = idx->left;
-			else
-				idx = idx->right;
-		}
+		// while (idx != this->_last) {
+		// 	if (idx->data == value)
+		// 		return (idx);
+		// 	if (comp(idx->left->data, value))
+		// 		idx = idx->left;
+		// 	else
+		// 	// else if (comp(value, idx->right->data))
+		// 		idx = idx->right;
+		// }
 
-		return (nullptr_t);
+		// return (nullptr_t);
+
+		// p1 "euuuh" p2
+		if (start_point == this->_last)
+			return start_point;
+		else if (comp(key_to_find, start_point->data))
+			return search(start_point->left, key_to_find);
+		else if (comp(start_point->data, key_to_find))
+			return search(start_point->right, key_to_find);
+		else
+			return (start_point);
+
 	}
-
-	// void
-	// initializeNULLNode( node_type here, node_type parent ) {
-
-	// 	here->data = 0;
-	// 	here->parent = parent;
-	// 	here->left = NULL;
-	// 	here->right = NULL;
-	// 	here->color = 0;
-	// }
-
-  // Preorder
-// void preOrderHelper(pointer node) {
-// if (node != NULL) {
-// p1 node->data << " ";
-// preOrderHelper(node->left);
-// preOrderHelper(node->right);
-// }
-// }
-
-  // Inorder
-// void inOrderHelper(pointer node) {
-// if (node != NULL) {
-// inOrderHelper(node->left);
-// p1 node->data << " ";
-// inOrderHelper(node->right);
-// }
-// }
-
-  // Post order
-// void postOrderHelper(pointer node) {
-// if (node != NULL) {
-// postOrderHelper(node->left);
-// postOrderHelper(node->right);
-// p1 node->data << " ";
-// }
-// }
-
 
 
 // private:
@@ -361,6 +345,13 @@ public:
 public:
 
 	void
+	printTree( void ) {
+
+		if (_ptrNode)
+			printHelper(this->_ptrNode, "", true);
+	}
+
+	void
 	preorder( void ) {
 
 		preOrderHelper(this->root);
@@ -383,8 +374,9 @@ public:
 
 		if (tmp == nullptr_t || tmp == this->_last)
 			return this->_last;
-		while (tmp->left != this->_last)
-			tmp = tmp->left;
+		while (tmp->left != this->_last) {
+			// p1 "merde0" p2
+			tmp = tmp->left;}
 		return tmp;
 	}
 
@@ -526,24 +518,10 @@ public:
 		return true; //
 	}
 
-
-	// pointer
-	// getRoot( void ) {
-
-	// 	return this->_ptrNode;
-	// }
-
 	void
 	deleteNode( int data ) {
 
 		deleteNodeHelper(this->_ptrNode, data);
-	}
-
-	void
-	printTree( void ) {
-
-		if (_ptrNode)
-			printHelper(this->_ptrNode, "", true);
 	}
 
 };

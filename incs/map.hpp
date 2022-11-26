@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/25 15:51:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/26 19:19:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,37 @@ private:
 
 public:
 
+	void printTree( void ) {
+
+		this->_t.printTree();
+		// if (this->_t.getPtrNode())
+		// 	this->_t.printHelper(this->_t.getPtrNode(), "", true);
+	}
+
+
 // 23.3.1.1 construct/copy/destroy:
 // Complexity: Constant.
-	explicit map( const Compare &comp = Compare(), const Allocator &t = Allocator() )
-		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(t) {}
+	explicit map( const Compare &comp = Compare(), const Allocator &alloc = Allocator() )
+		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {}
 
 /* CONSTRUCTOR WITH RANGE OF ITERATORS */
 	template< class InputIterator >
 	map( InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &alloc = Allocator() )
 		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {
 
+			// p1 "le second" p2
+
 		this->insert(first, last);
+		// p1 " seg ? test" p2
 	}
 
 	// map( const map< Key, T, Compare, Allocator > &alloc )
 	// 	: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {}
 
 	virtual
-	~map( void ) {}
+	~map( void ) {
+		// p1 "la" p2
+	}
 
 
 /* CONSTRUCTORS BY COPY */
@@ -159,13 +172,13 @@ public:
 	iterator
 	end( void ) {
 
-		return iterator(this->_t.getMaximum(), this->_t.getPtrNode(), this->_t.getLast());
+		return iterator(this->_t.getLast(), this->_t.getPtrNode(), this->_t.getLast());
 	}
 
 	const_iterator
 	end( void ) const {
 
-		return const_iterator(this->_t.getMaximum(), this->_t.getPtrNode(), this->_t.getLast());
+		return const_iterator(this->_t.getLast(), this->_t.getPtrNode(), this->_t.getLast());
 	}
 
 	reverse_iterator
@@ -223,14 +236,25 @@ public:
 /* ~~~~~ ELEMENT ACCESS ~~~~~ */
 
 	T
-	&operator[]( const key_type &to_add ) {
+	&operator[]( const key_type &to_print ) {
 	
-		iterator	tmp = this->_t.search(to_add);
-		if (tmp == this->_t.getLast())
-			ft::make_pair(this->insert(to_add), T());
-		return tmp;// tamere
-	}
+		// iterator	tmp = ;
+		// this->_t.search(this->_t.getPtrNode(), to_print);
+		// if (tmp == this->_t.getLast())
+		// 	ft::make_pair(this->insert(to_print), T());
+		// return to_print;// tamere
+	
+		// insert(ft::make_pair(to_print, mapped_type()));
+		// return find(to_print)->second;
 
+		iterator    it;
+        value_type    pair(to_print, T());
+
+		if (find(to_print) == end())
+			insert(pair);
+		it = find(to_print);
+		return (it->second);
+	}
 
 
 
@@ -239,7 +263,13 @@ public:
 	ft::pair< iterator, bool >
 	insert( const value_type &to_add ) {
 
-		return (ft::make_pair(this->find(to_add), this->_t.insert(to_add)));
+		// p1 "test0" p2
+		const bool	wesh = this->_t.insert(to_add);
+		// p1 "la" p2
+		return ft::make_pair(this->find(to_add.first), wesh);
+
+		// const bool	r = _rbt.insert(v);
+		// 	return ft::make_pair(find(v.first), r);
 
 	}
 
@@ -252,7 +282,10 @@ public:
 	insert( InputIterator first, InputIterator last ) {
 	// call 1 insert
 
+		// p1 "first = " << *first p2
 		for (; first != last ; first++) {
+					// p1 "first = " << *first p2
+
 			// p1 "test" p2
 			this->insert(*first);
 		}
@@ -288,23 +321,22 @@ public:
 
 /* ~~~~~ OPERATIONS ~~~~~ */
 	iterator
-	find( const value_type &to_find ) {
+	find( const key_type &to_find ) {
 
 		// const bool	r = this->_t.insert(x);
 		// return ft::make_pair(this->find(x), r);
-		return (iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
+		return (iterator(this->_t.searchConst(ft::make_pair(to_find, mapped_type())), this->_t.getPtrNode(), this->_t.getLast()));
 		// return iterator(this->_t, this->_t.getLast(), this->_t.searchTree(ft::make_pair(x, mapped_type())));
 	}
 
 	const_iterator
 	find( const value_type &to_find ) const {
 
-		return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
+		return (const_iterator(this->_t.searchConst(ft::make_pair(to_find, mapped_type())), this->_t.getPtrNode(), this->_t.getLast()));
 		// return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
 	}
 
-// 		size_type
-// 		count( const key_type & x) const;
+// 		size_typfindconst key_type & x) const;
 
 // 		iterator
 // 		lower_bound( const key_type &x );
@@ -326,6 +358,7 @@ public:
 	// 	return (this->find(to_add)->second);
 	// 	equal_range( const key_type &x ) const;
 	
+
 	};
 
 	template< class Key, class T, class Compare, class Allocator >

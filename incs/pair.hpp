@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/23 14:08:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/26 17:51:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,13 @@ template< class T1, class T2 >
 bool
 operator>=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return !(x < y);
+}
+
+template< class T1, class T2 >
+std::ostream &operator<<( std::ostream &o, pair< T1, T2 > const &pair ) {
+
+	o << pair.first << " - " << pair.second;
+	return (o);
 }
 
 STOP
