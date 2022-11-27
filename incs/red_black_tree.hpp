@@ -30,7 +30,6 @@ public:
 // le node a 3 pointeurs : le parents (pour remonter l'arbre), gauche et droite pour naviguer
 // couleur + pair entre 2 element de la map
 /*
-
 	rbt = constructeur par copie, par default et sur plage d'ite
 	par defaut, on va creer un node (new) -> ca sera toutes les extremitees,
 	des noeuds qui ne contiennent rien et va delimitee l'arbre binaire, 
@@ -39,7 +38,6 @@ public:
 	Des qu'on incremente les iterateurs, on va aller sur cet elements 
 	(pour voir si on arrive a la fin)
 	On est censee l'alouer des le debut, avec le constructeur par default
-
 */
 
 /* ~~~~~ ARGUMENTS TEMPLATE ~~~~~ */
@@ -55,8 +53,6 @@ public:
 	typedef typename Allocator::const_pointer	const_pointer;
 
 /* ~~~~~ ~~~~~ */
-	// typedef ft::random_iterator< T >		iterator;
-	// typedef ft::random_iterator< const T >	const_iterator;
 	typedef typename Allocator::difference_type	difference_type;
 	typedef size_t								size_type;
 
@@ -97,6 +93,10 @@ public:
 	virtual
 	~RedBlackTree( void ) {}
 
+	// operator	RedBlackTree< T, Node >() const {
+	// 	return (RedBlackTree< T, Node >());
+	// };
+
 /* ~~~~~ ACCESSORS ~~~~~ */
 
 	value_compare	getComp( void ) const { return this->comp; }
@@ -106,9 +106,6 @@ public:
 	// size_type		getMaxSize( void ) const { std::numeric_limits<difference_type>::max(); }
 	pointer			getMinimum( void ) const { return this->minimum(this->_ptrNode); }
 	pointer			getMaximum( void ) const { return this->maximum(this->_ptrNode); }
-	// pointer			searchConst( const pointer start_point, const value_type &key_to_find ) const {
-	// 	return search(start_point, key_to_find);
-	// }
 	pointer			searchConst( const value_type &key_to_find ) const { return search(this->getPtrNode(), key_to_find); }
 
 /* ~~~~~ ~~~~~ */

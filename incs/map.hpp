@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/26 19:19:52 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/27 18:17:15 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ public:
 /* ~~~~~ ITERATOR ~~~~~ */
 
 	typedef ft::RedBlackTreeIterator< value_type, node_type >		iterator;
-	typedef ft::RedBlackTreeIterator< const value_type, node_type >	const_iterator;
+	typedef ft::ConstRedBlackTreeIterator< value_type, node_type >	const_iterator;
 	typedef ft::reverse_iterator< iterator >						reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator >					const_reverse_iterator;
 
@@ -247,8 +247,8 @@ public:
 		// insert(ft::make_pair(to_print, mapped_type()));
 		// return find(to_print)->second;
 
-		iterator    it;
-        value_type    pair(to_print, T());
+		iterator	it;
+		value_type	pair(to_print, T());
 
 		if (find(to_print) == end())
 			insert(pair);

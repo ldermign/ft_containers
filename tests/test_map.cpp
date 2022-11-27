@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/26 19:20:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/27 18:37:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,8 @@ void	test_map( void ) {
 		lst.push_back(T3(lst_size - i, i));
 
 	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
-		p1 "~~~~~~~~~~~~~~~~~~~~~LA ??~~~~~~~~~~~~~~~~~~~" p2
 	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-	(void)ite; (void)it;
-	p1 "~~~~~~~~~~~~~~~~~~~~~MERDE~~~~~~~~~~~~~~~~~~~" p2
-	// ft::pair< T1, T2 > wesh = *(--(--ite));
 	LIBRARY::map<T1 , T2> mp_range(it, --(--ite));
-		p1 "~~~~~~~~~~~~~~~~~~~~~EUHHH~~~~~~~~~~~~~~~~~~~" p2
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 5;
 
@@ -133,8 +128,8 @@ void	test_map( void ) {
 
 	std::cout << "\t-- PART ONE --" << std::endl;
 	printSize(mp);
-	// printSize(mp_range);
-	// printSize(mp_copy);
+	printSize(mp_range);
+	printSize(mp_copy);
 
 	// mp = mp_copy;
 	// mp_copy = mp_range;
