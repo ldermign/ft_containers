@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/27 18:17:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:01:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ public:
 /* ~~~~~ ITERATOR ~~~~~ */
 
 	typedef ft::RedBlackTreeIterator< value_type, node_type >		iterator;
+	// typedef ft::RedBlackTreeIterator< const value_type, node_type >	const_iterator;
 	typedef ft::ConstRedBlackTreeIterator< value_type, node_type >	const_iterator;
 	typedef ft::reverse_iterator< iterator >						reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator >					const_reverse_iterator;
@@ -111,7 +112,9 @@ public:
 // 23.3.1.1 construct/copy/destroy:
 // Complexity: Constant.
 	explicit map( const Compare &comp = Compare(), const Allocator &alloc = Allocator() )
-		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {}
+		: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {
+			// p1 "le premier const " p2
+		}
 
 /* CONSTRUCTOR WITH RANGE OF ITERATORS */
 	template< class InputIterator >
@@ -132,9 +135,17 @@ public:
 		// p1 "la" p2
 	}
 
+	map( const map< Key, T, Compare, Allocator > &src )
+		: new_compare(Compare()), _t(new_compare), new_alloc(Allocator()) {
+
+		// p1 "un autre constructeur ??" p2
+		this->insert(src.begin(), src.end());
+	}
 
 /* CONSTRUCTORS BY COPY */
-	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator> &rhs ) {
+	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator > &rhs ) {
+
+		// p1 "le constructeur par copie ??? mais quoi ????" p2
 
 		if (&rhs == this)
 			return *this;
@@ -142,17 +153,11 @@ public:
 		this->_t = rhs._t;
 		this->new_alloc = rhs.new_alloc;
 		this->new_compare = rhs.new_compare;
+
+		return *this;
 	}
 
-	// map
-	// &operator=( const map &rhs )
-	// {
-	// 	if (&rhs == this)
-	// 		return *this;
-		
-	// 	this->~map();
-	// 	this->_t = ft::RedBlackTree< value_type, value_compare >(value_compare(key_compare()));
-	// 	insert(rhs.begin(), rhs.end())get_root
+
 
 
 
@@ -254,16 +259,19 @@ public:
 			insert(pair);
 		it = find(to_print);
 		return (it->second);
+
+		// return (*((insert(make_pair(to_print, T()))).first)).second; // --> non...
 	}
 
 
 
 
 /* ~~~~~ INSERT ~~~~~ */
+
 	ft::pair< iterator, bool >
 	insert( const value_type &to_add ) {
 
-		// p1 "test0" p2
+		// p1 "Bloque pour la valeur = " << to_add p2
 		const bool	wesh = this->_t.insert(to_add);
 		// p1 "la" p2
 		return ft::make_pair(this->find(to_add.first), wesh);
@@ -273,9 +281,15 @@ public:
 
 	}
 
-// 	iterator
-// 	insert( iterator position, const value_type &x ) {
-// 	}
+	// iterator
+	// insert( iterator position, const value_type &x ) {
+
+	// 	iterator	tmp = this->begin();
+	// 	while (tmp != position && tmp != this->end())
+	// 		tmp++;
+		
+		
+	// }
 
 	template< class InputIterator >
 	void
@@ -294,29 +308,73 @@ public:
 
 
 
-	// void
-	// erase( iterator position ) {
+
+
+/* ~~~~~ ERASE ~~~~~ */
+
+	size_type
+	erase( const key_type &value_to_del ) {
+
+		if (find(value_to_del) == end())
+			return 0;
 		
-	// }
+		this->_t.deleteNode(find(value_to_del));
+		return 1;
+	}
 
-// 	size_type
-// 	erase( const key_type &x );
+	void
+	erase( iterator position ) {
+
+		this->eras(position->first);
+	}
+
+	void
+	erase( iterator first, iterator last ) {
+
+		for (; first != last ; first++)
+			erase(first->second);
+		// ou le first ???
+	}
+
+
+
+
+
+/* ~~~~~ SWAP ~~~~~ */
 
 // 	void
-// 	erase( iterator first, iterator last );
+// 	swap( map< Key, T, Compare, Allocator > &x ) {
 
-// 	void
-// 	swap( map< Key, T, Compare, Allocator > &x );
+// }
 
-// 	void
-// 	clear( void );
 
-// // observers:
+
+
+
+/* ~~~~~ CLEAR ~~~~~ */
+
+	void
+	clear( void ) {
+
+		// this->erase(this->begin(), this->end());
+		// this->new_alloc.deallocate(); // ??
+		// this->_size = 0;
+		this->_t.clear();
+	}
+
+
+
+
+
+/* ~~~~~ OBSERVERS ~~~~~ */
 // 	key_compare
 // 	key_comp( void ) const;
 
 // 	value_compare
 // 	value_comp( void ) const;
+
+
+
 
 
 /* ~~~~~ OPERATIONS ~~~~~ */
@@ -336,22 +394,23 @@ public:
 		// return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
 	}
 
-// 		size_typfindconst key_type & x) const;
+	// size_type
+	// count( const key_type &x ) const;
 
-// 		iterator
-// 		lower_bound( const key_type &x );
+	// iterator
+	// lower_bound( const key_type &x );
 
-// 		const_iterator
-// 		lower_bound( const key_type &x ) const;
+	// const_iterator
+	// lower_bound( const key_type &x ) const;
 
-// 		iterator
-// 		upper_bound( const key_type &x );
+	// iterator
+	// upper_bound( const key_type &x );
 
-// 		const_iterator
-// 		upper_bound( const key_type &x ) const;
+	// const_iterator
+	// upper_bound( const key_type &x ) const;
 
-// 		ft::pair< iterator, iterator >
-// 		equal_range( const key_type &x );
+	// ft::pair< iterator, iterator >
+	// equal_range( const key_type &x );
 		
 	// 	ft::pair< const_iterator, const_iterator >
 	// this->insert(ft::make_pair(to_add, T()));

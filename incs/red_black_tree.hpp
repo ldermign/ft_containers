@@ -19,6 +19,8 @@
 
 START
 
+// https://www.cs.auckland.ac.nz/software/AlgAnim/red_black.html
+
 template< 	class T,
 			class Compare,
 			class Node = ft::Node< T >,
@@ -80,10 +82,10 @@ public:
 		this->_last->color = N_BLACK;
 		this->_last->left = _last;
 		this->_last->right = _last;
-		_last->parent = _last;
+		this->_last->parent = _last;
 		// p1 _last p2 ////
 		// << "] [" << _ptrNode->parent p2
-		_ptrNode = _last;
+		this->_ptrNode = this->_last;
 		_size = 0;
 	}
 
@@ -366,6 +368,12 @@ public:
 		postOrderHelper(this->root);
 	}
 
+
+
+
+
+/* ~~~~~ ~~~~~ */
+
 	pointer
 	minimum( pointer tmp ) const {
 
@@ -432,7 +440,7 @@ public:
 		if (y->left != this->_last)
 			y->left->parent = x;
 		y->parent = x->parent; // link x’s parent to y
-		if (x->parent == nullptr_t)
+		if (x->parent == _last)
 			this->_ptrNode = y;
 		else if (x == x->parent->left)
 			x->parent->left = y;
@@ -453,7 +461,7 @@ public:
 			y->right->parent = x;
 		y->parent = x->parent;
 
-		if (x->parent == nullptr_t)
+		if (x->parent == _last)
 			this->_ptrNode = y;
 
 		else if (x == x->parent->right)
@@ -472,23 +480,30 @@ public:
 /* ~~~~~ INSERT NODE ~~~~~ */
 // insert the key to the tree in its appropriate position
 	// and fix the tree
+
+/**
+	// TODO: ne plus utiliser new... faire avec allocate 
+*/
 	bool
 	insert( const value_type key ) {
 // Ordinary Binary Search Insertion
-		Node *tmp = new Node(key, nullptr_t, this->_last, this->_last, N_RED);
+		Node *tmp = new Node(key, _last, this->_last, this->_last, N_RED);
 
 		Node *y = nullptr_t;
 		Node *x = this->_ptrNode;
 		this->_size++;
 
-		while (x != this->_last) {
+		while (x != this->_last && x != nullptr_t) {
 			y = x;
 			if (this->comp(tmp->data, x->data)) //
 				x = x->left;
 			else if (this->comp(x->data, tmp->data))
 				x = x->right;
-			else
-				return false;
+			else {
+				// p1 "salut" p2; 
+				return (false);
+			}
+			// p1 "loop" p2; 
 		}
 
 		// y is parent of x
@@ -503,22 +518,40 @@ public:
 		// if new node is a root node, simply return
 		if (tmp->parent == nullptr_t) {
 			tmp->color = N_BLACK;
+			tmp->parent = _last;
+			// p1 "first element" p2; 
 			return true;
 		}
 
 		// if the grandparent is null, simply return
-		if (tmp->parent->parent == nullptr_t)
+		if (tmp->parent->parent == _last)
 			return true;
 
 		// Fix the tree
 		insertFix(tmp);
-		return true; //
+		return true;
 	}
+
+
+
+
+
+/* ~~~~~ DELETE NODE ~~~~~ */
 
 	void
 	deleteNode( int data ) {
 
 		deleteNodeHelper(this->_ptrNode, data);
+	}
+
+
+/* ~~~~~ CLEAR ~~~~~ */
+
+	void
+	clear( void ) {
+
+		for (iterator it = this->begin() ; it != this->end() ; it++)
+			this->deleteNode(it->first);
 	}
 
 };

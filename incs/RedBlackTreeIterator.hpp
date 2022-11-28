@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/27 18:40:11 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/28 14:05:34 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ public:
 	RedBlackTreeIterator( Node *c, Node *r, Node *l )
 		: _current(c), _root(r), _last(l) {
 			// p1 "current = " << _current << " - _last = " << _last p2
-		}
+	}
 
 	RedBlackTreeIterator( void )
 		: _current(), _root(), _last() {}
@@ -60,9 +60,9 @@ public:
 	~RedBlackTreeIterator( void ) {}
 
 // check for the const
-	// operator	RedBlackTreeIterator< T, Node >() const {
-	// 	return (RedBlackTreeIterator< T, Node >(this->_current, this->_root, this->_last));
-	// };
+	operator	RedBlackTreeIterator< T, Node >() const {
+		return (RedBlackTreeIterator< T, Node >(this->_current, this->_root, this->_last));
+	};
 
 	reference
 	operator*( void ) {
@@ -78,7 +78,7 @@ public:
 
 	RedBlackTreeIterator
 	&operator++( void ) {
-
+/*
 		if (_current == maximum(_root))
 			{
 				_current = _last;
@@ -91,11 +91,11 @@ public:
 			}
 			_current = Increment(_current);
 			return *this;
-
-		/*
+*/
+		
 		Increment();
 		return *this;
-		*/
+		
 	}
 
 	RedBlackTreeIterator
@@ -181,11 +181,11 @@ public:
 
 private:
 
-	Node *Increment( Node *x ) {
-/*
+	void Increment( void ) {
+
 		if (_current->right != _last)
 		{
-			ft::Node<T> *temp = _current->right;
+			Node *temp = _current->right;
 			while (temp->left != _last)
 				temp = temp->left;
 			_current = temp;
@@ -193,15 +193,12 @@ private:
 		}
 		else
 		{
-			ft::Node<T> *tmp = _current->parent;
-			if (tmp == _last)
-			{
-				_current = _last;
-				return ;
-			}
+			Node *tmp = _current->parent;
 			if (tmp->right ==_current)
 			{
-				while (tmp != this->_last && tmp->right == _current) {
+				while (_current != this->_last 
+					&& tmp->right != this->_last
+					&& _current == tmp->right) {
 					_current = tmp;
 					tmp = tmp->parent;
 				}
@@ -211,28 +208,27 @@ private:
 		}
 
 
-*/
-/*
+//////////////////////////////////////////
+		// if (_current->right != _last)
+		// {
+		// 	ft::Node<T> *temp = _current->right;
+		// 	while (temp->left != _last)
+		// 		temp = temp->left;
+		// }
+		// else
+		// {
+		// 	ft::Node<T> *tmp = _current->parent;
+		// 		while (tmp != this->_last && tmp->right == _current) {
+		// 			_current = tmp;
+		// 			tmp = tmp->parent;
+		// 		}
+		// 	if (_current->left != tmp)
+		// 		_current = tmp;
+		// 	else
+		// 		_current = this->_last;
+		// }
+		// p1 "seg ?" p2
 
-		if (_current->right != _last)
-		{
-			ft::Node<T> *temp = _current->right;
-			while (temp->left != _last)
-				temp = temp->left;
-		}
-		else
-		{
-			ft::Node<T> *tmp = _current->parent;
-				while (tmp != this->_last && tmp->right == _current) {
-					_current = tmp;
-					tmp = tmp->parent;
-				}
-			if (_current->left != tmp)
-				_current = tmp;
-			else
-				_current = this->_last;
-		}
-*/
 
 /*
 		if (this->_current != this->_last
@@ -257,7 +253,7 @@ private:
 				this->_current = tmp;
 		}
 */
-
+/*
 		if (x->right != _last)
 				return minimum(x->right);
 
@@ -268,6 +264,7 @@ private:
 				tmp = tmp->parent;
 			}
 			return tmp;
+		*/
 	}
 
 
@@ -334,10 +331,10 @@ private:
 /*
 
 			else {
-				Node* parent = _pnode->_parent;
-				while (parent != nil && _pnode == parent->_left) {
+				Node* parent = _pnode->parent;
+				while (parent != _last && _pnode == parent->left) {
 					_pnode = parent;
-					parent = parent->_parent;
+					parent = parent->parent;
 				}
 				_pnode = parent;
 			}
@@ -403,6 +400,7 @@ public:
 	ConstRedBlackTreeIterator
 	&operator++( void ) {
 
+/*
 		if (_current == maximum(_root))
 			{
 				_current = _last;
@@ -415,11 +413,11 @@ public:
 			}
 			_current = Increment(_current);
 			return *this;
-
-		/*
+*/
+		
 		Increment();
 		return *this;
-		*/
+
 	}
 
 	ConstRedBlackTreeIterator
@@ -455,14 +453,14 @@ public:
 		return *this;
 
 
-			// if (_current == _last)
-			// {
-			// 	_current = maximum(_root);
-			// 	return *this;
-			// }
-			// _current = Decrement(_current);
+		// if (_current == _last)
+		// {
+		// 	_current = maximum(_root);
+		// 	return *this;
+		// }
+		// _current = Decrement(_current);
 
-			// return *this;
+		// return *this;
 	}
 
 	Node
@@ -505,29 +503,34 @@ public:
 
 private:
 
-	Node *Increment( Node *x ) {
-/*
+	void Increment( void ) {
+
 		if (_current->right != _last)
 		{
-			ft::Node<T> *temp = _current->right;
-			while (temp->left != _last)
+			Node *temp = _current->right;
+			while (temp->left != _last) {
+				// p1 "salut je suis un while" p2
 				temp = temp->left;
+			}
 			_current = temp;
 
 		}
 		else
 		{
-			ft::Node<T> *tmp = _current->parent;
-			if (tmp == _last)
+			Node *tmp = _current->parent;
+			if (tmp->right == _current)
 			{
-				_current = _last;
-				return ;
-			}
-			if (tmp->right ==_current)
-			{
-				while (tmp != this->_last && tmp->right == _current) {
+				while (
+					tmp != _last &&
+					// tmp->right != _last &&
+					// _current != _last &&
+					_current == tmp->right) {
+					// p1 "a tmp = " << tmp << " avec " << tmp->data << " - last = " << _last << " avec " << _last->data p2
+					
+					// p1 "toujours un while" p2
 					_current = tmp;
 					tmp = tmp->parent;
+					// p1 "p tmp = " << tmp << " avec " << tmp->data << " - last = " << _last << " avec " << _last->data p2
 				}
 			}
 			if (_current->right != tmp)
@@ -535,7 +538,7 @@ private:
 		}
 
 
-*/
+
 /*
 
 		if (_current->right != _last)
@@ -581,7 +584,7 @@ private:
 				this->_current = tmp;
 		}
 */
-
+/*
 		if (x->right != _last)
 				return minimum(x->right);
 
@@ -592,6 +595,7 @@ private:
 				tmp = tmp->parent;
 			}
 			return tmp;
+			*/
 	}
 
 	void Decrement( void ) {
@@ -657,10 +661,10 @@ private:
 /*
 
 			else {
-				Node* parent = _pnode->_parent;
-				while (parent != nil && _pnode == parent->_left) {
+				Node* parent = _pnode->parent;
+				while (parent != _last && _pnode == parent->left) {
 					_pnode = parent;
-					parent = parent->_parent;
+					parent = parent->parent;
 				}
 				_pnode = parent;
 			}

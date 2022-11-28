@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/27 18:37:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:00:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ void	test_map( void ) {
 	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
 	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
 	LIBRARY::map<T1 , T2> mp_range(it, --(--ite));
+
+	// for (; it != ite; it++) {
+	// 	p1 it->first + 48 p2
+	// }
+
+	p1 "oups" p2
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 5;
 
@@ -117,11 +123,14 @@ void	test_map( void ) {
 	
 
 	it = mp.begin(); ite = --(--mp.end());
+	p1 "on utilise quel constructeur ????" p2
 	LIBRARY::map<T1, T2> mp_copy(mp);
+	p1 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" p2
+	
 	for (int i = 0; it != ite; ++it)
 		it->second = ++i * 7;
 
-	p1 "apres = " p2
+	// p1 "apres = " p2
 	for (size_t i = 0 ; i < mp.size() ; i++)
 		p1 mp[i] << " ";
 	p3
@@ -129,11 +138,13 @@ void	test_map( void ) {
 	std::cout << "\t-- PART ONE --" << std::endl;
 	printSize(mp);
 	printSize(mp_range);
+	// mp.printTree(); 	);
+	p1 "ici" p2
 	printSize(mp_copy);
 
-	// mp = mp_copy;
-	// mp_copy = mp_range;
-	// mp_range.clear();
+	mp = mp_copy;
+	mp_copy = mp_range;
+	mp_range.clear();
 
 	// std::cout << "\t-- PART TWO --" << std::endl;
 	// printSize(mp);
