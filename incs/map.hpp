@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/29 13:00:52 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:56:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,7 +387,7 @@ public:
 	}
 
 	const_iterator
-	find( const value_type &to_find ) const {
+	find( const key_type &to_find ) const {
 
 		return (const_iterator(this->_t.searchConst(ft::make_pair(to_find, mapped_type())), this->_t.getPtrNode(), this->_t.getLast()));
 		// return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
@@ -396,38 +396,109 @@ public:
 	// size_type
 	// count( const key_type &x ) const;
 
-	// iterator
-	// lower_bound( const key_type &x );
 
-	const_iterator
-	lower_bound( const key_type &x ) const {
 
-		(void)x;
+
+
+/* ~~~~~ BOUND ~~~~~ */
+// https://cplusplus.com/reference/algorithm/lower_bound/?kw=lower_bound
+
+	iterator
+	lower_bound( const key_type &lower ) {
+
 		iterator	tmp = this->begin();
 		while (tmp != this->end()) {
-			if (tmp->)			
+			if (tmp->_current->data >= lower)
+				break ;
 			tmp++;
 		}
+		if (tmp == this->end())
+			return (this->end());
 
 		return tmp;
 	}
 
-	// iterator
-	// upper_bound( const key_type &x );
+	const_iterator
+	lower_bound( const key_type &lower ) const {
 
-	// const_iterator
-	// upper_bound( const key_type &x ) const;
+		const_iterator	tmp = this->begin();
+		while (tmp != this->end()) {
+			if (tmp->_current->data >= lower)
+				break ;
+			tmp++;
+		}
+		if (tmp == this->end())
+			return (this->end());
 
-	// ft::pair< iterator, iterator >
-	// equal_range( const key_type &x );
-		
-	// 	ft::pair< const_iterator, const_iterator >
-	// this->insert(ft::make_pair(to_add, T()));
-	// 	return (this->find(to_add)->second);
-	// 	equal_range( const key_type &x ) const;
-	
+		return tmp;
 
-	};
+	}
+
+	iterator
+	upper_bound( const key_type &upper ) {
+
+		iterator	tmp = this->begin();
+		while (tmp != this->end()) {
+			// this->_t.comp()
+			// if (tmp->_current->data < upper)
+				// break ;
+			tmp++;
+		}
+		if (tmp == this->end())
+			return (this->end());
+
+		return tmp;
+	}
+
+	const_iterator
+	upper_bound( const key_type &upper ) const {
+
+		const_iterator	tmp = this->begin();
+		while (tmp != this->end()) {
+			if (tmp->_current->data < upper)
+				break ;
+			tmp++;
+		}
+		if (tmp == this->end())
+			return (this->end());
+
+		return tmp;
+	}
+
+
+
+
+
+/* ~~~~~ EQUAL RANGE ~~~~~ */
+
+// Returns a range containing all elements with the given key in the container.
+// The range is defined by two iterators, one pointing to the first element
+// that is not less than key and another pointing to the first element greater
+// than key. Alternatively, the first iterator may be obtained with lower_bound(),
+// and the second with upper_bound().
+// Compares the keys to key.
+
+	ft::pair< iterator, iterator >
+	equal_range( const Key &key ) {
+
+		iterator	first = this->lower_bound(key);
+		iterator	last = this->upper_bound(key);
+
+		return ft::make_pair(first, last);
+		// make_pair ??
+	}
+
+	ft::pair< const_iterator, const_iterator >
+	equal_range( const Key &key ) const {
+
+		const_iterator	first = this->lower_bound(key);
+		const_iterator	last = this->upper_bound(key);
+
+		return ft::make_pair(first, last);
+
+	}
+
+};
 
 	template< class Key, class T, class Compare, class Allocator >
 	bool

@@ -74,9 +74,6 @@ public:
 
 	RedBlackTree( const value_compare &c = Compare() ) : comp(c) {
 
-		// alloc = allocate(1);
-
-
 		this->_last = alloc.allocate(1);
 		alloc.construct(_last, Node());
 		this->_last->color = N_BLACK;
@@ -266,10 +263,9 @@ public:
 			y->left->parent = y;
 			y->color = z->color;
 		}
-		delete z;
-		// alloc.destroy(z); // ??
-		// alloc.deallocate(z, 1); // ??
-		// deallocate ??
+		// delete z;
+		alloc.destroy(z); // ??
+		alloc.deallocate(z, 1); // ??
 		if (y_original_color == N_BLACK)
 			deleteFix(x);
 	}
@@ -490,7 +486,9 @@ public:
 	bool
 	insert( const value_type key ) {
 // Ordinary Binary Search Insertion
-		Node *tmp = new Node(key, _last, this->_last, this->_last, N_RED);
+
+		Node	*tmp = alloc.allocate(1);
+		alloc.construct(tmp, Node(key, _last, this->_last, this->_last, N_RED));
 
 		Node *y = nullptr_t;
 		Node *x = this->_ptrNode;
@@ -503,7 +501,9 @@ public:
 			else if (this->comp(x->data, tmp->data))
 				x = x->right;
 			else {
-				// p1 "salut" p2; 
+				// p1 "salut" p2;
+				alloc.destroy(tmp);
+				alloc.deallocate(tmp, 1);
 				return (false);
 			}
 			// p1 "loop" p2; 
