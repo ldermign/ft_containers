@@ -8,33 +8,7 @@ void	printVector(LIBRARY::vector< T > const &vct, std::string str) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// 
 	
 		// LIBRARY::vector< std::string >	test;
@@ -99,6 +73,7 @@ void	printVector(LIBRARY::vector< T > const &vct, std::string str) {
 		p1 "2 SIZE vct_range = " << vct_range.size() p2
 		p1 "2 SIZE vct_copy = " << vct_copy.size() p2 // normalement 3, ici 7
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////// CHECK ERASE //////////////////////////////////////////////////
 
 
@@ -114,6 +89,7 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 	p1 "2 SIZE vct = " << vct.size() p2
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////
 
 	LIBRARY::vector< std::string > vct(10);
@@ -177,6 +153,7 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 	p1 "4 SIZE vct = " << vct.size() p2
 	checkErase(vct, vct.erase(vct.begin(), vct.end()));
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////// CHECK CONSTRUCTOR COPY ////////////////
 
 	LIBRARY::vector< int > vct(5);
@@ -212,7 +189,7 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 	printSize(vct_range);
 	printSize(vct_copy);
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// CHECK INSERT2 ///////////////////////
 
 	LIBRARY::vector< int > vct(5);
@@ -238,7 +215,7 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 
 	printSize(vct2);
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////// ENCORE INSERT ////////////////
 
 	LIBRARY::vector< int > vct(5);
@@ -270,3 +247,138 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 	std::cout << "----------------------------------------" << std::endl;
 
 	printSize(vct2);
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////MAP/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	test rbt constructors + clear + EEEEELLLLLIIIIIIIIIISSSSSAAAAA
+	////////
+
+
+#define _pair LIBRARY::pair
+
+template <typename T>
+std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+{
+	o << "key: " << iterator->first << " | value: " << iterator->second;
+	if (nl)
+		o << std::endl;
+	return ("");
+}
+
+template <typename T_MAP>
+void	printSize(T_MAP const &mp, bool print_content = 1)
+{
+	std::cout << "size: " << mp.size() << std::endl;
+	std::cout << "max_size: " << mp.max_size() << std::endl;
+	if (print_content)
+	{
+		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << printPair(it, false) << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
+
+template <typename T1, typename T2>
+void	printReverse(LIBRARY::map<T1, T2> &mp)
+{
+	typename LIBRARY::map<T1, T2>::iterator it = mp.end(), ite = mp.begin();
+
+	std::cout << "printReverse:" << std::endl;
+	while (it != ite) {
+		it--;
+		std::cout << "-> " << printPair(it, false) << std::endl;
+	}
+	std::cout << "_______________________________________________" << std::endl;
+}
+
+
+#define T1 char
+#define T2 int
+typedef _pair<const T1, T2> T3;
+
+template <class T>
+void	is_empty(T const &mp)
+{
+	std::cout << "is_empty: " << mp.empty() << std::endl;
+}
+{
+
+		// ft::RedBlackTree< int, std::less< int > > elisa;
+	// elisa.insert(42);
+	// elisa.insert(1);
+	// elisa.insert(-111);
+	// elisa.insert(123);
+	// elisa.insert(-2);
+
+	// elisa.printTree();
+
+	
+
+	///////
+	// ft::map< int, int > elisa2;
+	// elisa2.insert(ft::pair< int, int >(42, 57));
+	// elisa2.insert(ft::pair< int, int >(-123, 0));
+	// elisa2.insert(ft::pair< int, int >(4, 9898));
+	
+	// elisa2.printTree();
+
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3(lst_size - i, i));
+
+	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
+	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+	LIBRARY::map<T1 , T2> mp_range(it, --(--ite));
+
+	// for (; it != ite; it++) {
+	// 	p1 it->first + 48 p2
+	// }
+
+	// p1 "oups" p2
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 5;
+
+	// p1 "avant = " p2
+	for (size_t i = 0 ; i < mp.size() ; i++)
+		p1 mp[i] << " ";
+	p3
+
+	
+
+	it = mp.begin(); ite = --(--mp.end());
+	// p1 "on utilise quel constructeur ????" p2
+	LIBRARY::map<T1, T2> mp_copy(mp);
+	// p1 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" p2
+	
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 7;
+
+	// p1 "apres = " p2
+	for (size_t i = 0 ; i < mp.size() ; i++)
+		p1 mp[i] << " ";
+	p3
+
+	std::cout << "\t-- PART ONE --" << std::endl;
+	printSize(mp);
+	printSize(mp_range);
+	// mp.printTree(); 	);
+	// p1 "ici" p2
+	printSize(mp_copy);
+
+	mp = mp_copy;
+	mp_copy = mp_range;
+	mp_range.clear();
+
+	std::cout << "\t-- PART TWO --" << std::endl;
+	printSize(mp);
+	printSize(mp_range);
+	printSize(mp_copy);
+
+	}

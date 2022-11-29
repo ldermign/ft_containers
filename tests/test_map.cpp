@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/28 16:00:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/29 12:58:39 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,89 @@ void	printReverse(LIBRARY::map<T1, T2> &mp)
 }
 
 
-#define T1 char
-#define T2 int
-typedef _pair<const T1, T2> T3;
 
-template <class T>
-void	is_empty(T const &mp)
+
+
+
+
+
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define T1 int
+#define T2 foo<int>
+typedef LIBRARY::map<T1, T2>::value_type T3;
+typedef LIBRARY::map<T1, T2>::iterator ft_iterator;
+typedef LIBRARY::map<T1, T2>::const_iterator ft_const_iterator;
+
+static int iter = 0;
+
+template <typename MAP>
+void	ft_bound(MAP &mp, const T1 &param)
 {
-	std::cout << "is_empty: " << mp.empty() << std::endl;
+	ft_iterator ite = mp.end(), it[2];
+	_pair<ft_iterator, ft_iterator> ft_range;
+
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+	ft_range = mp.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
+
+template <typename MAP>
+void	ft_const_bound(const MAP &mp, const T1 &param)
+{
+	ft_const_iterator ite = mp.end(), it[2];
+	_pair<ft_const_iterator, ft_const_iterator> ft_range;
+
+	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+	ft_range = mp.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
 }
 
 
@@ -79,77 +154,28 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	// ft::RedBlackTree< int, std::less< int > > elisa;
-	// elisa.insert(42);
-	// elisa.insert(1);
-	// elisa.insert(-111);
-	// elisa.insert(123);
-	// elisa.insert(-2);
-
-	// elisa.printTree();
-
-	
-
-	////////////////////////////////////////////
-	// ft::map< int, int > elisa2;
-	// elisa2.insert(ft::pair< int, int >(42, 57));
-	// elisa2.insert(ft::pair< int, int >(-123, 0));
-	// elisa2.insert(ft::pair< int, int >(4, 9898));
-	
-	// elisa2.printTree();
-
 	std::list<T3> lst;
-	unsigned int lst_size = 7;
+	unsigned int lst_size = 10;
 	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(lst_size - i, i));
-
+		lst.push_back(T3(i + 1, (i + 1) * 3));
 	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
-	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
-	LIBRARY::map<T1 , T2> mp_range(it, --(--ite));
-
-	// for (; it != ite; it++) {
-	// 	p1 it->first + 48 p2
-	// }
-
-	p1 "oups" p2
-	for (int i = 0; it != ite; ++it)
-		it->second = ++i * 5;
-
-	p1 "avant = " p2
-	for (size_t i = 0 ; i < mp.size() ; i++)
-		p1 mp[i] << " ";
-	p3
-
-	
-
-	it = mp.begin(); ite = --(--mp.end());
-	p1 "on utilise quel constructeur ????" p2
-	LIBRARY::map<T1, T2> mp_copy(mp);
-	p1 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" p2
-	
-	for (int i = 0; it != ite; ++it)
-		it->second = ++i * 7;
-
-	// p1 "apres = " p2
-	for (size_t i = 0 ; i < mp.size() ; i++)
-		p1 mp[i] << " ";
-	p3
-
-	std::cout << "\t-- PART ONE --" << std::endl;
 	printSize(mp);
-	printSize(mp_range);
-	// mp.printTree(); 	);
-	p1 "ici" p2
-	printSize(mp_copy);
 
-	mp = mp_copy;
-	mp_copy = mp_range;
-	mp_range.clear();
+	ft_const_bound(mp, -10);
+	// ft_const_bound(mp, 1);
+	// ft_const_bound(mp, 5);
+	// ft_const_bound(mp, 10);
+	// ft_const_bound(mp, 50);
 
-	// std::cout << "\t-- PART TWO --" << std::endl;
 	// printSize(mp);
-	// printSize(mp_range);
-	// printSize(mp_copy);
+
+	// mp.lower_bound(3)->second = 404;
+	// mp.upper_bound(7)->second = 842;
+	// ft_bound(mp, 5);
+	// ft_bound(mp, 7);
+
+	// printSize(mp);
+
 
 
 }

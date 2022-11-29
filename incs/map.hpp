@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/28 16:01:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:00:52 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,6 @@ public:
 
 		// this->erase(this->begin(), this->end());
 		// this->new_alloc.deallocate(); // ??
-		// this->_size = 0;
 		this->_t.clear();
 	}
 
@@ -400,8 +399,18 @@ public:
 	// iterator
 	// lower_bound( const key_type &x );
 
-	// const_iterator
-	// lower_bound( const key_type &x ) const;
+	const_iterator
+	lower_bound( const key_type &x ) const {
+
+		(void)x;
+		iterator	tmp = this->begin();
+		while (tmp != this->end()) {
+			if (tmp->)			
+			tmp++;
+		}
+
+		return tmp;
+	}
 
 	// iterator
 	// upper_bound( const key_type &x );

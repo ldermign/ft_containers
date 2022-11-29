@@ -267,6 +267,9 @@ public:
 			y->color = z->color;
 		}
 		delete z;
+		// alloc.destroy(z); // ??
+		// alloc.deallocate(z, 1); // ??
+		// deallocate ??
 		if (y_original_color == N_BLACK)
 			deleteFix(x);
 	}
@@ -550,8 +553,16 @@ public:
 	void
 	clear( void ) {
 
-		for (iterator it = this->begin() ; it != this->end() ; it++)
-			this->deleteNode(it->first);
+		Node	*root = this->getPtrNode();
+		while (root != this->_last) {
+			root = root->left;
+			root = root->right;
+			alloc.destroy(root); // ??
+			alloc.deallocate(root, 1); // ??
+		}
+		this->_ptrNode = this->_last;
+		this->_size = 0;
+
 	}
 
 };
