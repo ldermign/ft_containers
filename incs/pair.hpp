@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/26 17:51:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:34:26 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ struct pair {
 	}
 
 /* DESTRUCTCEUR */
-	virtual
 	~pair( void ) {}
 
 };
@@ -112,12 +111,13 @@ operator>=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
 	return !(x < y);
 }
 
-template< class T1, class T2 >
-std::ostream &operator<<( std::ostream &o, pair< T1, T2 > const &pair ) {
+// SUPPRIMEER
+// template< class T1, class T2 >
+// std::ostream &operator<<( std::ostream &o, pair< T1, T2 > const &pair ) {
 
-	o << pair.first << " - " << pair.second;
-	return (o);
-}
+// 	o << pair.first << " - " << pair.second;
+// 	return (o);
+// }
 
 STOP
 

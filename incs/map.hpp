@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/29 15:56:52 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:36:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ public:
 /* ~~~~~ ITERATOR ~~~~~ */
 
 	typedef ft::RedBlackTreeIterator< value_type, node_type >		iterator;
-	// typedef ft::RedBlackTreeIterator< const value_type, node_type >	const_iterator;
-	typedef ft::ConstRedBlackTreeIterator< value_type, node_type >	const_iterator;
+	typedef ft::RedBlackTreeIterator< const value_type, node_type >	const_iterator;
+	// typedef ft::ConstRedBlackTreeIterator< value_type, node_type >	const_iterator;
 	typedef ft::reverse_iterator< iterator >						reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator >					const_reverse_iterator;
 
@@ -143,7 +143,8 @@ public:
 	}
 
 /* CONSTRUCTORS BY COPY */
-	map< Key, T, Compare, Allocator > &operator=( const map< Key, T, Compare, Allocator > &rhs ) {
+	map< Key, T, Compare, Allocator >
+	&operator=( const map< Key, T, Compare, Allocator > &rhs ) {
 
 		// p1 "le constructeur par copie ??? mais quoi ????" p2
 
@@ -231,7 +232,7 @@ public:
 	size_type
 	max_size( void ) const {
 
-		return (static_cast< unsigned long >(std::numeric_limits< difference_type >::max() / sizeof(ft::Node< int >)));
+		return (static_cast< unsigned long >(std::numeric_limits< difference_type >::max() / (sizeof(ft::Node< value_type >))));
 	}
 
 
@@ -325,7 +326,7 @@ public:
 	void
 	erase( iterator position ) {
 
-		this->eras(position->first);
+		this->erase(position->first);
 	}
 
 	void
@@ -341,11 +342,24 @@ public:
 
 
 /* ~~~~~ SWAP ~~~~~ */
+// revoir lol
+	void
+	swap( map< Key, T, Compare, Allocator > &x ) {
 
-// 	void
-// 	swap( map< Key, T, Compare, Allocator > &x ) {
+		map	tmp;
+		
+		tmp->new_compare = x.new_compare;
+		tmp->new_alloc = x.new_alloc;
+		tmp->_t = x._t;
 
-// }
+		x.new_compare = this->new_compare;
+		x.new_alloc = this->new_alloc;
+		x._t = this->_t;
+
+		this->new_compare = tmp.new_compare;
+		this->new_alloc = tmp.new_alloc;
+		this->_t = tmp._t;
+}
 
 
 
@@ -366,11 +380,19 @@ public:
 
 
 /* ~~~~~ OBSERVERS ~~~~~ */
-// 	key_compare
-// 	key_comp( void ) const;
+	key_compare
+	key_comp( void ) const {
 
-// 	value_compare
-// 	value_comp( void ) const;
+		return key_compare();
+	}
+
+	value_compare
+	value_comp( void ) const {
+
+		// return key_comp()(this->new_compare);
+		return value_compare(this->key_comp());
+		// return this->new_compare;
+	}
 
 
 
@@ -404,63 +426,57 @@ public:
 // https://cplusplus.com/reference/algorithm/lower_bound/?kw=lower_bound
 
 	iterator
-	lower_bound( const key_type &lower ) {
+	lower_bound( const key_type &lower_key ) {
 
 		iterator	tmp = this->begin();
+
 		while (tmp != this->end()) {
-			if (tmp->_current->data >= lower)
+			if (tmp.getCurrent()->data.first >= lower_key)
 				break ;
 			tmp++;
 		}
-		if (tmp == this->end())
-			return (this->end());
 
 		return tmp;
 	}
 
 	const_iterator
-	lower_bound( const key_type &lower ) const {
+	lower_bound( const key_type &lower_key ) const {
 
 		const_iterator	tmp = this->begin();
+
 		while (tmp != this->end()) {
-			if (tmp->_current->data >= lower)
+			if (tmp.getCurrent()->data.first >= lower_key)
 				break ;
 			tmp++;
 		}
-		if (tmp == this->end())
-			return (this->end());
 
 		return tmp;
-
 	}
 
 	iterator
-	upper_bound( const key_type &upper ) {
+	upper_bound( const key_type &upper_key ) {
 
 		iterator	tmp = this->begin();
+
 		while (tmp != this->end()) {
-			// this->_t.comp()
-			// if (tmp->_current->data < upper)
-				// break ;
+			if (tmp.getCurrent()->data.first > upper_key)
+				break ;
 			tmp++;
 		}
-		if (tmp == this->end())
-			return (this->end());
 
 		return tmp;
 	}
 
 	const_iterator
-	upper_bound( const key_type &upper ) const {
+	upper_bound( const key_type &upper_key ) const {
 
 		const_iterator	tmp = this->begin();
+
 		while (tmp != this->end()) {
-			if (tmp->_current->data < upper)
+			if (tmp.getCurrent()->data.first > upper_key)
 				break ;
 			tmp++;
 		}
-		if (tmp == this->end())
-			return (this->end());
 
 		return tmp;
 	}
@@ -534,7 +550,10 @@ public:
 // specialized algorithms:
 	template< class Key, class T, class Compare, class Allocator >
 	void
-	swap( ft::map< Key, T, Compare, Allocator > &x, ft::map< Key, T, Compare, Allocator > &y );
+	swap( ft::map< Key, T, Compare, Allocator > &x, ft::map< Key, T, Compare, Allocator > &y ) {
+
+		x.swap(y);
+	}
 
 
 STOP

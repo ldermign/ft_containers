@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/29 15:46:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:58:57 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,46 +103,29 @@ class foo {
 
 
 
+#define T1 char
+#define T2 foo<float>
+typedef LIBRARY::map<T1, T2> _map;
+typedef _map::const_iterator const_it;
 
+static unsigned int i = 0;
 
-
-#define T1 int
-#define T2 foo<int>
-typedef LIBRARY::map<T1, T2>::value_type T3;
-typedef LIBRARY::map<T1, T2>::iterator ft_iterator;
-typedef LIBRARY::map<T1, T2>::const_iterator ft_const_iterator;
-
-static int iter = 0;
-
-template <typename MAP>
-void	ft_bound(MAP &mp, const T1 &param)
+void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
 {
-	ft_iterator ite = mp.end(), it[2];
-	_pair<ft_iterator, ft_iterator> ft_range;
+	bool res[2];
 
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-	ft_range = mp.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+	std::cout << "\t-- [" << ++i << "] --" << std::endl;
+	res[0] = mp.key_comp()(it1->first, it2->first);
+	res[1] = mp.value_comp()(*it1, *it2);
+	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
+	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
 }
 
-template <typename MAP>
-void	ft_const_bound(const MAP &mp, const T1 &param)
-{
-	ft_const_iterator ite = mp.end(), it[2];
-	_pair<ft_const_iterator, ft_const_iterator> ft_range;
 
-	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-	ft_range = mp.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
+
+
+
+
 
 
 
@@ -154,28 +137,20 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	std::list<T3> lst;
-	unsigned int lst_size = 10;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(i + 1, (i + 1) * 3));
-	
-	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
+	_map	mp;
+
+	mp['a'] = 2.3;
+	mp['b'] = 1.4;
+	mp['c'] = 0.3;
+	mp['d'] = 4.2;
 	printSize(mp);
 
-	ft_const_bound(mp, -10);
-	// ft_const_bound(mp, 1);
-	// ft_const_bound(mp, 5);
-	// ft_const_bound(mp, 10);
-	// ft_const_bound(mp, 50);
+	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
+		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2) {
+			ft_comp(mp, it1, it2);
+		}
 
-	// printSize(mp);
-
-	// mp.lower_bound(3)->second = 404;
-	// mp.upper_bound(7)->second = 842;
-	// ft_bound(mp, 5);
-	// ft_bound(mp, 7);
-
-	// printSize(mp);
+	printSize(mp);
 
 
 

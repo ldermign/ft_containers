@@ -89,7 +89,7 @@ public:
 	// RedBlackTree( void ) {}
 		// : _last(new node), _last->color(N_BLACK), _last->left(NULL), _last->right(NULL), _ptrNode(_last) {}
 
-	virtual
+	// virtual
 	~RedBlackTree( void ) {}
 
 	// operator	RedBlackTree< T, Node >() const {
