@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 09:56:56 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:42:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ public:
 	// checkerrrrrrrrrrrrrrrr
 
 
-	virtual ~reverse_iterator( void ) {}
+	// virtual
+	~reverse_iterator( void ) {}
 
 
 	template < class U >

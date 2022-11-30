@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/24 15:18:12 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:42:03 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ public:
 
 /* ~~~~~ DESTRUCTOR ~~~~~ */
 
-	virtual
+	// virtual
 	~vector( void ) {
 		
 		// detruire avec deallocate ? destroy ?

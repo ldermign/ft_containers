@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 09:56:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:42:09 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ public:
 
 //	DESTRUCTOR
 
-	virtual ~random_iterator( void ) {}
+	// virtual 
+	~random_iterator( void ) {}
 
 // les deux constructeurs fonctionnent je crois 
 	// random_iterator

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/30 15:36:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:42:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ public:
 	// map( const map< Key, T, Compare, Allocator > &alloc )
 	// 	: new_compare(value_compare(comp)), _t(new_compare), new_alloc(alloc) {}
 
-	virtual
+	// virtual
 	~map( void ) {
 		// p1 "la" p2
 	}
@@ -495,7 +495,7 @@ public:
 // Compares the keys to key.
 
 	ft::pair< iterator, iterator >
-	equal_range( const Key &key ) {
+	equal_range( const key_type &key ) {
 
 		iterator	first = this->lower_bound(key);
 		iterator	last = this->upper_bound(key);
@@ -505,7 +505,7 @@ public:
 	}
 
 	ft::pair< const_iterator, const_iterator >
-	equal_range( const Key &key ) const {
+	equal_range( const key_type &key ) const {
 
 		const_iterator	first = this->lower_bound(key);
 		const_iterator	last = this->upper_bound(key);

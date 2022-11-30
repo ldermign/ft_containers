@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:01:03 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 15:40:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:42:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ public:
 		*this = src;
 	}
 
-	virtual
+	// virtual
 	~stack( void ) {}
 
 	size_type

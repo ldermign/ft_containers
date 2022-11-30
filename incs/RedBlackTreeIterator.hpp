@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/30 15:58:20 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/11/30 21:41:16 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ public:
 
 /* ~~~~~ ACCESSORS ~~~~~ */
 
-	ft::Node< T >	*getCurrent( void ) const { return this->_current; }
+	Node	*getCurrent( void ) const { return this->_current; }
 
 
 	reference
