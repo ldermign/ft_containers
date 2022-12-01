@@ -138,137 +138,7 @@ public:
 
 	}
 
-
-// private:
-  // For balancing the tree after deletion
-	void
-	deleteFix( pointer x ) {
-
-		pointer s;
-
-		while (x != this->_ptrNode && x->color == N_BLACK) {
-
-			if (x == x->parent->left) {
-				s = x->parent->right;
-				if (s->color == N_RED) {
-					s->color = N_BLACK;
-					x->parent->color = N_RED;
-					leftRotate(x->parent);
-					s = x->parent->right;
-				}
-				if (s->left->color == N_BLACK && s->right->color == N_BLACK) {
-					s->color = N_RED;
-					x = x->parent;
-				}
-				else {
-					if (s->right->color == N_BLACK) {
-						s->left->color = N_BLACK;
-						s->color = N_RED;
-						rightRotate(s);
-						s = x->parent->right;
-					}
-					s->color = x->parent->color;
-					x->parent->color = N_BLACK;
-					s->right->color = N_BLACK;
-					leftRotate(x->parent);
-					x = _ptrNode;
-				}
-			}
-			else {
-				s = x->parent->left;
-				if (s->color == N_RED) {
-					s->color = N_BLACK;
-					x->parent->color = N_RED;
-					rightRotate(x->parent);
-					s = x->parent->left;
-				}
-				if (s->right->color == N_BLACK && s->right->color == N_BLACK) {
-					s->color = N_RED;
-					x = x->parent;
-				}
-				else {
-					if (s->left->color == N_BLACK) {
-						s->right->color = N_BLACK;
-						s->color = N_RED;
-						leftRotate(s);
-						s = x->parent->left;
-					}
-					s->color = x->parent->color;
-					x->parent->color = N_BLACK;
-					s->left->color = N_BLACK;
-					rightRotate(x->parent);
-					x = _ptrNode;
-				}
-			}
-		}
 	
-		x->color = 0;
-	}
-
-	void
-	rbTransplant( pointer u, pointer v ) {
-
-		if (u->parent == nullptr_t)
-			_ptrNode = v;
-		else if (u == u->parent->left)
-			u->parent->left = v;
-		else
-			u->parent->right = v;
-		v->parent = u->parent;
-	}
-
-	void
-	deleteNodeHelper( pointer tmp, int key ) {
-
-		pointer z = this->_last;
-		pointer x, y;
-
-		while (tmp != this->_last) {
-			if (tmp->data == key)
-				z = tmp;
-
-			if (tmp->data <= key)
-				tmp = tmp->right;
-			else
-				tmp = tmp->left;
-		}
-		if (z == this->_last) {
-			p1 "Key not found in the tree" p2;
-			return;
-		}
-
-		y = z;
-		int y_original_color = y->color;
-		if (z->left == this->_last) {
-			x = z->right;
-			rbTransplant(z, z->right);
-		}
-		else if (z->right == this->_last) {
-			x = z->left;
-			rbTransplant(z, z->left);
-		}
-		else {
-			y = minimum(z->right);
-			y_original_color = y->color;
-			x = y->right;
-			if (y->parent == z)
-				x->parent = y;
-			else {
-				rbTransplant(y, y->right);
-				y->right = z->right;
-				y->right->parent = y;
-			}
-			rbTransplant(z, y);
-			y->left = z->left;
-			y->left->parent = y;
-			y->color = z->color;
-		}
-		// delete z;
-		alloc.destroy(z); // ??
-		alloc.deallocate(z, 1); // ??
-		if (y_original_color == N_BLACK)
-			deleteFix(x);
-	}
 
 	// For balancing the tree after insertion
 	void
@@ -541,10 +411,142 @@ public:
 
 /* ~~~~~ DELETE NODE ~~~~~ */
 
-	void
+	bool
 	deleteNode( int data ) {
 
-		deleteNodeHelper(this->_ptrNode, data);
+		return deleteNodeHelper(this->_ptrNode, data);
+	}
+
+	// private:
+  // For balancing the tree after deletion
+	void
+	deleteFix( pointer x ) {
+
+		pointer s;
+
+		while (x != this->_ptrNode && x->color == N_BLACK) {
+
+			if (x == x->parent->left) {
+				s = x->parent->right;
+				if (s->color == N_RED) {
+					s->color = N_BLACK;
+					x->parent->color = N_RED;
+					leftRotate(x->parent);
+					s = x->parent->right;
+				}
+				if (s->left->color == N_BLACK && s->right->color == N_BLACK) {
+					s->color = N_RED;
+					x = x->parent;
+				}
+				else {
+					if (s->right->color == N_BLACK) {
+						s->left->color = N_BLACK;
+						s->color = N_RED;
+						rightRotate(s);
+						s = x->parent->right;
+					}
+					s->color = x->parent->color;
+					x->parent->color = N_BLACK;
+					s->right->color = N_BLACK;
+					leftRotate(x->parent);
+					x = _ptrNode;
+				}
+			}
+			else {
+				s = x->parent->left;
+				if (s->color == N_RED) {
+					s->color = N_BLACK;
+					x->parent->color = N_RED;
+					rightRotate(x->parent);
+					s = x->parent->left;
+				}
+				if (s->right->color == N_BLACK && s->right->color == N_BLACK) {
+					s->color = N_RED;
+					x = x->parent;
+				}
+				else {
+					if (s->left->color == N_BLACK) {
+						s->right->color = N_BLACK;
+						s->color = N_RED;
+						leftRotate(s);
+						s = x->parent->left;
+					}
+					s->color = x->parent->color;
+					x->parent->color = N_BLACK;
+					s->left->color = N_BLACK;
+					rightRotate(x->parent);
+					x = _ptrNode;
+				}
+			}
+		}
+	
+		x->color = 0;
+	}
+
+	void
+	rbTransplant( pointer u, pointer v ) {
+
+		if (u->parent == nullptr_t)
+			_ptrNode = v;
+		else if (u == u->parent->left)
+			u->parent->left = v;
+		else
+			u->parent->right = v;
+		v->parent = u->parent;
+	}
+
+	bool
+	deleteNodeHelper( pointer tmp, int key ) {
+
+		pointer z = this->_last;
+		pointer x, y;
+
+		while (tmp != this->_last) {
+			if (tmp->data == key)
+				z = tmp;
+
+			if (tmp->data <= key)
+				tmp = tmp->right;
+			else
+				tmp = tmp->left;
+		}
+		if (z == this->_last) {
+			// p1 "Key not found in the tree" p2;
+			return false;
+		}
+
+		y = z;
+		int y_original_color = y->color;
+		if (z->left == this->_last) {
+			x = z->right;
+			rbTransplant(z, z->right);
+		}
+		else if (z->right == this->_last) {
+			x = z->left;
+			rbTransplant(z, z->left);
+		}
+		else {
+			y = minimum(z->right);
+			y_original_color = y->color;
+			x = y->right;
+			if (y->parent == z)
+				x->parent = y;
+			else {
+				rbTransplant(y, y->right);
+				y->right = z->right;
+				y->right->parent = y;
+			}
+			rbTransplant(z, y);
+			y->left = z->left;
+			y->left->parent = y;
+			y->color = z->color;
+		}
+		// delete z;
+		alloc.destroy(z); // ??
+		alloc.deallocate(z, 1); // ??
+		if (y_original_color == N_BLACK)
+			deleteFix(x);
+		return true;
 	}
 
 

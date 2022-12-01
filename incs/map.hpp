@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/30 21:42:11 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:37:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,8 @@ public:
 		if (&rhs == this)
 			return *this;
 		
-		this->_t = rhs._t;
-		this->new_alloc = rhs.new_alloc;
-		this->new_compare = rhs.new_compare;
+		this->clear();
+		this->insert(rhs.begin(), rhs.end());
 
 		return *this;
 	}
@@ -217,11 +216,11 @@ public:
 
 /* ~~~~~ CAPACITY ~~~~~ */
 
-	// bool
-	// empty( void ) const {
+	bool
+	empty( void ) const {
 
-	// 	return (this->_t._size() == 0);
-	// }
+		return (this->size() == 0);
+	}
 
 	size_type
 	size( void ) const {
@@ -243,15 +242,6 @@ public:
 
 	T
 	&operator[]( const key_type &to_print ) {
-	
-		// iterator	tmp = ;
-		// this->_t.search(this->_t.getPtrNode(), to_print);
-		// if (tmp == this->_t.getLast())
-		// 	ft::make_pair(this->insert(to_print), T());
-		// return to_print;// tamere
-	
-		// insert(ft::make_pair(to_print, mapped_type()));
-		// return find(to_print)->second;
 
 		iterator	it;
 		value_type	pair(to_print, T());
@@ -272,38 +262,25 @@ public:
 	ft::pair< iterator, bool >
 	insert( const value_type &to_add ) {
 
-		// p1 "Bloque pour la valeur = " << to_add p2
-		const bool	wesh = this->_t.insert(to_add);
-		// p1 "la" p2
-		return ft::make_pair(this->find(to_add.first), wesh);
-
-		// const bool	r = _rbt.insert(v);
-		// 	return ft::make_pair(find(v.first), r);
+		const bool	insert_tree = this->_t.insert(to_add);
+		return ft::make_pair(this->find(to_add.first), insert_tree);
 
 	}
 
-	// iterator
-	// insert( iterator position, const value_type &x ) {
+	iterator
+	insert( iterator position, const value_type &to_add ) {
 
-	// 	iterator	tmp = this->begin();
-	// 	while (tmp != position && tmp != this->end())
-	// 		tmp++;
+		(void)position; //changer ca
+		return iterator(this->_t.insert(to_add), this->_t.getPtrNode(), this->_t.getLast());
 		
-		
-	// }
+	}
 
 	template< class InputIterator >
 	void
 	insert( InputIterator first, InputIterator last ) {
-	// call 1 insert
 
-		// p1 "first = " << *first p2
-		for (; first != last ; first++) {
-					// p1 "first = " << *first p2
-
-			// p1 "test" p2
+		for (; first != last ; first++)
 			this->insert(*first);
-		}
 
 	}
 
@@ -316,24 +293,33 @@ public:
 	size_type
 	erase( const key_type &value_to_del ) {
 
-		if (find(value_to_del) == end())
+		iterator	tmp;
+
+		tmp = find(value_to_del);
+		if (tmp == end())
 			return 0;
-		
-		this->_t.deleteNode(find(value_to_del));
+
+		this->_t.deleteNode(value_to_del);
+		// this->_size--;
 		return 1;
+		// bool tmp = ft::make_pair(value_to_del, T());
+		// return (this->_t.deleteNode(tmp));
 	}
 
 	void
 	erase( iterator position ) {
 
 		this->erase(position->first);
+
 	}
 
 	void
 	erase( iterator first, iterator last ) {
 
-		for (; first != last ; first++)
-			erase(first->second);
+		for (; first != last ; first++) {
+			this->_t.deleteNode(*first);
+			// this->_size--; // doute
+		}
 		// ou le first ???
 	}
 
