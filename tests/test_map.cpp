@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/01 15:12:07 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:41:04 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,24 +105,31 @@ class foo {
 
 #define T1 int
 #define T2 std::string
-typedef _pair<const T1, T2> T3;
+typedef LIBRARY::map<T1, T2>::value_type T3;
+typedef LIBRARY::map<T1, T2>::iterator iterator;
 
 static int iter = 0;
 
 template <typename MAP, typename U>
-void	ft_erase(MAP &mp, U param)
+void	ft_insert(MAP &mp, U param)
 {
+	_pair<iterator, bool> tmp;
+
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param);
+	tmp = mp.insert(param);
+	std::cout << "insert return: " << printPair(tmp.first);
+	std::cout << "Created new node: " << tmp.second << std::endl;
 	printSize(mp);
 }
 
 template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2)
+void	ft_insert(MAP &mp, U param, V param2)
 {
-	(void)param2;(void)param;
+	iterator tmp;
+
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param, param2);
+	tmp = mp.insert(param, param2);
+	std::cout << "insert return: " << printPair(tmp);
 	printSize(mp);
 }
 
@@ -144,38 +151,23 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	std::list<T3> lst;
-	unsigned int lst_size = 10;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
-	printSize(mp);
+	LIBRARY::map<T1, T2> mp, mp2;
 
-	ft_erase(mp, ++mp.begin());
+	ft_insert(mp, T3(42, "lol"));
+	ft_insert(mp, T3(42, "mdr"));
 
-	ft_erase(mp, mp.begin());
-	ft_erase(mp, --mp.end());
+	ft_insert(mp, T3(50, "mdr"));
+	ft_insert(mp, T3(35, "funny"));
 
-	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+	ft_insert(mp, T3(45, "bunny"));
+	ft_insert(mp, T3(21, "fizz"));
+	ft_insert(mp, T3(38, "buzz"));
 
-	p1 "le dernier" p2
-	printSize(mp);
-	ft_erase(mp, --(--(--mp.end())), --mp.end());
+	ft_insert(mp, mp.begin(), T3(55, "fuzzy"));
 
-	mp[10] = "Hello";
-	mp[11] = "Hi there";
-	// printSize(mp);
-	// ft_erase(mp, --(--(--mp.end())), mp.end());
-
-	// mp[12] = "ONE";
-	// mp[13] = "TWO";
-	// mp[14] = "THREE";
-	// mp[15] = "FOUR";
-	// printSize(mp);
-	// ft_erase(mp, mp.begin(), mp.end());
-
-
-
+	ft_insert(mp2, mp2.begin(), T3(1337, "beauty"));
+	ft_insert(mp2, mp2.end(), T3(1000, "Hello"));
+	ft_insert(mp2, mp2.end(), T3(1500, "World"));
 
 
 

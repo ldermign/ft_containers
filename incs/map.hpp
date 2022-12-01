@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/01 15:17:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/01 21:55:18 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,10 @@ public:
 
 
 
-
+/* ~~~~~~~~~~~~~~~~~~~~~ */
 /* ~~~~~ ITERATORS ~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~ */
+
 	iterator
 	begin( void ) {
 
@@ -271,7 +273,9 @@ public:
 	insert( iterator position, const value_type &to_add ) {
 
 		(void)position; //changer ca
-		return iterator(this->_t.insert(to_add), this->_t.getPtrNode(), this->_t.getLast());
+		this->_t.insert(to_add);
+		return this->find(to_add.first);
+		// return iterator(this->_t.insert(to_add), this->_t.getPtrNode(), this->_t.getLast());
 		
 	}
 
@@ -312,7 +316,7 @@ public:
 	void
 	erase( iterator position ) {
 
-		p1 "erase position" p2
+		// p1 "erase position" p2
 		this->erase(position->first);
 
 	}
@@ -320,19 +324,25 @@ public:
 	void
 	erase( iterator first, iterator last ) {
 
+		p1 "erase iterators" p2
+		while (first != last)
+			_t.deleteNode(*first++);
+			// different de [this->_t.deleteNode(*first);]
+			// avec first++ dans while
 
-		
+
 		// p1 "erase iterators" p2
-		iterator ret;
-		for (; first != last ; first++) {
-			p1 "1 ?? " << first->first << " " << first->second p2
-			printTree();
-			this->_t.deleteNode(*first);
-			// ret = first;
-			// ret++;
-			// this->erase(first);
-			// first = ret;
-		}
+		// iterator ret;
+		// for (; first != last ; first++) {
+
+		// 	// p1 "1 ?? " << first->first << " " << first->second p2
+		// 	// printTree();
+		// 	this->_t.deleteNode(*first);
+		// 	// ret = first;
+		// 	// ret++;
+		// 	// this->erase(first);
+		// 	// first = ret;
+		// }
 		// ou le first ???
 
 	}
@@ -415,8 +425,11 @@ public:
 		// return (const_iterator(this->_t.search(to_find), this->_t.getPtrNode(), this->_t.getLast()));
 	}
 
-	// size_type
-	// count( const key_type &x ) const;
+	size_type
+	count( const key_type &value ) const {
+
+		return (this->find(value) != this->end());
+	}
 
 
 

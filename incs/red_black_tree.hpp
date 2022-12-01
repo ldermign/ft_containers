@@ -414,7 +414,7 @@ public:
 	bool
 	deleteNode( const value_type &data ) {
 
-		this->_size--;
+		// this->_size--;
 		return deleteNodeHelper(this->_ptrNode, data);
 	}
 
@@ -489,6 +489,7 @@ public:
 	rbTransplant( pointer u, pointer v ) {
 
 		if (u->parent == this->_last)
+		// if (u->parent == nullptr_t)
 			_ptrNode = v;
 		else if (u == u->parent->left)
 			u->parent->left = v;
@@ -561,6 +562,7 @@ public:
 		alloc.deallocate(z, 1); // ??
 		if (y_original_color == N_BLACK)
 			deleteFix(x);
+		this->_size--;
 		return true;
 	}
 
