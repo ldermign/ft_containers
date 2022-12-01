@@ -1,0 +1,38 @@
+erase position		     <
+erase position		     <
+erase position		     <
+1 ?? 2 CCCCCCCC		     <
+R----5 - FFFFF(BLACK)	     <
+   L----3 - DDDDDDD(BLACK)   <
+   |  L----2 - CCCCCCCC(BLAC <
+   |  R----4 - EEEEEE(BLACK) <
+   R----7 - HHH(BLACK)	     <
+      L----6 - GGGG(BLACK)   <
+      R----8 - II(BLACK)     <
+1 ?? 3 DDDDDDD		     <
+R----5 - FFFFF(BLACK)	     <
+   L----3 - DDDDDDD(BLACK)   <
+   |  R----4 - EEEEEE(RED)   <
+   R----7 - HHH(RED)	     <
+      L----6 - GGGG(BLACK)   <
+      R----8 - II(BLACK)     <
+1 ?? 4 EEEEEE		     <
+R----5 - FFFFF(BLACK)	     <
+   L----4 - EEEEEE(BLACK)    <
+   R----7 - HHH(RED)	     <
+      L----6 - GGGG(BLACK)   <
+      R----8 - II(BLACK)     <
+1 ?? 6 GGGG		     |	size: 2
+R----7 - HHH(BLACK)	     <
+   L----5 - FFFFF(BLACK)     <
+   |  R----6 - GGGG(RED)     <
+   R----8 - II(BLACK)	     <
+1 ?? 5 FFFFF		     <
+R----7 - HHH(BLACK)	     <
+   L----5 - FFFFF(BLACK)     <
+   R----8 - II(BLACK)	     <
+1 ?? 7 HHH		     <
+R----7 - HHH(BLACK)	     <
+   R----8 - II(RED)	     <
+size: 1			     <
+			     >	- key: 5 | value: FFFFF

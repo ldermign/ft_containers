@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/01 11:37:46 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:17:54 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,22 +293,26 @@ public:
 	size_type
 	erase( const key_type &value_to_del ) {
 
-		iterator	tmp;
+		// p1 "erase key_type" p2
+		// iterator	tmp;
 
-		tmp = find(value_to_del);
-		if (tmp == end())
-			return 0;
+		// tmp = find(value_to_del);
+		// if (tmp == end())
+		// 	return 0;
+		// p1 "la ?" p2
+		// this->_t.deleteNode(value_to_del);
 
-		this->_t.deleteNode(value_to_del);
-		// this->_size--;
-		return 1;
-		// bool tmp = ft::make_pair(value_to_del, T());
-		// return (this->_t.deleteNode(tmp));
+		// // this->erase(tmp);
+		// // this->_size--;
+		// return 1;
+		// const bool tmp = ft::make_pair(value_to_del, mapped_type());
+		return (this->_t.deleteNode(ft::make_pair(value_to_del, mapped_type())));
 	}
 
 	void
 	erase( iterator position ) {
 
+		p1 "erase position" p2
 		this->erase(position->first);
 
 	}
@@ -316,11 +320,21 @@ public:
 	void
 	erase( iterator first, iterator last ) {
 
+
+		
+		// p1 "erase iterators" p2
+		iterator ret;
 		for (; first != last ; first++) {
+			p1 "1 ?? " << first->first << " " << first->second p2
+			printTree();
 			this->_t.deleteNode(*first);
-			// this->_size--; // doute
+			// ret = first;
+			// ret++;
+			// this->erase(first);
+			// first = ret;
 		}
 		// ou le first ???
+
 	}
 
 

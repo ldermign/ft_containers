@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/30 21:41:16 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:07:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,14 +179,14 @@ private:
 			Node *tmp = _current->parent;
 			if (tmp->right ==_current)
 			{
-				while (_current != this->_last 
+				while (_current != this->_last
 					&& tmp->right != this->_last
 					&& _current == tmp->right) {
 					_current = tmp;
 					tmp = tmp->parent;
 				}
 			}
-			if (_current->right != tmp)
+			if (_current->right != tmp || tmp == this->_last)
 				_current = tmp;
 		}
 	}
@@ -214,6 +214,16 @@ private:
 			_current = parent;
 		}
 	}
+
+	// void Decrement(void) {
+	// 	if (_current->right != _last)
+	// 		_current = (minimum(_current->right));
+	// 	else {
+	// 		Node * save = _current->parent;
+	// 		for(;(save != _last && _current == save->right); _current = save, save = save->parent);
+	// 		_current = save;
+	// 	}
+	// }
 
 };
 

@@ -392,7 +392,7 @@ public:
 		if (tmp->parent == nullptr_t) {
 			tmp->color = N_BLACK;
 			tmp->parent = _last;
-			// p1 "first element" p2; 
+			// p1 "first element" p2;
 			return true;
 		}
 
@@ -412,13 +412,14 @@ public:
 /* ~~~~~ DELETE NODE ~~~~~ */
 
 	bool
-	deleteNode( int data ) {
+	deleteNode( const value_type &data ) {
 
+		this->_size--;
 		return deleteNodeHelper(this->_ptrNode, data);
 	}
 
-	// private:
-  // For balancing the tree after deletion
+// private:
+// For balancing the tree after deletion
 	void
 	deleteFix( pointer x ) {
 
@@ -452,6 +453,7 @@ public:
 					x = _ptrNode;
 				}
 			}
+
 			else {
 				s = x->parent->left;
 				if (s->color == N_RED) {
@@ -460,7 +462,7 @@ public:
 					rightRotate(x->parent);
 					s = x->parent->left;
 				}
-				if (s->right->color == N_BLACK && s->right->color == N_BLACK) {
+				if (s->right->color == N_BLACK) {
 					s->color = N_RED;
 					x = x->parent;
 				}
@@ -480,13 +482,13 @@ public:
 			}
 		}
 	
-		x->color = 0;
+		x->color = N_BLACK;
 	}
 
 	void
 	rbTransplant( pointer u, pointer v ) {
 
-		if (u->parent == nullptr_t)
+		if (u->parent == this->_last)
 			_ptrNode = v;
 		else if (u == u->parent->left)
 			u->parent->left = v;
@@ -496,20 +498,33 @@ public:
 	}
 
 	bool
-	deleteNodeHelper( pointer tmp, int key ) {
+	deleteNodeHelper( pointer tmp, const value_type &key ) {
 
 		pointer z = this->_last;
 		pointer x, y;
 
-		while (tmp != this->_last) {
-			if (tmp->data == key)
-				z = tmp;
+		// while (tmp != this->_last) {
+		// 	if (tmp->data == key)
+		// 		z = tmp;
 
-			if (tmp->data <= key)
+		// 	else if (tmp->data <= key)
+		// 		tmp = tmp->right;
+		// 	else
+		// 		tmp = tmp->left;
+		// }
+
+		while (tmp != _last)
+		{
+			if (this->comp(tmp->data, key))
 				tmp = tmp->right;
-			else
+			else if (this->comp(key, tmp->data))
 				tmp = tmp->left;
+			else {
+				z = tmp;
+				tmp = tmp->right;
+			}
 		}
+
 		if (z == this->_last) {
 			// p1 "Key not found in the tree" p2;
 			return false;

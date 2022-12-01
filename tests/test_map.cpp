@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/01 10:17:50 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:12:07 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	ft_erase(MAP &mp, U param)
 template <typename MAP, typename U, typename V>
 void	ft_erase(MAP &mp, U param, V param2)
 {
+	(void)param2;(void)param;
 	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
 	mp.erase(param, param2);
 	printSize(mp);
@@ -156,19 +157,22 @@ void	test_map( void ) {
 	ft_erase(mp, --mp.end());
 
 	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+
+	p1 "le dernier" p2
+	printSize(mp);
 	ft_erase(mp, --(--(--mp.end())), --mp.end());
 
 	mp[10] = "Hello";
 	mp[11] = "Hi there";
-	printSize(mp);
-	ft_erase(mp, --(--(--mp.end())), mp.end());
+	// printSize(mp);
+	// ft_erase(mp, --(--(--mp.end())), mp.end());
 
-	mp[12] = "ONE";
-	mp[13] = "TWO";
-	mp[14] = "THREE";
-	mp[15] = "FOUR";
-	printSize(mp);
-	ft_erase(mp, mp.begin(), mp.end());
+	// mp[12] = "ONE";
+	// mp[13] = "TWO";
+	// mp[14] = "THREE";
+	// mp[15] = "FOUR";
+	// printSize(mp);
+	// ft_erase(mp, mp.begin(), mp.end());
 
 
 

@@ -72,3 +72,13 @@ fclean:		clean
 re:			fclean all
 
 .PHONY:		all clean fclean re
+
+
+# /*
+
+# --(--(--mp.end)) = - key: 6 | value: GGGG
+# --mp.end() = - key: 8 | value: II
+
+
+
+# */
