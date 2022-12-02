@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 14:23:44 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:15:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ class foo {
 		value_type	value;
 		bool		_verbose;
 };
+
 template <typename T>
 std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
 	o << bar.getValue();

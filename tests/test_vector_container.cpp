@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 15:50:31 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/02 21:17:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,45 +80,6 @@
 using namespace LIBRARY;
 
 
-
-int leak_i = 0;
-
-class LeakClass
-{
-	public:
-
-		LeakClass()
-		{
-			ptr = new int;
-		}
-
-		LeakClass(const LeakClass& other)
-		: ptr(NULL)
-		{
-			(void)other;
-			if (leak_i++ == 10)
-				throw std::runtime_error("error leak custom");
-			if (ptr)
-				delete ptr;
-			ptr = new int;
-		}
-
-		LeakClass operator=(const LeakClass& rhs)
-		{
-			(void)rhs;
-			if (ptr)
-				delete ptr;
-			ptr = new int;
-			return (*this);
-		}
-
-		~LeakClass()
-		{
-			delete ptr;
-		}
-
-		int *ptr;
-};
 
 
 //Reset
@@ -197,7 +158,7 @@ void	checkErase(LIBRARY::vector< std::string > const &vct,
 }
 
 
-		# define CCOUT(color, x) std::cout << color << x << CRESET << std::endl;
+# define CCOUT(color, x) std::cout << color << x << CRESET << std::endl;
 # define COUT(x) std::cout << x << std::endl;
 # define EXCEPTION(x, y) public: class x : public std::exception { const char * what (void) const throw { return y; } }
 # define P_TAB(x) print_tab(x);
