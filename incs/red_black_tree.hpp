@@ -80,59 +80,34 @@ public:
 		this->_last->left = _last;
 		this->_last->right = _last;
 		this->_last->parent = _last;
-		// p1 _last p2 ////
-		// << "] [" << _ptrNode->parent p2
 		this->_ptrNode = this->_last;
 		_size = 0;
+
 	}
 
-	// RedBlackTree( void ) {}
-		// : _last(new node), _last->color(N_BLACK), _last->left(NULL), _last->right(NULL), _ptrNode(_last) {}
-
-	// virtual
 	~RedBlackTree( void ) {}
-
-	// operator	RedBlackTree< T, Node >() const {
-	// 	return (RedBlackTree< T, Node >());
-	// };
 
 /* ~~~~~ ACCESSORS ~~~~~ */
 
-	value_compare	getComp( void ) const { return this->comp; }
-	Node			*getPtrNode( void ) const { return this->_ptrNode; }
-	Node			*getLast( void ) const { return this->_last; }
-	size_type		getSize( void ) const { return this->_size; }
-	// size_type		getMaxSize( void ) const { std::numeric_limits<difference_type>::max(); }
-	pointer			getMinimum( void ) const { return this->minimum(this->_ptrNode); }
-	pointer			getMaximum( void ) const { return this->maximum(this->_ptrNode); }
-	pointer			searchConst( const value_type &key_to_find ) const { return search(this->getPtrNode(), key_to_find); }
+	value_compare	getComp( void ) const { return (this->comp); }
+	Node			*getPtrNode( void ) const { return (this->_ptrNode); }
+	Node			*getLast( void ) const { return (this->_last); }
+	size_type		getSize( void ) const { return (this->_size); }
+	pointer			getMinimum( void ) const { return (this->minimum(this->_ptrNode)); }
+	pointer			getMaximum( void ) const { return (this->maximum(this->_ptrNode)); }
+	pointer			searchConst( const value_type &key_to_find ) const { return (search(this->getPtrNode(), key_to_find)); }
 
 /* ~~~~~ ~~~~~ */
 
 	pointer
 	search( pointer start_point, const value_type &key_to_find ) const {
 
-		// pointer	idx = _ptrNode;
-
-		// while (idx != this->_last) {
-		// 	if (idx->data == value)
-		// 		return (idx);
-		// 	if (comp(idx->left->data, value))
-		// 		idx = idx->left;
-		// 	else
-		// 	// else if (comp(value, idx->right->data))
-		// 		idx = idx->right;
-		// }
-
-		// return (nullptr_t);
-
-		// p1 "euuuh" p2
 		if (start_point == this->_last)
-			return start_point;
+			return (start_point);
 		else if (comp(key_to_find, start_point->data))
-			return search(start_point->left, key_to_find);
+			return (search(start_point->left, key_to_find));
 		else if (comp(start_point->data, key_to_find))
-			return search(start_point->right, key_to_find);
+			return (search(start_point->right, key_to_find));
 		else
 			return (start_point);
 
@@ -247,43 +222,44 @@ public:
 	minimum( pointer tmp ) const {
 
 		if (tmp == nullptr_t || tmp == this->_last)
-			return this->_last;
-		while (tmp->left != this->_last) {
-			// p1 "merde0" p2
-			tmp = tmp->left;}
-		return tmp;
+			return (this->_last);
+		while (tmp->left != this->_last)
+			tmp = tmp->left;
+
+		return (tmp);
 	}
 
 	pointer
 	maximum( pointer tmp ) const {
 
 		if (tmp == nullptr_t || tmp == this->_last)
-			return this->_last;
+			return (this->_last);
 		while (tmp->right != this->_last)
 			tmp = tmp->right;
 
-		return tmp;
+		return (tmp);
 	}
 
 	pointer
 	successor( pointer x ) {
 
 		if (x->right != this->_last)
-			return minimum(x->right);
+			return (minimum(x->right));
 
 		pointer y = x->parent;
 		while (y != this->_last && x == y->right) {
 			x = y;
 			y = y->parent;
 		}
-		return y;
+
+		return (y);
 	}
 
 	pointer
 	predecessor( pointer x ) {
 
 		if (x->left != this->_last) {
-			return maximum(x->left);
+			return (maximum(x->left));
 		}
 
 		pointer y = x->parent;
@@ -292,7 +268,7 @@ public:
 			y = y->parent;
 		}
 
-		return y;
+		return (y);
 	}
 
 
@@ -362,7 +338,6 @@ public:
 
 		Node *y = nullptr_t;
 		Node *x = this->_ptrNode;
-		this->_size++;
 
 		while (x != this->_last && x != nullptr_t) {
 			y = x;
@@ -371,12 +346,10 @@ public:
 			else if (this->comp(x->data, tmp->data))
 				x = x->right;
 			else {
-				// p1 "salut" p2;
 				alloc.destroy(tmp);
 				alloc.deallocate(tmp, 1);
-				return (false);
+				return false;
 			}
-			// p1 "loop" p2; 
 		}
 
 		// y is parent of x
@@ -388,6 +361,7 @@ public:
 		else
 			y->right = tmp;
 
+		this->_size++;
 		// if new node is a root node, simply return
 		if (tmp->parent == nullptr_t) {
 			tmp->color = N_BLACK;
@@ -414,8 +388,7 @@ public:
 	bool
 	deleteNode( const value_type &data ) {
 
-		// this->_size--;
-		return deleteNodeHelper(this->_ptrNode, data);
+		return (deleteNodeHelper(this->_ptrNode, data));
 	}
 
 // private:
@@ -570,17 +543,26 @@ public:
 /* ~~~~~ CLEAR ~~~~~ */
 
 	void
+	clear_loop( Node *root ) {
+
+		this->_ptrNode = this->_last;
+		if (root == this->_last)
+			return ;
+
+		clear_loop(root->left); 
+		clear_loop(root->right); 
+
+		alloc.destroy(root);
+		alloc.deallocate(root, 1);
+
+		this->_size--;
+	}
+
+	void
 	clear( void ) {
 
-		Node	*root = this->getPtrNode();
-		while (root != this->_last) {
-			root = root->left;
-			root = root->right;
-			alloc.destroy(root); // ??
-			alloc.deallocate(root, 1); // ??
-		}
+		clear_loop(this->getPtrNode());
 		this->_ptrNode = this->_last;
-		this->_size = 0;
 
 	}
 

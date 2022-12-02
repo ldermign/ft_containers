@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nullptr.hpp                                        :+:      :+:    :+:   */
+/*   equal.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 15:02:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 15:42:03 by ldermign         ###   ########.fr       */
+/*   Created: 2022/12/02 10:05:24 by ldermign          #+#    #+#             */
+/*   Updated: 2022/12/02 14:26:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NULLPTR_HPP
-# define NULLPTR_HPP
-
-// https://stackoverflow.com/questions/1282295/what-exactly-is-nullptr
+#ifndef EQUAL_HPP
+# define EQUAL_HPP
 
 #include "ft_containers.hpp"
 
 START
 
-struct nullptr_ {
+template< class InputIt1, class InputIt2 >
+bool
+equal( InputIt1 first1, InputIt1 last1, InputIt2 first2 ) {
 
-	nullptr_( void ) {}
-
-	void operator &() const;  // Can't take address of nullptr
-
-	template< class T >
-	inline operator T*() const {
-		return (0);
+	for (; first1 != last1; ++first1, ++first2) {
+		if (!(*first1 == *first2)) {
+			return false;
+		}
 	}
 
-	template< class C, class T >
-	inline operator T C::*() const {
-		return (0);
-	}
-};
-
-nullptr_ nullptr_t;
+	return true;
+}
 
 STOP
 

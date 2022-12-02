@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/01 21:41:04 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:23:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,45 +93,47 @@ class foo {
 		value_type	value;
 		bool		_verbose;
 };
+template <typename T>
+std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
+	o << bar.getValue();
+	return o;
+}
+// --- End of class foo
 
-
-
-
-
-
-
-
-
-
-#define T1 int
-#define T2 std::string
-typedef LIBRARY::map<T1, T2>::value_type T3;
-typedef LIBRARY::map<T1, T2>::iterator iterator;
-
-static int iter = 0;
-
-template <typename MAP, typename U>
-void	ft_insert(MAP &mp, U param)
+template <typename T>
+T	inc(T it, int n)
 {
-	_pair<iterator, bool> tmp;
-
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	tmp = mp.insert(param);
-	std::cout << "insert return: " << printPair(tmp.first);
-	std::cout << "Created new node: " << tmp.second << std::endl;
-	printSize(mp);
+	while (n-- > 0)
+		++it;
+	return (it);
 }
 
-template <typename MAP, typename U, typename V>
-void	ft_insert(MAP &mp, U param, V param2)
+template <typename T>
+T	dec(T it, int n)
 {
-	iterator tmp;
-
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	tmp = mp.insert(param, param2);
-	std::cout << "insert return: " << printPair(tmp);
-	printSize(mp);
+	while (n-- > 0)
+		--it;
+	return (it);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define T1 char
+#define T2 int
+typedef _pair<const T1, T2> T3;
+
+
 
 
 
@@ -151,23 +153,47 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	LIBRARY::map<T1, T2> mp, mp2;
 
-	ft_insert(mp, T3(42, "lol"));
-	ft_insert(mp, T3(42, "mdr"));
 
-	ft_insert(mp, T3(50, "mdr"));
-	ft_insert(mp, T3(35, "funny"));
 
-	ft_insert(mp, T3(45, "bunny"));
-	ft_insert(mp, T3(21, "fizz"));
-	ft_insert(mp, T3(38, "buzz"));
+	std::list<T3> lst;
+	unsigned int lst_size = 7;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3(lst_size - i, i));
 
-	ft_insert(mp, mp.begin(), T3(55, "fuzzy"));
+	LIBRARY::map<T1, T2> mp(lst.begin(), lst.end());
+	LIBRARY::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
 
-	ft_insert(mp2, mp2.begin(), T3(1337, "beauty"));
-	ft_insert(mp2, mp2.end(), T3(1000, "Hello"));
-	ft_insert(mp2, mp2.end(), T3(1500, "World"));
+	LIBRARY::map<T1, T2> mp_range(it, --(--ite));
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 5;
+
+	it = mp.begin(); ite = --(--mp.end());
+	LIBRARY::map<T1, T2> mp_copy(mp);
+	for (int i = 0; it != ite; ++it)
+		it->second = ++i * 7;
+
+	std::cout << "\t-- PART ONE --" << std::endl;
+	printSize(mp);
+	printSize(mp_range);
+	printSize(mp_copy);
+
+	mp = mp_copy;
+	p1 "COPYYYYYYYYYYYYY" p2
+	printSize(mp_copy);
+	p1 "MMMMMMMMMMMMMPPPPPPPPPPP" p2
+	p1 "mp[0] = " << mp[0] p2
+	printSize(mp);
+	mp_copy = mp_range;
+	printSize(mp_copy);
+	mp_range.clear();
+
+	std::cout << "\t-- PART TWO --" << std::endl;
+	printSize(mp);
+	printSize(mp_range);
+	printSize(mp_copy);
+
+
 
 
 

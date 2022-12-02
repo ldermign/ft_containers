@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:01:03 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/30 21:42:05 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:30:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,50 +34,49 @@ public:
 
 /* ~~~~~ CANONICAL FORM ~~~~~ */
 
-	// stack( void ) : c(NULL) {}
-
-	explicit
-	stack( const container_type &a = container_type() ) : c(a) {}
+	explicit stack( const container_type &a = container_type() )
+		: c(a) {}
 
 	stack
 	&operator=( const stack &rhs ) {
 
 		if (this == &rhs) 
-			return *this;
+			return (*this);
 		this->c = rhs.c;
-		return *this;
+
+		return (*this);
 	}
 	
-	stack( const stack &src ) : c(src) {
+	stack( const stack &src ) {
 
 		*this = src;
 	}
 
-	// virtual
+
 	~stack( void ) {}
 
 	size_type
 	size( void ) const {
-		
-		return this->c.size();
+
+		return (this->c.size());
 	}
 
 	bool
 	empty( void ) const {
 
-		return this->c.empty();
+		return (this->c.empty());
 	}
 
 	value_type
 	&top( void ) {
 
-		return this->c.back();
+		return (this->c.back());
 	}
 
 	const value_type
 	&top( void ) const {
-		
-		return this->c.back();
+
+		return (this->c.back());
 	}
 	
 	void
@@ -89,49 +88,49 @@ public:
 	void
 	pop( void ) {
 
-		return this->c.pop_back();
+		return (this->c.pop_back());
 	}
 
 	friend bool
-	operator==( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	operator==( const ft::stack< T, Container > &lhs, const ft::stack< T, Container > &rhs ) {
 
-		return (x.c == y.c);
+		return (lhs.c == rhs.c);
 	}
 
 	friend bool
-	operator!=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	operator!=( const ft::stack< T, Container > &lhs, const ft::stack< T, Container > &rhs ) {
 
-		return (x.c != y.c);
+		return (lhs.c != rhs.c);
 	}
 
 	friend bool
-	operator<( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	operator<( const ft::stack< T, Container > &lhs, const ft::stack< T, Container > &rhs ) {
 		
-		return (x.c < y.c);
+		return (lhs.c < rhs.c);
 	}
 
 	friend bool
-	operator<=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	operator<=( const ft::stack< T, Container > &lhs, const ft::stack< T, Container > &rhs ) {
 		
-		return (x.c <= y.c);
+		return (lhs.c <= rhs.c);
 	}
 
 	friend bool
-	operator>( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	operator>( const ft::stack< T, Container > &lhs, const ft::stack< T, Container > &rhs ) {
 		
-		return (x.c > y.c);
+		return (lhs.c > rhs.c);
 	}
 
 	friend bool
-	operator>=( const ft::stack< T, Container > &x, const ft::stack< T, Container > &y ) {
+	operator>=( const ft::stack< T, Container > &lhs, const ft::stack< T, Container > &rhs ) {
 		
-		return (x.c >= y.c);
+		return (lhs.c >= rhs.c);
 	}
 
 	void
-	swap( stack< T, Container > &x, stack< T, Container > &y) {
+	swap( stack< T, Container > &lhs, stack< T, Container > &rhs) {
 
-		x.swap(y);
+		lhs.swap(rhs);
 	}
 
 };

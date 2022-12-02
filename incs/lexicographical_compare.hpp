@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:45:19 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/22 14:59:38 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:27:31 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool lexicographical_compare( InputIt1 first1, InputIt1 last1, InputIt2 first2, 
 			return false;
 	}
 
-	return (first1 == last1) && (first2 != last2);
+	return ((first1 == last1) && (first2 != last2));
 }
 
 STOP

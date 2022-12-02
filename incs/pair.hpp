@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:43:57 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/01 15:18:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:30:36 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,21 @@ struct pair {
 	pair &operator=( const pair &other ) {
 
 		if (&other == this)
-			return *this;
+			return (*this);
 
         this->first = other.first;
         this->second = other.second;
 
-        return *this;
+        return (*this);
 	}
 
-	operator	pair< const T1, const T2 > (void) const {
+	operator
+	pair< const T1, const T2 > (void) const {
 
-		return pair< const T1, const T2 >(first, second);
+		return (pair< const T1, const T2 >(first, second));
 	}
 
-/* DESTRUCTCEUR */
+/* DESTRUCTEUR */
 	~pair( void ) {}
 
 };
@@ -78,37 +79,37 @@ ft::pair< T1, T2 > make_pair( T1 x, T2 y ) {
 template< class T1, class T2 >
 bool
 operator==( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
-    return x.first == y.first && x.second == y.second;
+    return (x.first == y.first && x.second == y.second);
 }
 
 template< class T1, class T2 >
 bool
 operator!=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
-	return !(x == y);
+	return (!(x == y));
 }
 
 template< class T1, class T2 >
 bool
 operator<( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
-	return x.first < y.first || (!(y.first < x.first) && x.second < y.second);
+	return (x.first < y.first || (!(y.first < x.first) && x.second < y.second));
 }
 
 template< class T1, class T2 >
 bool
 operator<=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
-	return !(y < x);
+	return (!(y < x));
 }
 
 template< class T1, class T2 >
 bool
 operator>( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
-	return y < x;
+	return (y < x);
 }
 
 template< class T1, class T2 >
 bool
 operator>=( const pair< T1, T2 > &x, const pair< T1, T2 > &y ) {
-	return !(x < y);
+	return (!(x < y));
 }
 
 // SUPPRIMEER
