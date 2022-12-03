@@ -1,0 +1,10 @@
+ >> ----------------------- FT OUTPUT:
+1 2 212121 capacity:4 size:3
+
+1 2 212121 capacity:4 size:3
+ >> ----------------------- STD OUTPUT:
+1 2 212121 capacity:4 size:3
+
+1 2 212121 capacity:3 size:3
+ >> ----------------------- DIFF ❌ 
+3c3 < 1 2 212121 capacity:4 size:3 --- > 1 2 212121 capacity:3 size:3

@@ -1,0 +1,12 @@
+ >> ----------------------- FT OUTPUT:
+1
+0
+A B C D E F G H I; s9; c16
+a b X d e f; s6; c8
+ >> ----------------------- STD OUTPUT:
+1
+0
+A B C D E F G H I; s9; c9
+a b X d e f; s6; c6
+ >> ----------------------- DIFF ❌ 
+3,4c3,4 < A B C D E F G H I; s9; c16 < a b X d e f; s6; c8 --- > A B C D E F G H I; s9; c9 > a b X d e f; s6; c6

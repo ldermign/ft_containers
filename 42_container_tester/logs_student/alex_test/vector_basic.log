@@ -1,0 +1,36 @@
+ >> ----------------------- FT OUTPUT:
+a a a a; s4; c4
+A B C D; s4; c4
+C D E F; s4; c4
+9223372036854775807
+8
+0
+9
+18
+1
+A B C X a b c d e f g X D E F G; s16; c16
+a b c d e f g; s7; c18
+A B C X a b c d e f g X D E F G; s16; c16
+b
+F
+A B C X b c d e f g X F G; s13; c16
+010011
+ >> ----------------------- STD OUTPUT:
+a a a a; s4; c4
+A B C D; s4; c4
+C D E F; s4; c4
+9223372036854775807
+8
+0
+9
+18
+1
+A B C X a b c d e f g X D E F G; s16; c16
+a b c d e f g; s7; c7
+A B C X a b c d e f g X D E F G; s16; c16
+b
+F
+A B C X b c d e f g X F G; s13; c13
+010011
+ >> ----------------------- DIFF ❌ 
+11c11 < a b c d e f g; s7; c18 --- > a b c d e f g; s7; c7 15c15 < A B C X b c d e f g X F G; s13; c16 --- > A B C X b c d e f g X F G; s13; c13

@@ -128,7 +128,7 @@ size: 16 capacity: 20
 size: 18 capacity: 20
 testttt
 before insert with 3 args --- size: 18 capacity: 20
-after insert with 3 args --- size: 23 capacity: 40
+after insert with 3 args --- size: 23 capacity: 36
 42
 42
 42
@@ -137,7 +137,7 @@ after insert with 3 args --- size: 23 capacity: 40
 size: 5 capacity: 5
 [4;35m                                         ERASE
 [0m
-before erase --- size: 23 capacity: 40
+before erase --- size: 23 capacity: 36
 42
 42
 42
@@ -160,7 +160,7 @@ before erase --- size: 23 capacity: 40
 -95
 -96
 -97
-after erase --- size: 22 capacity: 40
+after erase --- size: 22 capacity: 36
 erase --- size: 0 capacity: 5
 [4;35m                                         SWAP
 [0m
@@ -192,7 +192,7 @@ swap --- size: 3 capacity: 5
 -97
 12
 12
-swap --- size: 24 capacity: 40
+swap --- size: 24 capacity: 36
 [4;35m                                         CLEAR
 [0m
 swap --- size: 0 capacity: 10
@@ -222,9 +222,9 @@ swap --- size: 0 capacity: 10
 12
 [4;35m                                         AT
 [0m
-at --- size: 24 capacity: 40
+at --- size: 24 capacity: 36
 42
-at --- size: 24 capacity: 40
+at --- size: 24 capacity: 36
 back: 12
 front: 42
 42
@@ -296,207 +296,3 @@ resize --- size: 10 capacity: 10
 [0m
 operator [] --- size: 10 capacity: 10
 operator [] --- size: 10 capacity: 10
-
-
-
-
-[0;103m                                         STACK TESTS                                         [0m
-
-
-
-
-[4;35m                                         CONSTRUCTORS
-[0m
-empty: 1
-size: 0
-[4;35m                                         TEST
-[0m
-size: 3
-top: 389
-size: 2
-top: 478
-size: 2
-top: 478
-size: 2
-top: 478
-empty: 0
-
-
-
-
-[0;103m                                         MAP TESTS                                         [0m
-
-
-
-
-[4;35m                                         CONSTRUCTORS
-[0m
-42 42
-389 389
-443 443
-478 478
-42 42
-389 389
-443 443
-478 478
-42 42
-389 389
-443 443
-478 478
-42 42
-389 389
-443 443
-478 478
-42 42
-389 389
-443 443
-478 478
-42 42
-389 389
-443 443
-478 478
-[4;35m                                         CLEAR
-[0m
-size: 4
-size: 0
-empty: 0
-[4;35m                                         OPERATOR
-[0m
-size: 4
-size: 4
-empty: 0
-42 42
-389 389
-443 443
-478 478
-42
-0
-478
-[4;35m                                         ITERATORS
-[0m
--30 0
-42 42
-389 389
-443 443
-478 42
-reverse iterator
-478 42
-443 443
-389 389
-42 42
--30 0
-const it + decrement
-478 42
-443 443
-389 389
-42 42
-[4;35m                                         COUNT
-[0m
-1
-0
-0
-[4;35m                                         SIZE
-[0m
-5
-230584300921369395
-0
-4
-230584300921369395
-0
-4
-230584300921369395
-0
-4
-230584300921369395
-0
-4
-230584300921369395
-0
-[4;35m                                         FIND
-[0m
-42
-478
-42
-478
-42
-42
--42
--42
-[4;35m                                         INSERT
-[0m
-33333
-4
-230584300921369395
-4
-230584300921369395
--86 -86
-42 42
-2222 2222
-33333 33333
-4
-230584300921369395
--86 -86
-42 42
-2222 2222
-33333 33333
--86 -86
-42 42
-2222 2222
-33333 33333
-[4;35m                                         ERASE
-[0m
-42 42
-2222 2222
-33333 33333
-3
-230584300921369395
-2222 2222
-33333 33333
-2
-230584300921369395
-0
-230584300921369395
-[4;35m                                         SWAP
-[0m
-42 42
-389 389
-443 443
-478 478
--30 0
-42 42
-389 389
-443 443
-478 42
-4
-230584300921369395
-5
-230584300921369395
-[4;35m                                         LOWER BOUND
-[0m
-42
-478
--30
-389
--30
-[4;35m                                         EQUAL RANGE
-[0m
-42
-
-
-
-
-[0;103m                                         PAIR TESTS                                         [0m
-
-
-
-
-[4;35m                                         CONSTRUCTORS
-[0m
-0
-0
-42
-42
-42
-42
-42
-42
