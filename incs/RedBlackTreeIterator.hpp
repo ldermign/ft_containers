@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 15:34:27 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:48:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ struct RedBlackTreeIterator : public ft::iterator< ft::bidirectional_iterator_ta
 public:
 
 	typedef T						value_type;
+	// typedef typename ft::Node< T >	node_type;
 	typedef RedBlackTreeIterator	Self;
+
 
 	typedef typename ft::iterator< ft::bidirectional_iterator_tag, T >::pointer		pointer;
 	typedef typename ft::iterator< ft::bidirectional_iterator_tag, T >::reference	reference;
@@ -49,7 +51,7 @@ public:
 	RedBlackTreeIterator( void )
 		: _current(), _root(), _last() {}
 
-	operator RedBlackTreeIterator< const T, Node > (void) {
+	operator RedBlackTreeIterator< const T, Node > ( void ) {
 		return (RedBlackTreeIterator< const T, Node >(_current, _root, _last));
 	}
 
@@ -91,7 +93,7 @@ public:
 	Node
 	*minimum( Node *tmp ) const {
 
-		if (tmp == nullptr_t || tmp == this->_last)
+		if (tmp == nullptr_v || tmp == this->_last)
 			return (this->_last);
 		while (tmp->left != this->_last)
 			tmp = tmp->left;
@@ -111,7 +113,7 @@ public:
 	Node
 	*maximum( Node *tmp ) const {
 
-		if (tmp == nullptr_t || tmp == this->_last)
+		if (tmp == nullptr_v || tmp == this->_last)
 			return (this->_last);
 		while (tmp->right != this->_last)
 			tmp = tmp->right;
@@ -129,16 +131,16 @@ public:
 		return (tmp);
 	}
 
-	bool
-	operator==( const RedBlackTreeIterator &s ) {
+	friend bool
+	operator==( const RedBlackTreeIterator &lhs, const RedBlackTreeIterator &rhs ) {
 
-		return (this->_current == s._current);
+		return (lhs._current == rhs._current);
 	}
 
-	bool
-	operator!=( const RedBlackTreeIterator &s ) {
+	friend bool
+	operator!=( const RedBlackTreeIterator &lhs, const RedBlackTreeIterator &rhs ) {
 
-		return (this->_current != s._current);
+		return (!(lhs == rhs));
 	}
 
 	RedBlackTreeIterator &

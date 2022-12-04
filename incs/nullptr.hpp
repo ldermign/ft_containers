@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 15:02:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 15:20:15 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 15:41:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 
 START
 
-struct nullptr_ {
+struct nullptr_vv {
 
-	nullptr_( void ) {}
+	nullptr_vv( void ) {}
 
 	void operator &() const;  // Can't take address of nullptr
 
@@ -36,7 +36,7 @@ struct nullptr_ {
 	}
 };
 
-nullptr_ nullptr_t;
+nullptr_vv nullptr_v;
 
 STOP
 

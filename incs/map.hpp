@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 15:26:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:48:51 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ public:
 	insert( const value_type &to_add ) {
 
 		const bool	insert_tree = this->_t.insert(to_add);
+		// p1 "1 insert" p2
 
 		return (ft::make_pair(this->find(to_add.first), insert_tree));
 	}

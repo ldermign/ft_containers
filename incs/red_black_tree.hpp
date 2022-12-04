@@ -64,6 +64,7 @@ private:
 	value_compare	comp;
 	Node			*_ptrNode;
 	Node			*_last;
+	Node			*_ret;
 	size_type		_size; // a faire
 	// size_type		_maxSize;
 
@@ -73,6 +74,7 @@ public:
 
 	RedBlackTree( const value_compare &c = Compare() ) : comp(c) {
 
+		// p1 "constructeur redblacktree" p2
 		this->_last = alloc.allocate(1);
 		alloc.construct(_last, Node());
 		this->_last->color = N_BLACK;
@@ -84,7 +86,17 @@ public:
 
 	}
 
-	~RedBlackTree( void ) {}
+	~RedBlackTree( void ) {
+
+		if (this->_last != NULL) {
+			alloc.destroy(this->_last);
+			alloc.deallocate(this->_last, 1);
+		}
+		if (this->_ptrNode != NULL) {
+			alloc.destroy(this->_ptrNode);
+			alloc.deallocate(this->_ptrNode, 1);
+		}
+	}
 
 /* ~~~~~ ACCESSORS ~~~~~ */
 
@@ -109,7 +121,7 @@ public:
 			return (search(start_point->right, key_to_find));
 		else
 			return (start_point);
-
+// 72 1 360 5
 	}
 
 	
@@ -220,7 +232,7 @@ public:
 	pointer
 	minimum( pointer tmp ) const {
 
-		if (tmp == nullptr_t || tmp == this->_last)
+		if (tmp == nullptr_v || tmp == this->_last)
 			return (this->_last);
 		while (tmp->left != this->_last)
 			tmp = tmp->left;
@@ -231,7 +243,7 @@ public:
 	pointer
 	maximum( pointer tmp ) const {
 
-		if (tmp == nullptr_t || tmp == this->_last)
+		if (tmp == nullptr_v || tmp == this->_last)
 			return (this->_last);
 		while (tmp->right != this->_last)
 			tmp = tmp->right;
@@ -332,13 +344,13 @@ public:
 	insert( const value_type key ) {
 // Ordinary Binary Search Insertion
 
-		Node	*tmp = alloc.allocate(1);
+		pointer	tmp = alloc.allocate(1);
 		alloc.construct(tmp, Node(key, _last, this->_last, this->_last, N_RED));
 
-		Node *y = nullptr_t;
-		Node *x = this->_ptrNode;
+		pointer	y = nullptr_v;
+		pointer	x = this->_ptrNode;
 
-		while (x != this->_last && x != nullptr_t) {
+		while (x != this->_last && x != nullptr_v) {
 			y = x;
 			if (this->comp(tmp->data, x->data)) //
 				x = x->left;
@@ -354,7 +366,7 @@ public:
 
 		// y is parent of x
 		tmp->parent = y;
-		if (y == nullptr_t)
+		if (y == nullptr_v)
 			_ptrNode = tmp;
 		else if (this->comp(tmp->data, y->data)) //
 			y->left = tmp;
@@ -363,7 +375,7 @@ public:
 
 		this->_size++;
 		// if new node is a root node, simply return
-		if (tmp->parent == nullptr_t) {
+		if (tmp->parent == nullptr_v) {
 			tmp->color = N_BLACK;
 			tmp->parent = _last;
 			// p1 "first element" p2;
@@ -545,7 +557,7 @@ public:
 	void
 	clear_loop( Node *root ) {
 
-		this->_ptrNode = this->_last;
+		// this->_ptrNode = this->_last;
 		if (root == this->_last)
 			return ;
 
@@ -555,14 +567,17 @@ public:
 		alloc.destroy(root);
 		if (root != NULL)
 			alloc.deallocate(root, 1);
+		alloc.destroy(root->_last);
+		if (root->_last != NULL)
+			alloc.deallocate(root->_last, 1);
 
-		this->_size--;
 	}
 
 	void
 	clear( void ) {
 
 		clear_loop(this->getPtrNode());
+		this->_size = 0;
 		this->_ptrNode = this->_last;
 
 	}

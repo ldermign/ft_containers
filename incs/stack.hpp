@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:01:03 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 15:30:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 16:50:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ protected:
 
 public:
 
-	typedef				Container container_type;
-	typedef typename	Container::value_type value_type;
-	typedef typename	Container::size_type size_type;
-	typedef typename	Container::reference reference;
+	typedef Container						container_type;
+	typedef typename Container::value_type	value_type;
+	typedef typename Container::size_type	size_type;
+	typedef typename Container::reference	reference;
 
 /* ~~~~~ CANONICAL FORM ~~~~~ */
 

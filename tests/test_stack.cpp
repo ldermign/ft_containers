@@ -6,78 +6,19 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:49:17 by ldermign          #+#    #+#             */
-/*   Updated: 2022/11/14 14:28:43 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 17:03:32 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <list>
 #include <stack>
+#include <vector>
+#include "vector.hpp"
 #include "stack.hpp"
 #include <iostream>
 
-// --- Class foo
-template <typename T>
-class foo {
-	public:
-		typedef T	value_type;
 
-		foo(void) : value(), _verbose(false) { };
-		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
-		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
-		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
-		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
-		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
-		foo &operator=(value_type src) { this->value = src; return *this; };
-		foo &operator=(foo const &src) {
-			if (this->_verbose || src._verbose)
-				std::cout << "foo::operator=(foo) CALLED" << std::endl;
-			this->value = src.value;
-			return *this;
-		};
-		value_type	getValue(void) const { return this->value; };
-		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
-
-		operator value_type(void) const {
-			return value_type(this->value);
-		}
-	private:
-		value_type	value;
-		bool		_verbose;
-};
-
-
-
-template <typename T_STACK>
-void	printSize(T_STACK &stck, bool print_content = 1)
-{
-	std::cout << "size: " << stck.size() << std::endl;
-	if (print_content)
-	{
-		std::cout << std::endl << "Content was:" << std::endl;
-		while (stck.size() != 0) {
-			std::cout << "- " << stck.top() << std::endl;
-			stck.pop();
-		}
-	}
-	std::cout << "###############################################" << std::endl;
-}
-
-#define TESTED_TYPE foo<int>
-#define t_stack_ LIBRARY::stack<TESTED_TYPE>
-typedef t_stack_::container_type container_type;
-
-
-template <class T_STACK>
-void	cmp(const T_STACK &lhs, const T_STACK &rhs)
-{
-	static int i = 0;
-
-	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
-	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
-	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
-	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
-}
 
 
 void	test_stack( void ) {
@@ -88,37 +29,37 @@ void	test_stack( void ) {
 	p1 "\t~~~~~~~~~~ STACK CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	container_type	ctnr;
+	LIBRARY::stack<float>								other_stack;
+	LIBRARY::vector<std::string>							lst;
 
-	ctnr.push_back(21);
-	ctnr.push_back(42);
-	ctnr.push_back(1337);
-	ctnr.push_back(19);
-	ctnr.push_back(0);
-	ctnr.push_back(183792);
+	lst.push_back("salut");
+	lst.push_back("tu vas bien?");
+	lst.push_back("super");
+	lst.push_back("et toi?");
 
-	t_stack_	stck(ctnr);
-	t_stack_	stck2(ctnr);
+	LIBRARY::stack<std::string, LIBRARY::vector<std::string> >	my_stack(lst);
 
-	cmp(stck, stck);  // 0
-	cmp(stck, stck2); // 1
+	p1 std::boolalpha << other_stack.empty() p2;
+	other_stack.push(8.5); // 8.5;
+	// other_stack.push(42.4242); // 8.5; 42.4242;
+	// p1 other_stack.size() p2; // 2
+	// other_stack.pop(); // 8.5;
+	// p1 other_stack.size() p2; // 1
+	// other_stack.push(78541.987); // 8.5; 78541.987;
+	// p1 other_stack.size() p2; // 2
+	// p1 other_stack.top() p2; //78541.987
+	// p1 std::boolalpha << other_stack.empty() p2;
 
-	stck2.push(60);
-	stck2.push(61);
-	stck2.push(62);
+	// const std::string const_top = my_stack.top();
 
-	cmp(stck, stck2); // 2
-	cmp(stck2, stck); // 3
+	// p1 "const top: " << const_top p2;
 
-	stck.push(42);
+	// while (!my_stack.empty())
+	// {
+	// 	p1 my_stack.top() p2;
+	// 	my_stack.pop();
+	// }
 
-	cmp(stck, stck2); // 4
-	cmp(stck2, stck); // 5
-
-	stck.push(100);
-
-	cmp(stck, stck2); // 6
-	cmp(stck2, stck); // 7
 
 
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/03 17:51:54 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 17:15:53 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ class vector {
 private:
 
 	T				*_ptrVector;
-	
+
 	Allocator		_alloc;
 	unsigned int	_size;
 	unsigned int	_capacity;
@@ -49,12 +49,14 @@ public:
 	typedef ft::random_iterator< const T >	const_iterator;
 	typedef size_t							size_type;
 
+
 	typedef Allocator							allocator_type;
+typedef	typename allocator_type::difference_type	difference_type;
 	typedef typename Allocator::pointer			pointer;
 	typedef typename Allocator::const_pointer	const_pointer;
 
-	typedef ft::reverse_iterator< iterator > reverse_iterator;
-	typedef ft::reverse_iterator< const_iterator > const_reverse_iterator;
+	typedef ft::reverse_iterator< iterator >		reverse_iterator;
+	typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;
 
 
 	explicit vector( const Allocator &x = Allocator() )
@@ -119,6 +121,8 @@ public:
 		}
 
 		this->clear();
+		if (this->_ptrVector != NULL)
+			this->_alloc.deallocate(this->_ptrVector, this->capacity());
 		this->_size = rhs.size();
 		this->_capacity = rhs.capacity();
 		this->_ptrVector = this->_alloc.allocate(rhs.capacity());
@@ -136,7 +140,7 @@ public:
 		
 		this->clear();
 		if (this->_ptrVector != NULL)
-			this->_alloc.deallocate(this->_ptrVector, this->_capacity);
+			this->_alloc.deallocate(this->_ptrVector, this->capacity());
 	}
 
 
@@ -149,6 +153,8 @@ public:
 	assign( size_t count, const T &value ) {
 
 		this->clear();
+		if (this->_ptrVector != NULL)
+			this->_alloc.deallocate(this->_ptrVector, this->capacity());
 		if (count > this->size())
 			this->reserve(count);
 		for (size_t i = 0 ; i < count ; i++)
@@ -326,10 +332,6 @@ public:
 		else if (new_cap <= this->capacity())
 			return ;
 
-		else if (new_cap == 1 && this->capacity() <= this->size()) {
-			this->_ptrVector = this->_alloc.allocate(1);
-			this->_capacity = 1;
-		}
 		else {
 			T	*new_vector;
 			new_vector = this->_alloc.allocate(new_cap);
@@ -478,11 +480,13 @@ public:
 		return (position);
 	}
 
-	iterator
+	void
 	insert( iterator position, size_t n, const T &x ) {
 
 		size_t ret = position - this->begin();
 
+		if (n == 0)
+			return ;
 		if (this->capacity() == 0)
 			this->reserve(1);
 		else if (this->size() + n > this->capacity() * 2)
@@ -508,15 +512,12 @@ public:
 		}		
 		this->_size += n;
 
-		return (position);
 	}
 
 	template < class InputIterator >
 	void
 	insert( iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
-
-// p1 "c'est celui-ci ?" p2
 
 		size_t		pos = position - this->begin();
 		size_t		lenght = ft::distance(first, last);
@@ -641,8 +642,7 @@ public:
 
 		for (size_t i = 0 ; i != this->size() ; i++)
 			this->_alloc.destroy(&_ptrVector[i]);
-		// this->_alloc.deallocate(this->_ptrVector, this->_capacity);
-		// utiliser aue si on a deja utiliser allocate
+
 		this->_size = 0;
 	}
 
