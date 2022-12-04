@@ -6,16 +6,16 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 14:46:53 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 15:34:27 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RED_BLACK_TREE_ITERATOR
 # define RED_BLACK_TREE_ITERATOR
 
-#include "iterator.hpp"
 #include "ft_containers.hpp"
 #include "nullptr.hpp"
+#include "iterator.hpp"
 #include "Node.hpp"
 
 // template

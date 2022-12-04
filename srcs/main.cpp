@@ -6,21 +6,22 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/03 17:28:59 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/04 15:24:46 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
-#include "vector.hpp"
 #include "ft_containers.hpp"
-#include <iostream>
-#include <map>
-#include <utility>
-#include <list>
-#include <stack>
-#include <set>
+#include "vector.hpp"
 #include "stack.hpp"
 #include "map.hpp"
+
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <stack>
+#include <map>
+#include <list>
+#include <set>
 // #include "set.hpp"
 
 
@@ -30,7 +31,7 @@ int main(int ac, char **av)
 	(void)av;
 
 // test_vector_container();
-
+	test_map();
 	return 0;
 
 }

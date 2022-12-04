@@ -14,7 +14,6 @@
 # define RED_BLACK_TREE_HPP
 
 #include "ft_containers.hpp"
-#include "nullptr.hpp"
 #include "RedBlackTreeIterator.hpp"
 
 START
@@ -463,7 +462,6 @@ public:
 	rbTransplant( pointer u, pointer v ) {
 
 		if (u->parent == this->_last)
-		// if (u->parent == nullptr_t)
 			_ptrNode = v;
 		else if (u == u->parent->left)
 			u->parent->left = v;
