@@ -64,7 +64,6 @@ private:
 	value_compare	comp;
 	Node			*_ptrNode;
 	Node			*_last;
-	Node			*_ret;
 	size_type		_size; // a faire
 	// size_type		_maxSize;
 
@@ -88,13 +87,10 @@ public:
 
 	~RedBlackTree( void ) {
 
-		if (this->_last != NULL) {
-			alloc.destroy(this->_last);
-			alloc.deallocate(this->_last, 1);
-		}
-		if (this->_ptrNode != NULL) {
-			alloc.destroy(this->_ptrNode);
-			alloc.deallocate(this->_ptrNode, 1);
+		this->clear();
+		if (this->getLast() != NULL) {
+			alloc.destroy(this->getLast());
+			alloc.deallocate(this->getLast(), 1);
 		}
 	}
 
@@ -121,10 +117,23 @@ public:
 			return (search(start_point->right, key_to_find));
 		else
 			return (start_point);
-// 72 1 360 5
 	}
 
-	
+	void
+	swap( RedBlackTree &rhs ) {
+
+		pointer	tmpPtrNode;
+		pointer	tmpLast;
+
+		tmpPtrNode = rhs._ptrNode;
+		tmpLast = rhs._last;
+
+		rhs._ptrNode = this->_ptrNode;
+		rhs._last = this->_last;
+
+		this->_ptrNode = tmpPtrNode;
+		this->_last = tmpLast;
+	}
 
 	// For balancing the tree after insertion
 	void
@@ -557,7 +566,6 @@ public:
 	void
 	clear_loop( Node *root ) {
 
-		// this->_ptrNode = this->_last;
 		if (root == this->_last)
 			return ;
 
@@ -567,9 +575,6 @@ public:
 		alloc.destroy(root);
 		if (root != NULL)
 			alloc.deallocate(root, 1);
-		alloc.destroy(root->_last);
-		if (root->_last != NULL)
-			alloc.deallocate(root->_last, 1);
 
 	}
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 17:17:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/05 11:12:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-// test_vector_container();
+	test_vector();
 	// test_map();
-	test_stack();
+	// test_stack();
 	return 0;
 
 }

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 16:48:51 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/05 11:12:19 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,10 @@ public:
 		return (*this);
 	}
 
-	~map( void ) {}
+	~map( void ) {
+
+		// this->clear();
+	}
 
 
 	allocator_type	get_allocator( void ) { return (this->new_alloc); }
@@ -332,19 +335,7 @@ public:
 	void
 	swap( map< Key, T, Compare, Allocator > &x ) {
 
-		map	tmp;
-		
-		tmp.new_compare = x.new_compare;
-		tmp.new_alloc = x.new_alloc;
-		tmp._t = x._t;
-
-		x.new_compare = this->new_compare;
-		x.new_alloc = this->new_alloc;
-		x._t = this->_t;
-
-		this->new_compare = tmp.new_compare;
-		this->new_alloc = tmp.new_alloc;
-		this->_t = tmp._t;
+		this->_t.swap(x._t);
 }
 
 
@@ -536,8 +527,6 @@ public:
 	bool
 	operator==( const ft::map< Key, T, Compare, Allocator > &lhs, const ft::map< Key, T, Compare, Allocator > &rhs ) {
 
-		if (lhs.size() != rhs.size())
-			return (false);
 		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
@@ -545,7 +534,7 @@ public:
 	bool
 	operator!=( const ft::map< Key, T, Compare, Allocator > &lhs, const ft::map< Key, T, Compare, Allocator > &rhs ) {
 
-		return !(lhs == rhs);
+		return (!(lhs == rhs));
 	}
 
 	template< class Key, class T, class Compare, class Allocator >
