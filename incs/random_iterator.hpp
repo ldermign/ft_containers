@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 15:09:08 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:38:45 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ public:
 	difference_type
 	operator-( const random_iterator &other ) const {
 
-		return (ft::distance(other.m_iterator, m_iterator));
+		// p1 "distace" p2
+		return (base() - other.base());
 	}
 
 

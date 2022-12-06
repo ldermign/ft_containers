@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 14:49:43 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:40:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ protected:
 
 public:
 
-	typedef Iterator iterator_type;
+	typedef Iterator														iterator_type;
 	typedef typename ft::iterator_traits< Iterator >::value_type			value_type;
 	typedef typename ft::iterator_traits< Iterator >::difference_type		difference_type;
 	typedef typename ft::iterator_traits< Iterator >::pointer				pointer;
@@ -49,15 +49,22 @@ public:
 	explicit reverse_iterator( Iterator x )
 		: _current(x) {}
 
-	template< class U >
-	reverse_iterator( const reverse_iterator< U > &u )
-		: _current(u.base()) {}// Effects: Initializes _current with u._current.
+	Iterator
+	base( void ) const {
 
-	reverse_iterator( const reverse_iterator &x )
-		: _current(x.base()) {}
+		// p1 "BASE = " << *this->_current << " ";
+		return (this->_current);
+	}
+
+	template< class U >
+	reverse_iterator( const reverse_iterator< U > &lhs )
+		: _current(lhs.base()) {}
+
+	reverse_iterator( const reverse_iterator &lh )
+		: _current(lh.base()) {}
 
 	operator	reverse_iterator< const iterator_type >() const {
-		return (reverse_iterator< const iterator_type >(this->m_iterator));
+		return (reverse_iterator< const iterator_type >(this->_current));
 	};
 
 	~reverse_iterator( void ) {}
@@ -65,17 +72,15 @@ public:
 
 	template < class U >
 	reverse_iterator
-	&operator=( const reverse_iterator< U > &x ) {
+	&operator=( const reverse_iterator< U > &lhs ) {
 
-		this->_current = x.base();
+		if (&lhs == this)
+			return (*this);
+
+		this->_current = lhs.base();
 		return (*this);
 	}
 
-	Iterator
-	base( void ) const {
-
-		return (this->_current);
-	}
 
 	reference
 	operator*( void ) const {
@@ -164,6 +169,8 @@ template< class Iterator1, class Iterator2 >
 bool
 operator!=( const reverse_iterator< Iterator1 > &lhs, const reverse_iterator< Iterator2 > &rhs ) {
 
+	// p1 "DIFFERENTS" p2
+	// p1 "mais c'est lequel le dernier putaiiinnn diff == " << *(lhs.base() != rhs.base()) p2
 	return (lhs.base() != rhs.base());
 }
 
@@ -199,6 +206,8 @@ template< class Iterator1, class Iterator2 >
 typename reverse_iterator< Iterator1 >::difference_type
 operator-( const reverse_iterator< Iterator1 > &lhs, const reverse_iterator< Iterator2 > &rhs ) {
 
+	// p1 "rhs.base(" << *(rhs.base()) << ") - lhs.base(" << *(lhs.base()) << ") = " << rhs.base() - lhs.base() p2
+	// p1 "SOUSTRACTION = " p2
 	return (rhs.base() - lhs.base());
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:40:01 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/02 14:27:09 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:49:16 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ START
 template< class T, T v >
 struct integral_const {
 
-	static const T value = v;
 	typedef T value_type;
 	typedef integral_const< T, v > type; // using injected-class-name
+
+	static const value_type value = v;
+
 	operator value_type() const {
 		return value;
 	}
@@ -32,7 +34,7 @@ struct integral_const {
 typedef integral_const< bool, true > true_type;
 typedef integral_const< bool, false > false_type;
 
-template < class T > struct is_integral : public false_type {};
+template< class T > struct is_integral : public false_type {};
 template<> struct is_integral< unsigned char > : public true_type {};
 template<> struct is_integral< unsigned short > : public true_type {};
 template<> struct is_integral< unsigned int > : public true_type {};

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/06 12:59:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:02:25 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "lexicographical_compare.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
+// #include "nullptr.hpp"
 
 START
 
@@ -63,19 +64,21 @@ typedef	typename allocator_type::difference_type	difference_type;
 		: _ptrVector(NULL), _alloc(x), _size(0), _capacity(0) {}
 	
 	explicit vector( size_t n, const T &value = T(), const Allocator &x = Allocator() )
-		: _alloc(x), _size(n), _capacity(n) {
+		: _ptrVector(NULL), _alloc(x), _size(n), _capacity(n) {
 
+// p1 "constructeur explicite siz, valu, alloc" p2
 		// utiliser une fct d'allocation de alloc pour donner la bonne taille au ptr de vector
 		// https://en.cppreference.com/w/cpp/memory/allocator/allocate
 		// https://cplusplus.com/reference/memory/allocator/construct/
-		_ptrVector = _alloc.allocate(_capacity); // ou x._capacity ??
+		// _ptrVector = _alloc.allocate(_capacity); // ou x._capacity ??
 
+		this->_ptrVector = this->_alloc.allocate(this->capacity());
+
+		// this->reserve(n);
 		// construire autant d'element que de n
 		// https://en.cppreference.com/w/cpp/memory/allocator/construct
 		for (size_t i = 0 ; i < n ; i++)
 			_alloc.construct(&_ptrVector[i], value);
-			// new(_ptrVector[i]) T(value);
-			// void construct(pointer p, const T& val)    { new(p) T(val); }
 
 	}
 
@@ -103,26 +106,23 @@ typedef	typename allocator_type::difference_type	difference_type;
 			i++;
 		}
 		this->_size = lhs.size();
-		// p1 "this->capacity = " << this->capacity() << " lhs.capacity() = " << lhs.capacity() p2
 		this->_capacity = lhs.size();
-		// p1 "this->capacity = " << this->capacity() << " lhs.capacity() = " << lhs.capacity() p2
 
 	}
 
 	self
-	&operator=( const self &rhs ) {
+	&operator=( const self &lhs ) {
 
-		if (this == &rhs)
+		if (this == &lhs)
 			return (*this);
 
 		this->~vector();
-		this->_size = rhs.size();
-		this->_capacity = rhs.capacity();
-		this->_ptrVector = this->_alloc.allocate(rhs.capacity());
-
-		if (&rhs != this)
-			for (size_t i = 0 ; i < this->_size ; i++)
-				this->_alloc.construct(&(this->_ptrVector[i]), rhs._ptrVector[i]);
+		this->_size = lhs.size();
+		if (lhs.size() > this->capacity())
+			this->_capacity = lhs.size();
+		this->_ptrVector = this->_alloc.allocate(this->capacity());
+		for (size_t i = 0 ; i < this->_size ; i++)
+			this->_alloc.construct(&(this->_ptrVector[i]), lhs._ptrVector[i]);
 
 		return (*this);
 	}
@@ -222,6 +222,7 @@ typedef	typename allocator_type::difference_type	difference_type;
 	reverse_iterator
 	rend( void ) {
 
+		// p1 "bah ?" p2
 		return (reverse_iterator(this->begin()));
 	}
 	
@@ -469,8 +470,10 @@ typedef	typename allocator_type::difference_type	difference_type;
 	iterator
 	insert( iterator position, const T &value ) {
 
+		size_t		pos = position - this->begin();
+
 		insert(position, 1, value);
-		return (position);
+		return (this->begin() + pos);
 	}
 
 	void
@@ -509,7 +512,7 @@ typedef	typename allocator_type::difference_type	difference_type;
 	template < class InputIterator >
 	void
 	insert( iterator position, InputIterator first, InputIterator last,
-		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
+		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type* = NULL ) {
 
 		size_t	pos = position - this->begin();
 		size_t	length = ft::distance(first, last);
