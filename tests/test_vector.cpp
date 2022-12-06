@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/05 16:04:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:59:31 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ void	insert_tests()
 	LIBRARY::vector<T> test(1, 1);
 	LIBRARY::vector<T> test2(5, 5);
 
-	p1"la"p2
+	p1 "la" p2
 	test.insert(test.begin(), 200, 12);
-	p1"ca timeout"p2
+	p1 "ca timeout" p2
 	print_vector<T>(test);
 	test.insert(test.begin() + 12, 200, 30);
 	print_vector<T>(test);
@@ -178,6 +178,8 @@ void	copy_swap_tests(void)
 	LIBRARY::vector<T> test;
 	for (size_t i = 0; i < 50; i++) { test.push_back(i); }
 	LIBRARY::vector<T> test_copy(test);
+	p1 "test.capacity = " << test.capacity() << " test_copy.capacity = " << test_copy.capacity() p2
+	print_vector<T>(test_copy);
 	for (size_t i = 0; i < test_copy.size(); i++) { test_copy[i] += 100; }
 	print_vector<T>(test_copy);
 	LIBRARY::vector<T> test_range(test.begin() + 20, test.begin() + 30);
@@ -291,15 +293,15 @@ void	test_vector( void ) {
 
 // push_pop_back_tests<int>();
 // 	resize_tests<int>();
-	insert_tests<int>();
+	// insert_tests<int>();
 	// reserve_tests<int>();
-	// copy_swap_tests<int>();
-	// reverse_it_tests<int>();
-	// erase_clear_tests<int>();
-	// max_size_tests();
-	// awesome_tests();
-	// push_pop_back_tests<Awesome>();
-	// resize_tests<Awesome>();
+	copy_swap_tests<int>();
+// 	reverse_it_tests<int>();
+// 	erase_clear_tests<int>();
+// 	max_size_tests();
+// 	awesome_tests();
+// 	push_pop_back_tests<Awesome>();
+// 	resize_tests<Awesome>();
 	// insert_tests<Awesome>();
 	// reserve_tests<Awesome>();
 	// copy_swap_tests<Awesome>();

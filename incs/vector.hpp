@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/05 16:12:23 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:59:17 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,20 @@ typedef	typename allocator_type::difference_type	difference_type;
 		this->_size = new_size;
 	}
 
-	vector( const self &x )
-		: _alloc(x._alloc) {
+	vector( const self &lhs )
+		: _alloc(lhs._alloc) {
 
 		size_t    i = 0;
-		this->_ptrVector = this->_alloc.allocate(x.capacity());
-		while (i < x.size()) {
-			this->_alloc.construct(&(this->_ptrVector[i]), x._ptrVector[i]);
+		this->_ptrVector = this->_alloc.allocate(lhs.size());
+		while (i < lhs.size()) {
+			this->_alloc.construct(&(this->_ptrVector[i]), lhs._ptrVector[i]);
 			i++;
 		}
-		this->_size = x.size();
-		this->_capacity = x.capacity();
+		this->_size = lhs.size();
+		// p1 "this->capacity = " << this->capacity() << " lhs.capacity() = " << lhs.capacity() p2
+		this->_capacity = lhs.size();
+		// p1 "this->capacity = " << this->capacity() << " lhs.capacity() = " << lhs.capacity() p2
+
 	}
 
 	self
@@ -471,13 +474,15 @@ typedef	typename allocator_type::difference_type	difference_type;
 	}
 
 	void
-	insert( iterator position, size_t length, const T &x ) {
+	insert( iterator position, size_t length, const T &value ) {
 
-		if (length == 0)
+		if (length <= 0)
 			return ;
 
-		size_t ret = position - this->begin();
-		size_t	diff = this->size() - ret;
+		size_t	pos = position - this->begin();
+		size_t	last = this->end() - this->begin();
+		size_t	diff = this->size() - pos;
+
 
 		if (this->capacity() < this->size() + length
 			&& this->size() * 2 > this->size() + length)
@@ -485,28 +490,17 @@ typedef	typename allocator_type::difference_type	difference_type;
 		else
 			this->reserve(this->size() + length);
 
-		if (iterator(&this->_ptrVector[ret]) == this->end()) {
+		if (iterator(&this->_ptrVector[pos]) == this->end()) {
 			for (size_t i = this->size() ; i < this->size() + length ; i++)
-				this->_alloc.construct(&this->_ptrVector[i], x);
+				this->_alloc.construct(&this->_ptrVector[i], value);
 		}
 		else {
-			size_t i_end = this->size() + length - 1;
-			for (; diff > 0 ; diff--) {
-				this->_alloc.construct(&this->_ptrVector[i_end], this->_ptrVector[i_end - length]);
-				this->_alloc.destroy(&this->_ptrVector[i_end - length]);
-				i_end--;
-				p1 "ici ca tourne beaucoup" p2
+			for (size_t i = 1; i <= diff; i++) {
+				this->_alloc.construct(&this->_ptrVector[last + length - i], this->_ptrVector[last - i]);
+				this->_alloc.destroy(&this->_ptrVector[last - i]);
 			}
-			i_end -= length;
-			for (; i_end > ret ; i_end--) {
-				this->_alloc.destroy(&this->_ptrVector[i_end]);
-				p1 "la aussi j'imagine..." p2
-			}
-			for (size_t i = 0 ; i < length ; i++) {
-				this->_alloc.construct(&this->_ptrVector[ret], x);
-				ret++;
-				p1 "et puis la tant qu'a faire" p2
-			}
+			for (size_type i = 0; i < length; i++)
+				this->_alloc.construct(&this->_ptrVector[pos + i], value);
 		}
 
 		this->_size += length;
@@ -517,11 +511,12 @@ typedef	typename allocator_type::difference_type	difference_type;
 	insert( iterator position, InputIterator first, InputIterator last,
 		typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
 
-		size_t		pos = position - this->begin();
-		size_t		length = ft::distance(first, last);
-		size_t		diff = this->size() - pos;
+		size_t	pos = position - this->begin();
+		size_t	length = ft::distance(first, last);
+		size_t	end = this->end() - this->begin();
+		size_t	diff = this->size() - pos;
 
-		if (length == 0)
+		if (length <= 0)
 			return ;
 
 		if (this->capacity() < this->size() + length
@@ -530,26 +525,14 @@ typedef	typename allocator_type::difference_type	difference_type;
 		else
 			this->reserve(this->size() + length);
 
-
-		// if (iterator(&this->_ptrVector[pos]) == this->end()) {
-		// 	for (size_t i = this->size() ; i < this->size() + length ; i++)
-		// 		this->_alloc.construct(&this->_ptrVector[i], x);
-		// }
-		// else {
-		size_t i_end = this->size() + length - 1;
-		for (; diff > 0 ; diff--) {
-			this->_alloc.construct(&this->_ptrVector[i_end], this->_ptrVector[i_end - length]);
-			this->_alloc.destroy(&this->_ptrVector[i_end - length]);
-			i_end--;
+		for (size_t i = 1; i <= diff; i++) {
+			this->_alloc.construct(&this->_ptrVector[end + length - i], this->_ptrVector[end - i]);
+			this->_alloc.destroy(&this->_ptrVector[end - i]);
 		}
-		i_end -= length;
-		for (; i_end > pos ; i_end--)
-			this->_alloc.destroy(&this->_ptrVector[i_end]);
-		for (; first != last ; first++) {
-			this->_alloc.construct(&this->_ptrVector[pos], *first);
-			pos++;
+		for (size_type i = 0; i < length; i++) {
+			this->_alloc.construct(&this->_ptrVector[pos + i], *first);
+			first++;
 		}
-		// }
 
 		this->_size += length;
 	}
