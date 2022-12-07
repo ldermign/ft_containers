@@ -5,6 +5,8 @@
 *.d
 *.swp
 .nsf*
+.path
+.include_path
 ft_containers
 ft.txt
 std.txt
