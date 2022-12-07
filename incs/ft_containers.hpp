@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:31:42 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 17:15:43 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:06:50 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # define START namespace ft {
 # define STOP };
 
-# define p1 std::cout <<
-# define p2 << std::endl;
-# define p3 std::cout << std::endl;
+// # define p1 std::cout <<
+// # define p2 << std::endl;
+// # define p3 std::cout << std::endl;
 
 # define N_BLACK 0
 # define N_RED 1

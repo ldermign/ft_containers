@@ -58,6 +58,8 @@ public:
 	typedef size_t								size_type;
 
 
+typedef ft::RedBlackTreeIterator< value_type, node_type >		iterator;
+
 private:
 
 	allocator_type	alloc;
@@ -124,15 +126,19 @@ public:
 
 		pointer	tmpPtrNode;
 		pointer	tmpLast;
+		size_t	tmpSize;
 
 		tmpPtrNode = rhs._ptrNode;
 		tmpLast = rhs._last;
+		tmpSize = rhs._size;
 
 		rhs._ptrNode = this->_ptrNode;
 		rhs._last = this->_last;
+		rhs._size = this->_size;
 
 		this->_ptrNode = tmpPtrNode;
 		this->_last = tmpLast;
+		this->_size = tmpSize;
 	}
 
 	// For balancing the tree after insertion
@@ -185,25 +191,25 @@ public:
 		_ptrNode->color = 0;
 	}
 
-	void
-	printHelper( pointer root, std::string indent, bool last ) {
+	// void
+	// printHelper( pointer root, std::string indent, bool last ) {
 	
-		if (root != this->_last) {
-			p1 indent;
-			if (last) {
-				p1 "R----";
-				indent += "   ";
-			}
-			else {
-				p1 "L----";
-				indent += "|  ";
-			}
-			std::string sColor = root->color ? "RED" : "BLACK";
-			p1 root->data << "(" << sColor << ")" p2;
-			printHelper(root->left, indent, false);
-			printHelper(root->right, indent, true);
-		}
-	}
+	// 	if (root != this->_last) {
+	// 		p1 indent;
+	// 		if (last) {
+	// 			p1 "R----";
+	// 			indent += "   ";
+	// 		}
+	// 		else {
+	// 			p1 "L----";
+	// 			indent += "|  ";
+	// 		}
+	// 		std::string sColor = root->color ? "RED" : "BLACK";
+	// 		p1 root->data << "(" << sColor << ")" p2;
+	// 		printHelper(root->left, indent, false);
+	// 		printHelper(root->right, indent, true);
+	// 	}
+	// }
 
 public:
 
@@ -232,7 +238,45 @@ public:
 		postOrderHelper(this->root);
 	}
 
+/* ~~~~~ LOWER AND UPPER BOUND ~~~~~ */
 
+	pointer
+	min( pointer s ) const {
+
+		if (s == NULL || s == this->getLast())
+			return this->getLast();
+		for (; s->left != this->getLast(); s = s->left)
+			;
+
+		return (s);
+	}
+
+	pointer
+	lower_bound( const value_type &v ) const {
+
+		pointer	p = min(this->getPtrNode());
+
+		for (; p != this->getLast(); p = successor(p)) {
+			if (!comp(p->data, v))
+				break ;
+		}
+
+		return (p);
+	}
+
+
+	pointer
+	upper_bound( const value_type &v ) const {
+
+		pointer	p = min(this->getPtrNode());
+
+		for (; p != this->_last; p = successor(p)) {
+			if (comp(v, p->data))
+				break ;
+		}
+
+		return (p);
+	}
 
 
 
@@ -261,7 +305,7 @@ public:
 	}
 
 	pointer
-	successor( pointer x ) {
+	successor( pointer x ) const {
 
 		if (x->right != this->_last)
 			return (minimum(x->right));

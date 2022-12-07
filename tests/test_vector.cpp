@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/06 16:06:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 10:24:10 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,75 @@
 #include "vector.hpp"
 
 
-// # define RED "\033[0;31m"
-# define CRED std::cout << "\033[0;31m"
-// # define GREEN "\033[0;92m"
-# define CGREEN std::cout << "\033[0;92m"
-# define MAG "\033[0;95m"
-# define CMAG std::cout << "\033[0;95m"
-// # define CYAN "\033[0;96m"
-# define CCYAN std::cout << "\033[0;96m"
-// # define BLUE "\033[0;94m"
-# define CBLUE std::cout << "\033[0;94m"
-// # define YELLOW "\033[0;93m"
-# define CYELLOW std::cout << "\033[0;93m"
-# define GREY "\033[0;90m"
-# define CGREY std::cout << "\033[0;90m"
-# define END "\033[0m"
-# define ENDL "\033[0m" << std::endl
 
-void print_vector(LIBRARY::vector<int> v)
+
+#define T_SIZE_TYPE typename LIBRARY::vector<T>::size_type
+
+template <typename T>
+void	printSize(LIBRARY::vector<T> const &vct, bool print_content = true)
 {
-	LIBRARY::vector<int>::iterator it1;
-	LIBRARY::vector<int>::iterator it2;
+	const T_SIZE_TYPE size = vct.size();
+	const T_SIZE_TYPE capacity = vct.capacity();
+	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
+	// Cannot limit capacity's max value because it's implementation dependent
 
-	it1 = v.begin();
-	it2 = v.end();
-
-	CCYAN << "Vector=[";
-	while (it1 < it2)
+	std::cout << "size: " << size << std::endl;
+	std::cout << "capacity: " << isCapacityOk << std::endl;
+	std::cout << "max_size: " << vct.max_size() << std::endl;
+	if (print_content)
 	{
-		CYELLOW << *it1;
-		CBLUE << ", ";
-		it1++;
+		typename LIBRARY::vector<T>::const_iterator it = vct.begin();
+		typename LIBRARY::vector<T>::const_iterator ite = vct.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << *it << std::endl;
 	}
-	CCYAN << "]" << ENDL;
+	std::cout << "###############################################" << std::endl;
 }
 
 
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
 
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+
+#define TESTED_TYPE foo<int>
+
+template <typename Ite_1, typename Ite_2>
+void ft_eq_ope(const Ite_1 &first, const Ite_2 &second, const bool redo = 1)
+{
+	std::cout << (first < second) << std::endl;
+	std::cout << (first <= second) << std::endl;
+	std::cout << (first > second) << std::endl;
+	std::cout << (first >= second) << std::endl;
+	if (redo)
+		ft_eq_ope(second, first, 0);
+}
 
 
 
@@ -65,95 +97,46 @@ void	test_vector( void ) {
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 	
 	{
-	CGREEN << "INITIALIZATION" << ENDL;
-	CMAG << "operations..." << ENDL;
-	LIBRARY::vector<int> fill(10, 42);
-	LIBRARY::vector<int> tmp;
-	LIBRARY::vector<int>::iterator it1;
-	LIBRARY::vector<int>::iterator it2;
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "ERASE" << ENDL;
-	CMAG << "operations..." << ENDL;
-	it1 = fill.begin();
-	it1 += 5;
-	it2 = fill.end();
-	it2 -=2;
-
-	fill.erase(it1, it2);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "POP_BACK/PUSH_BACK" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.pop_back();
-	fill.push_back(13);
-	fill.push_back(69);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "OPERATOR[]" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill[3] = -13;
-	fill[5] = 123456789;
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-	
-	CGREEN << "SWAP" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.swap(tmp);
-	fill.swap(tmp);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "FRONT/BACK/AT" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.front() = -42;
-	fill.back() /= -2;
-	fill.at(1) = 0;
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
-
-	CGREEN << "INSERT" << ENDL;
-	CMAG << "operations..." << ENDL;
-	it1 = fill.begin();
-	it1 += 2;
-
-	fill.insert(it1, 3, 987654321);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
 
 
-	CGREEN << "RESIZE" << ENDL;
-	CMAG << "operations..." << ENDL;
-	fill.resize(20);
-	fill.resize(13);
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
+	const int size = 5;
+	LIBRARY::vector<TESTED_TYPE> vct(size);
+	LIBRARY::vector<TESTED_TYPE>::reverse_iterator it_0(vct.rbegin());
+	LIBRARY::vector<TESTED_TYPE>::reverse_iterator it_1(vct.rend());
+	LIBRARY::vector<TESTED_TYPE>::reverse_iterator it_mid;
 
-	try
-	{
-		CGREEN << "AT(error)" << ENDL;
-		CMAG << "operations..." << ENDL;
-		fill.at(-1) = -1;
-	}
-	catch (std::out_of_range& oor)
-	{
-		(void)oor;
-		p1 "OOR error caught\n";
-	}
-	try
-	{
-		fill.at(15) = -1;
-	}
-	catch (std::out_of_range& oor)
-	{
-		(void)oor;
-		p1 "OOR error caught\n";
-	}
-	CMAG << "print..." << ENDL;
-	print_vector(fill);
+	LIBRARY::vector<TESTED_TYPE>::const_reverse_iterator cit_0 = vct.rbegin();
+	LIBRARY::vector<TESTED_TYPE>::const_reverse_iterator cit_1;
+	LIBRARY::vector<TESTED_TYPE>::const_reverse_iterator cit_mid;
+
+	for (int i = size; it_0 != it_1; --i)
+		*it_0++ = i;
+	printSize(vct, 1);
+	it_0 = vct.rbegin();
+	cit_1 = vct.rend();
+	it_mid = it_0 + 3;
+	cit_mid = it_0 + 3; cit_mid = cit_0 + 3; cit_mid = it_mid;
+
+	std::cout << std::boolalpha;
+	std::cout << ((it_0 + 3 == cit_0 + 3) && (cit_0 + 3 == it_mid)) << std::endl;
+
+	std::cout << "\t\tft_eq_ope:" << std::endl;
+	// regular it
+	ft_eq_ope(it_0 + 3, it_mid);
+	ft_eq_ope(it_0, it_1);
+	ft_eq_ope(it_1 - 3, it_mid);
+	// const it
+	ft_eq_ope(cit_0 + 3, cit_mid);
+	ft_eq_ope(cit_0, cit_1);
+	ft_eq_ope(cit_1 - 3, cit_mid);
+	// both it
+	ft_eq_ope(it_0 + 3, cit_mid);
+	ft_eq_ope(it_mid, cit_0 + 3);
+	ft_eq_ope(it_0, cit_1);
+	ft_eq_ope(it_1, cit_0);
+	ft_eq_ope(it_1 - 3, cit_mid);
+	ft_eq_ope(it_mid, cit_1 - 3);
+
 
 
 

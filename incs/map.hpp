@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/05 11:12:19 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:58:48 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ public:
 	void
 	insert( InputIterator first, InputIterator last ) {
 
-		for (; first != last ; first++)
+		for (; first != last ; ++first)
 			this->insert(*first);
 
 	}
@@ -417,57 +417,25 @@ public:
 	iterator
 	lower_bound( const key_type &lower_key ) {
 
-		iterator	tmp = this->begin();
-
-		while (tmp != this->end()) {
-			if (tmp.getCurrent()->data.first >= lower_key)
-				break ;
-			tmp++;
-		}
-
-		return (tmp);
+		return (iterator(_t.lower_bound(ft::make_pair(lower_key, mapped_type())), _t.getPtrNode(), _t.getLast()));
 	}
 
 	const_iterator
 	lower_bound( const key_type &lower_key ) const {
 
-		const_iterator	tmp = this->begin();
-
-		while (tmp != this->end()) {
-			if (tmp.getCurrent()->data.first >= lower_key)
-				break ;
-			tmp++;
-		}
-
-		return (tmp);
+		return (const_iterator(_t.lower_bound(ft::make_pair(lower_key, mapped_type())), _t.getPtrNode(), _t.getLast()));
 	}
 
 	iterator
 	upper_bound( const key_type &upper_key ) {
-
-		iterator	tmp = this->begin();
-
-		while (tmp != this->end()) {
-			if (tmp.getCurrent()->data.first > upper_key)
-				break ;
-			tmp++;
-		}
-
-		return (tmp);
+	
+		return (iterator(_t.upper_bound(ft::make_pair(upper_key, mapped_type())), _t.getPtrNode(), _t.getLast()));
 	}
 
 	const_iterator
 	upper_bound( const key_type &upper_key ) const {
 
-		const_iterator	tmp = this->begin();
-
-		while (tmp != this->end()) {
-			if (tmp.getCurrent()->data.first > upper_key)
-				break ;
-			tmp++;
-		}
-
-		return (tmp);
+		return (const_iterator(_t.upper_bound(ft::make_pair(upper_key, mapped_type())), _t.getPtrNode(), _t.getLast()));
 	}
 
 
@@ -527,7 +495,7 @@ public:
 	bool
 	operator==( const ft::map< Key, T, Compare, Allocator > &lhs, const ft::map< Key, T, Compare, Allocator > &rhs ) {
 
-		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template< class Key, class T, class Compare, class Allocator >

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/06 16:02:25 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:19:02 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 #include "lexicographical_compare.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
-// #include "nullptr.hpp"
 
 START
 
@@ -284,14 +283,13 @@ typedef	typename allocator_type::difference_type	difference_type;
 		}
 		else {
 			if (nbr_element > this->capacity()
-				&& this->capacity() * 2 >= nbr_element)
-				this->reserve(this->capacity() * 2);
+				&& this->size() * 2 >= nbr_element)
+				this->reserve(this->size() * 2);
 			else if (nbr_element > this->capacity())
 				this->reserve(nbr_element);
 			for (; this->_size < nbr_element ; this->_size++)
 				this->_alloc.construct(&this->_ptrVector[this->size()], c);
 		}
-
 	}
 
 

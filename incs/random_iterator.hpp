@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:49:16 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/06 14:38:45 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:35:44 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ public:
 
 	typedef random_iterator< T >  self;
 
-	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::value_type			value_type;
-	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::iterator_category	iterator_category;
-	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::difference_type		difference_type;
-	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::reference			reference;
-	typedef typename ft::iterator< ft::random_access_iterator_tag, T >::pointer				pointer;
+	typedef typename ft::iterator< std::random_access_iterator_tag, T >::value_type			value_type;
+	typedef typename ft::iterator< std::random_access_iterator_tag, T >::iterator_category	iterator_category;
+	typedef typename ft::iterator< std::random_access_iterator_tag, T >::difference_type		difference_type;
+	typedef typename ft::iterator< std::random_access_iterator_tag, T >::reference			reference;
+	typedef typename ft::iterator< std::random_access_iterator_tag, T >::pointer				pointer;
 
 	random_iterator( void )
 		: m_iterator(0) {}
@@ -166,7 +166,6 @@ public:
 	difference_type
 	operator-( const random_iterator &other ) const {
 
-		// p1 "distace" p2
 		return (base() - other.base());
 	}
 

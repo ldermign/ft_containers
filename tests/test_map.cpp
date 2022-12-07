@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/05 11:07:36 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 13:00:37 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <iostream>
 
 #include <iomanip>
+
+
+#define _pair LIBRARY::pair
 
 
 # define _END			"\x1b[0m"
@@ -48,6 +51,15 @@
 # define _ICYAN			"\x1b[46m"
 # define _IWHITE		"\x1b[47m"
 
+template <typename T>
+std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+{
+	o << "key: " << iterator->first << " | value: " << iterator->second;
+	if (nl)
+		o << std::endl;
+	return ("");
+}
+
 
 using namespace LIBRARY;
 template <class Key, class T>
@@ -58,6 +70,39 @@ void	print(LIBRARY::map<Key, T>& lst)
 		p1 it->first << " => " << it->second p2
 }
 
+template <typename T_MAP>
+void	printSize(T_MAP const &mp, bool print_content = 1)
+{
+	std::cout << "size: " << mp.size() << std::endl;
+	std::cout << "max_size: " << mp.max_size() << std::endl;
+	if (print_content)
+	{
+		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << printPair(it, false) << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
+
+
+template <class MAP>
+void	cmp(const MAP &lhs, const MAP &rhs)
+{
+	static int i = 0;
+
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+}
+
+
+
+
+#define T1 char
+#define T2 int
+typedef _pair<const T1, T2> T3;
 
 
 
@@ -69,167 +114,10 @@ void	test_map( void ) {
 	p1 "\t~~~~~~~~~~ MAP CONTAINER ~~~~~~~~~~\n" p2
 	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	p1 "/* ********************************************************************** */" << _END p2
-	p1 std::endl;
-
-
-	LIBRARY::map<std::string, int> mymap;
-	print(mymap);
 
 
 
-	p1 std::endl;
-	p1 "mymap.max_size(): " << (mymap.max_size() > 10000) p2
-	print(mymap);
-	p1 std::endl;
+	p3
 
-
-	print(mymap);
-	mymap.insert(LIBRARY::pair<std::string, int>("ft", 42));
-
-	print(mymap);
-	mymap.insert(LIBRARY::pair<std::string, int>("one", 1));
-
-
-	LIBRARY::map<std::string, int>::iterator mit;
-	LIBRARY::map<std::string, int>::iterator it;
-	// print(mymap);
-	// it = mymap.lower_bound("aaa");
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.lower_bound(\"aaa\"): " << it->first << ":" << it->second p2
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.lower_bound("one");
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.lower_bound(\"one\"): " << it->first << ":" << it->second p2
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.lower_bound("oae");
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.lower_bound(\"oae\"): " << it->first << ":" << it->second p2
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.lower_bound("ft");
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.lower_bound(\"ft\"): " << it->first << ":" << it->second p2
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.lower_bound("zzz");
-	// print(mymap);
-	
-	// if (it == mymap.end())
-	// 	p1 std::setw(40) << "mymap.lower_bound(\"zzz\"): mymap.end()" p2
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.upper_bound("aaa");
-	
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.upper_bound(\"aaa\"): " << it->first << ":" << it->second p2;
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.upper_bound("oae");
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.upper_bound(\"oae\"): " << it->first << ":" << it->second p2;
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.upper_bound("one");
-	
-	// if (it == mymap.end())
-	// 	p1 std::setw(40) << "mymap.upper_bound(\"one\"): mymap.end()" p2
-	// print(mymap);
-	// p1 std::endl;
-	// it = mymap.upper_bound("ft");
-	// print(mymap);
-	// p1 std::setw(40) << "mymap.upper_bound(\"ft\"): " << it->first << ":" << it->second p2;
-	// p1 std::endl;
-	// print(mymap);
-	// it = mymap.upper_bound("zzz");
-	
-	// if (it == mymap.end())
-	// 	p1 std::setw(40) << "mymap.upper_bound(\"zzz\"): mymap.end()" p2
-	// print(mymap);
-	// p1 std::endl;
-
-	// print(mymap);
-	// mymap.erase("undefined");
-	// print(mymap);
-	// mymap.erase("ft");
-	// print(mymap);
-	// p1 _WHITE << "# double clear" << _END p2
-	// mymap.clear();
-	// print(mymap);
-	// mymap.clear();
-	// print(mymap);
-	// mymap["lol"];
-	// print(mymap);
-	// mymap.insert(LIBRARY::pair<std::string, int>("xD", 123));
-	// print(mymap);
-	// mymap.insert(mymap.end(), LIBRARY::pair<std::string, int>("uch", 442));
-	// print(mymap);
-	// mymap.insert(mymap.begin(), LIBRARY::pair<std::string, int>("uch", 22));
-	// print(mymap);
-	// mymap.insert(mymap.end(), LIBRARY::pair<std::string, int>("uch", 23));
-	// print(mymap);
-	// mymap.insert(LIBRARY::pair<std::string, int>("uch", 23));
-	// print(mymap);
-	// mymap["lol"] = 8;
-
-
-	// print(mymap);
-	map<std::string, int> map2;
-
-	// print(mymap);
-	// print(map2);
-	// print(mymap);
-	// p1 "empty line\n";
-	// print(map2);
-	// p1 "empty line2\n";
-
-	swap(mymap, map2);
-	p1 "empty line3\n";
-	print(mymap);
-	p1 "empty line4\n";
-	print(map2);
-	p1 "empty line5\n";
-	mymap = map2;
-	print(mymap);
-	print(map2);
-
-	p1 std::setw(40) << "map == map2: " << (mymap == map2) p2
-	print(mymap);
-	print(map2);
-	p1 std::endl;
-
-/*
-
-	mymap.clear();
-	print(mymap);
-	print(map2);
-
-	mymap["satan"] = 666;
-	print(mymap);
-	print(map2);
-	p1 std::setw(40) << "mymap == map2: " << (mymap == map2) p2
-	print(mymap);
-	print(map2);
-	p1 std::endl;
-	p1 std::setw(40) << "mymap <= map2: " << (mymap <= map2) p2
-	print(mymap);
-	print(map2);
-	p1 std::endl;
-	p1 std::setw(40) << "mymap >= map2: " << (mymap >= map2) p2
-	print(mymap);
-	print(map2);
-	p1 std::endl;
-	p1 std::setw(40) << "mymap > map2: " << (mymap > map2) p2
-	print(mymap);
-	print(map2);
-	p1 std::endl;
-	p1 std::setw(40) << "mymap < map2: " << (mymap > map2) p2
-	print(mymap);
-	print(map2);
-	p1 std::endl;
-
-*/
 
 }

@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/06 15:36:14 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:31:21 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 START
 
 template< class T, class Node >
-struct RedBlackTreeIterator : public ft::iterator< ft::bidirectional_iterator_tag, T > {
+struct RedBlackTreeIterator : public ft::iterator< std::bidirectional_iterator_tag, T > {
 
 public:
 
@@ -33,8 +33,8 @@ public:
 	typedef RedBlackTreeIterator	Self;
 
 
-	typedef typename ft::iterator< ft::bidirectional_iterator_tag, T >::pointer		pointer;
-	typedef typename ft::iterator< ft::bidirectional_iterator_tag, T >::reference	reference;
+	typedef typename ft::iterator< std::bidirectional_iterator_tag, T >::pointer	pointer;
+	typedef typename ft::iterator< std::bidirectional_iterator_tag, T >::reference	reference;
 	
 
 private:
@@ -206,16 +206,6 @@ private:
 			_current = parent;
 		}
 	}
-
-	// void Decrement(void) {
-	// 	if (_current->right != _last)
-	// 		_current = (minimum(_current->right));
-	// 	else {
-	// 		Node * save = _current->parent;
-	// 		for(;(save != _last && _current == save->right); _current = save, save = save->parent);
-	// 		_current = save;
-	// 	}
-	// }
 
 };
 
