@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/07 15:19:02 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 20:49:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ private:
 	unsigned int	_capacity;
 
 public:
-// types:
 
 	typedef vector< T, Allocator >  self;
 
@@ -139,54 +138,56 @@ typedef	typename allocator_type::difference_type	difference_type;
 
 
 
-/* ~~~~~ ASSIGN ~~~~~ */
-
-	void
-	assign( size_t count, const T &value ) {
-
-		this->clear();
-		// if (this->_ptrVector != NULL)
-		// 	this->_alloc.deallocate(this->_ptrVector, this->capacity());
-		if (count > this->size())
-			this->reserve(count);
-		for (size_t i = 0 ; i < count ; i++)
-			this->_alloc.construct(&(this->_ptrVector[i]), value);
-		this->_size = count;
-	}
-
-	template < class InputIterator >
-	void
-	assign( InputIterator first, InputIterator last,
-	typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
-		// Replaces the contents with copies of those in the range [first, last).
-		// The behavior is undefined if either argument is an iterator into *this.
-		// This overload has the same effect as overload (1) if InputIt is an int type.
-
-		size_t	length = ft::distance(first, last);
-		this->clear();
-		
-		if (length > this->size())
-			this->reserve(length);
-		for (size_t i = 0 ; i < length ; i++) {			
-			this->_alloc.construct(&(this->_ptrVector[i]), *first);
-			first++;
-		}
-		this->_size = length;
-	}
-
-
-
-
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ACCESSORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 /* ~~~~~ ALLOCATOR ~~~~~ */
 
-	allocator_type	get_allocator( void ) const { return (this->_alloc); }
+	allocator_type
+	get_allocator( void ) const {
+
+		return (this->_alloc);
+	}
+
+/* ~~~~~ SIZE ~~~~~ */
+
+	size_t
+	size( void ) const {
+
+		return (this->_size);
+	}
+
+/* ~~~~~ MAX_SIZE ~~~~~ */
+
+	size_t
+	max_size( void ) const {
+
+		return (this->_alloc.max_size());
+	}
+
+/* ~~~~~ CAPACITY ~~~~~ */
+
+	size_t
+	capacity( void ) const {
+
+		return (this->_capacity);
+	}
+
+/* ~~~~~ EMPTY ~~~~~ */
+
+	bool
+	empty( void ) const {
+
+		return (this->size() == 0);
+	}
 
 
 
 
-
-/* ~~~~~ ITERATORS ~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ITERATORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 	iterator
 	begin( void ) {
@@ -221,7 +222,6 @@ typedef	typename allocator_type::difference_type	difference_type;
 	reverse_iterator
 	rend( void ) {
 
-		// p1 "bah ?" p2
 		return (reverse_iterator(this->begin()));
 	}
 	
@@ -241,31 +241,33 @@ typedef	typename allocator_type::difference_type	difference_type;
 
 
 
-/* ~~~~~ SIZE ~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MEMORY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-	size_t
-	size( void ) const {
+/* ~~~~~ RESERVE ~~~~~ */
 
-		return (this->_size);
+	void
+	reserve( size_t new_cap ) {
+		
+		if (new_cap > this->max_size())
+			throw (std::length_error("vector::reserve"));
+		else if (new_cap <= this->capacity())
+			return ;
+
+		else {
+			T	*new_vector;
+			new_vector = this->_alloc.allocate(new_cap);
+			for (size_t i = 0 ; i < this->size() ; i++) {
+				this->_alloc.construct(&new_vector[i], this->_ptrVector[i]);
+				this->_alloc.destroy(&this->_ptrVector[i]);
+			}
+			if (this->_ptrVector != NULL)
+				this->_alloc.deallocate(this->_ptrVector, this->capacity());
+			this->_capacity = new_cap;
+			this->_ptrVector = new_vector;
+		}
 	}
-
-
-
-
-
-/* ~~~~~ MAX_SIZE ~~~~~ */
-	
-	size_t
-	max_size( void ) const {
-
-		return (this->_alloc.max_size());
-// retourne le nombre d'element maximum que le container peut contenir
-// avec les limitations du system / de la lib
-	}
-
-
-
-
 
 /* ~~~~~ RESIZE ~~~~~ */
 
@@ -296,159 +298,9 @@ typedef	typename allocator_type::difference_type	difference_type;
 
 
 
-/* ~~~~~ CAPACITY ~~~~~ */
-
-	size_t
-	capacity( void ) const {
-
-		// p1 "capacity = " << this->_capacity p2
-		return (this->_capacity);
-	}
-
-
-
-
-
-/* ~~~~~ EMPTY ~~~~~ */
-	
-	bool
-	empty( void ) const {
-
-		return (this->size() == 0);
-	}
-
-
-
-
-
-/* ~~~~~ RESERVE ~~~~~ */
-	
-	void
-	reserve( size_t new_cap ) {
-		
-		if (new_cap > this->max_size())
-			throw (std::length_error("vector::reserve"));
-		else if (new_cap <= this->capacity())
-			return ;
-
-		else {
-			T	*new_vector;
-			new_vector = this->_alloc.allocate(new_cap);
-			for (size_t i = 0 ; i < this->size() ; i++) {
-				this->_alloc.construct(&new_vector[i], this->_ptrVector[i]);
-				this->_alloc.destroy(&this->_ptrVector[i]);
-			}
-			if (this->_ptrVector != NULL)
-				this->_alloc.deallocate(this->_ptrVector, this->capacity());
-			this->_capacity = new_cap;
-			this->_ptrVector = new_vector;
-		}
-	}
-
-
-
-
-
-/* ~~~~~ OPERATOR [] ~~~~~ */
-
-	reference
-	operator[]( size_t index ) {
-
-		return (this->_ptrVector[index]);
-	}
-	
-	const_reference
-	operator[]( size_t index ) const {
-
-		return (this->_ptrVector[index]);
-	}
-
-
-
-
-
-/* ~~~~~ AT ~~~~~ */
-
-	reference
-	at( size_t index ) {
-
-		// pour la phrase de out_of_range
-		// https://en.cppreference.com/w/cpp/container/vector/at
-		// vector::_M_range_check: __n (which is 6) >= this->size() (which is 6)
-		std::stringstream tmp;
-		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
-		
-		std::string string = tmp.str();
-		if (index >= this->size())
-			throw std::out_of_range(string);
-
-		return (this->_ptrVector[index]);
-	}
-
-	const_reference
-	at( size_t index ) const {
-
-		std::stringstream tmp;
-		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
-
-		std::string string = tmp.str();
-		if (index >= this->size())
-			throw std::out_of_range(string);
-
-		return (this->_ptrVector[index]);
-	}
-
-
-
-
-
-/* ~~~~~ FRONT ~~~~~ */
-
-	reference
-	front( void ) {
-
-		return (this->_ptrVector[0]);
-	}
-	
-	const_reference
-	front( void ) const {
-
-		return (this->_ptrVector[0]);	
-	}
-
-
-
-
-
-/* ~~~~~ BACK ~~~~~ */
-
-	reference
-	back( void ) {
-
-		return (this->_ptrVector[this->size() - 1]);
-	}
-	
-	const_reference
-	back( void ) const {
-
-		return (this->_ptrVector[this->size() - 1]);
-	}
-
-
-
-
-
-/* ~~~~~ PUSH_BACK ~~~~~ */
-	
-	void
-	push_back( const T &x ) {
-
-		this->insert(this->end(), x);
-	}
-
-
-
-
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADD / SUPP VALUE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 /* ~~~~~ POP_BACK ~~~~~ */
 
@@ -459,9 +311,13 @@ typedef	typename allocator_type::difference_type	difference_type;
 		this->_size--;
 	}
 
+/* ~~~~~ PUSH_BACK ~~~~~ */
 
+	void
+	push_back( const T &x ) {
 
-
+		this->insert(this->end(), x);
+	}
 
 /* ~~~~~ INSERT ~~~~~ */
 
@@ -542,6 +398,152 @@ typedef	typename allocator_type::difference_type	difference_type;
 
 
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MODIFIERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* ~~~~~ SWAP ~~~~~ */
+
+	void
+	swap( self &x ) {
+		
+		T				*type_tmp = x._ptrVector;
+		Allocator		alloc_tmp = x._alloc;
+		unsigned int	size_tmp = x._size;
+		unsigned int	capacity_tmp = x._capacity;
+
+		x._ptrVector = this->_ptrVector;
+		x._alloc = this->_alloc;
+		x._size = this->_size;
+		x._capacity = this->_capacity;
+
+		this->_ptrVector = type_tmp;
+		this->_alloc = alloc_tmp;
+		this->_size = size_tmp;
+		this->_capacity = capacity_tmp;
+	}
+
+/* ~~~~~ ASSIGN ~~~~~ */
+
+	void
+	assign( size_t count, const T &value ) {
+
+		this->clear();
+		if (count > this->size())
+			this->reserve(count);
+		for (size_t i = 0 ; i < count ; i++)
+			this->_alloc.construct(&(this->_ptrVector[i]), value);
+		this->_size = count;
+	}
+
+	template < class InputIterator >
+	void
+	assign( InputIterator first, InputIterator last, typename ft::enable_if< !ft::is_integral< InputIterator >::value, InputIterator >::type * = NULL ) {
+		// Replaces the contents with copies of those in the range [first, last).
+		// The behavior is undefined if either argument is an iterator into *this.
+		// This overload has the same effect as overload (1) if InputIt is an int type.
+
+		size_t	length = ft::distance(first, last);
+		this->clear();
+		
+		if (length > this->size())
+			this->reserve(length);
+		for (size_t i = 0 ; i < length ; i++) {			
+			this->_alloc.construct(&(this->_ptrVector[i]), *first);
+			first++;
+		}
+		this->_size = length;
+	}
+
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [] AT FRONT BACK ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* ~~~~~ OPERATOR [] ~~~~~ */
+
+	reference
+	operator[]( size_t index ) {
+
+		return (this->_ptrVector[index]);
+	}
+	
+	const_reference
+	operator[]( size_t index ) const {
+
+		return (this->_ptrVector[index]);
+	}
+
+/* ~~~~~ AT ~~~~~ */
+
+	reference
+	at( size_t index ) {
+
+		// pour la phrase de out_of_range
+		// https://en.cppreference.com/w/cpp/container/vector/at
+		// vector::_M_range_check: __n (which is 6) >= this->size() (which is 6)
+		std::stringstream tmp;
+		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
+		
+		std::string string = tmp.str();
+		if (index >= this->size())
+			throw std::out_of_range(string);
+
+		return (this->_ptrVector[index]);
+	}
+
+	const_reference
+	at( size_t index ) const {
+
+		std::stringstream tmp;
+		tmp << "vector::_M_range_check: __n (which is " << index << ") >= this->size() (which is " << this->size() << ")";
+
+		std::string string = tmp.str();
+		if (index >= this->size())
+			throw std::out_of_range(string);
+
+		return (this->_ptrVector[index]);
+	}
+
+/* ~~~~~ FRONT ~~~~~ */
+
+	reference
+	front( void ) {
+
+		return (this->_ptrVector[0]);
+	}
+	
+	const_reference
+	front( void ) const {
+
+		return (this->_ptrVector[0]);	
+	}
+
+/* ~~~~~ BACK ~~~~~ */
+
+	reference
+	back( void ) {
+
+		return (this->_ptrVector[this->size() - 1]);
+	}
+	
+	const_reference
+	back( void ) const {
+
+		return (this->_ptrVector[this->size() - 1]);
+	}
+
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ERASE - CLEAN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
 /* ~~~~~ ERASE ~~~~~ */
 
 	iterator	erase( iterator position ) {
@@ -572,43 +574,6 @@ typedef	typename allocator_type::difference_type	difference_type;
 		return first;
 	}
 
-
-
-
-
-
-
-/* ~~~~~ SWAP ~~~~~ */
-
-	void
-	swap( self &x ) {
-		
-		T				*type_tmp = x._ptrVector;
-		Allocator		alloc_tmp = x._alloc;
-		unsigned int	size_tmp = x._size;
-		unsigned int	capacity_tmp = x._capacity;
-
-		x._ptrVector = this->_ptrVector;
-		x._alloc = this->_alloc;
-		x._size = this->_size;
-		x._capacity = this->_capacity;
-
-		this->_ptrVector = type_tmp;
-		this->_alloc = alloc_tmp;
-		this->_size = size_tmp;
-		this->_capacity = capacity_tmp;
-	}
-
-	friend void
-	swap( self &x, self &y) {
-
-		x.swap(y);
-	}
-
-
-
-
-
 /* ~~~~~ CLEAR ~~~~~ */
 
 	void
@@ -624,9 +589,9 @@ typedef	typename allocator_type::difference_type	difference_type;
 
 
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-/* ~~~~~ RELATIONNAL OPERATORS ~~~~~ */
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~ RELATIONNAL OPERATORS ~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 	friend bool
 	operator==( const self &lhs, const self &rhs ) {
@@ -668,6 +633,12 @@ typedef	typename allocator_type::difference_type	difference_type;
 	operator>=( const self &lhs, const self &rhs ) {
 
 		return (!(lhs < rhs));
+	}
+
+	friend void
+	swap( self &x, self &y) {
+
+		x.swap(y);
 	}
 
 };

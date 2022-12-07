@@ -451,7 +451,7 @@ public:
 	bool
 	deleteNode( const value_type &data ) {
 
-		return (deleteNodeHelper(this->getPtrNode(), this->data));
+		return (deleteNodeHelper(this->getPtrNode(), data));
 	}
 
 // private:
