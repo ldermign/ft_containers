@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/07 14:31:21 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:41:35 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ struct RedBlackTreeIterator : public ft::iterator< std::bidirectional_iterator_t
 public:
 
 	typedef T						value_type;
-	// typedef typename ft::Node< T >	node_type;
 	typedef RedBlackTreeIterator	Self;
 
 

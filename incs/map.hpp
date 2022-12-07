@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:50:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/07 14:58:48 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:45:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,17 +144,12 @@ public:
 			return (*this);
 
 		this->clear();
-		// this->new_compare = rhs.new_compare;
-		// this->new_alloc = rhs.new_alloc;
 		this->insert(rhs.begin(), rhs.end());
 
 		return (*this);
 	}
 
-	~map( void ) {
-
-		// this->clear();
-	}
+	~map( void ) {}
 
 
 	allocator_type	get_allocator( void ) { return (this->new_alloc); }
@@ -273,8 +268,6 @@ public:
 	insert( const value_type &to_add ) {
 
 		const bool	insert_tree = this->_t.insert(to_add);
-		// p1 "1 insert" p2
-
 		return (ft::make_pair(this->find(to_add.first), insert_tree));
 	}
 

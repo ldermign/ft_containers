@@ -66,8 +66,7 @@ private:
 	value_compare	comp;
 	Node			*_ptrNode;
 	Node			*_last;
-	size_type		_size; // a faire
-	// size_type		_maxSize;
+	size_type		_size;
 
 public:
 
@@ -75,7 +74,6 @@ public:
 
 	RedBlackTree( const value_compare &c = Compare() ) : comp(c) {
 
-		// p1 "constructeur redblacktree" p2
 		this->_last = alloc.allocate(1);
 		alloc.construct(_last, Node());
 		this->_last->color = N_BLACK;
@@ -83,7 +81,7 @@ public:
 		this->_last->right = _last;
 		this->_last->parent = _last;
 		this->_ptrNode = this->_last;
-		_size = 0;
+		this->_size = 0;
 
 	}
 
@@ -216,7 +214,7 @@ public:
 	void
 	printTree( void ) {
 
-		if (_ptrNode)
+		if (this->_ptrNode)
 			printHelper(this->_ptrNode, "", true);
 	}
 
@@ -349,7 +347,7 @@ public:
 		if (y->left != this->_last)
 			y->left->parent = x;
 		y->parent = x->parent; // link x’s parent to y
-		if (x->parent == _last)
+		if (x->parent == this->_last)
 			this->_ptrNode = y;
 		else if (x == x->parent->left)
 			x->parent->left = y;
@@ -370,7 +368,7 @@ public:
 			y->right->parent = x;
 		y->parent = x->parent;
 
-		if (x->parent == _last)
+		if (x->parent == this->_last)
 			this->_ptrNode = y;
 
 		else if (x == x->parent->right)
@@ -398,7 +396,7 @@ public:
 // Ordinary Binary Search Insertion
 
 		pointer	tmp = alloc.allocate(1);
-		alloc.construct(tmp, Node(key, _last, this->_last, this->_last, N_RED));
+		alloc.construct(tmp, Node(key, this->_last, this->_last, this->_last, N_RED));
 
 		pointer	y = nullptr_v;
 		pointer	x = this->_ptrNode;
@@ -420,7 +418,7 @@ public:
 		// y is parent of x
 		tmp->parent = y;
 		if (y == nullptr_v)
-			_ptrNode = tmp;
+			this->_ptrNode = tmp;
 		else if (this->comp(tmp->data, y->data)) //
 			y->left = tmp;
 		else
@@ -430,13 +428,13 @@ public:
 		// if new node is a root node, simply return
 		if (tmp->parent == nullptr_v) {
 			tmp->color = N_BLACK;
-			tmp->parent = _last;
+			tmp->parent = this->_last;
 			// p1 "first element" p2;
 			return true;
 		}
 
 		// if the grandparent is null, simply return
-		if (tmp->parent->parent == _last)
+		if (tmp->parent->parent == this->_last)
 			return true;
 
 		// Fix the tree
@@ -453,7 +451,7 @@ public:
 	bool
 	deleteNode( const value_type &data ) {
 
-		return (deleteNodeHelper(this->_ptrNode, data));
+		return (deleteNodeHelper(this->getPtrNode(), this->data));
 	}
 
 // private:
@@ -515,7 +513,7 @@ public:
 					x->parent->color = N_BLACK;
 					s->left->color = N_BLACK;
 					rightRotate(x->parent);
-					x = _ptrNode;
+					x = this->getPtrNode();
 				}
 			}
 		}
@@ -527,7 +525,7 @@ public:
 	rbTransplant( pointer u, pointer v ) {
 
 		if (u->parent == this->_last)
-			_ptrNode = v;
+			this->_ptrNode = v;
 		else if (u == u->parent->left)
 			u->parent->left = v;
 		else
@@ -541,17 +539,7 @@ public:
 		pointer z = this->_last;
 		pointer x, y;
 
-		// while (tmp != this->_last) {
-		// 	if (tmp->data == key)
-		// 		z = tmp;
-
-		// 	else if (tmp->data <= key)
-		// 		tmp = tmp->right;
-		// 	else
-		// 		tmp = tmp->left;
-		// }
-
-		while (tmp != _last)
+		while (tmp != this->getLast())
 		{
 			if (this->comp(tmp->data, key))
 				tmp = tmp->right;
@@ -594,10 +582,9 @@ public:
 			y->left->parent = y;
 			y->color = z->color;
 		}
-		// delete z;
-		alloc.destroy(z); // ??
+		alloc.destroy(z);
 		if (z != NULL)
-			alloc.deallocate(z, 1); // ??
+			alloc.deallocate(z, 1);
 		if (y_original_color == N_BLACK)
 			deleteFix(x);
 		this->_size--;
@@ -610,7 +597,7 @@ public:
 	void
 	clear_loop( Node *root ) {
 
-		if (root == this->_last)
+		if (root == this->getLast())
 			return ;
 
 		clear_loop(root->left); 
@@ -627,8 +614,7 @@ public:
 
 		clear_loop(this->getPtrNode());
 		this->_size = 0;
-		this->_ptrNode = this->_last;
-
+		this->_ptrNode = this->getLast();
 	}
 
 };
