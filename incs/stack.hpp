@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 11:01:03 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/08 15:24:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:24:11 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ public:
 	explicit stack( const container_type &a = container_type() )
 		: c(a) {}
 
+	stack( const stack &src ) {
+
+		*this = src;
+	}
+
 	stack
 	&operator=( const stack &rhs ) {
 
@@ -45,11 +50,6 @@ public:
 		this->c = rhs.c;
 
 		return (*this);
-	}
-	
-	stack( const stack &src ) {
-
-		*this = src;
 	}
 
 	~stack( void ) {}

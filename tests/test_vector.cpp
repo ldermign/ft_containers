@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/08 15:23:00 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:12:10 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,74 @@
 #include "vector.hpp"
 #include <unistd.h>
 
-#include "test_utils.hpp"
-#include "stack.hpp"
+template< class T >
+void printVector(std::string name, LIBRARY::vector< T > const &src) {
+
+	typename LIBRARY::vector< T >::const_iterator	it = src.begin();
+	typename LIBRARY::vector< T >::const_iterator	it2 = src.end();
+
+	p1 BLUE << "vector " << name << RESET << " = ";
+	for (; it != it2 ; it++)
+		p1 *it << " ";
+	p3
+	
+	p1 "size = " << src.size() p2
+	p1 "max_size = " << src.max_size() p2
+	p1 "capacity = " << src.capacity() p2
+	p1 "empty = " << src.empty() p2
+	p1 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" p2
+	p3
+		
+}
 
 void constructor( void ) {
 
 	p1 RED << "~~~~~~~~~~ CONSTRUCTOR ~~~~~~~~~~ " << RESET p2
 	p3
 
+	std::string	s1[] = {"stp, ", "me met ", " pas faux", " :("}; // 4
+	std::string s2[] = {"Une ", "serie ", "de ", "phrases..."}; // 4
+	std::string s3[] = {"Et puis encore une...", " (tant qu'a faire)"}; // 2
 
+	LIBRARY::vector< std::string >	vctString1;
+	for (size_t i = 0 ; i < 4 ; i++)
+		vctString1.push_back(s1[i]);
+	LIBRARY::vector< std::string >	vctString2;
+	for (size_t i = 0 ; i < 4 ; i++)
+		vctString2.push_back(s2[i]);
+	LIBRARY::vector< std::string >	vctString3(42);
+	LIBRARY::vector< std::string >	vctString4(vctString1);
+	LIBRARY::vector< std::string >	vctString5(vctString2.begin() + 1, vctString2.end() - 1);
+	LIBRARY::vector< std::string >	vctString6(s3, s3 + sizeof(s3) / sizeof(std::string));
+
+	printVector("vctString1", vctString1);
+	printVector("vctString2", vctString2);
+	printVector("vctString3", vctString3);
+	printVector("vctString4", vctString4);
+	printVector("vctString5", vctString5);
+	printVector("vctString5", vctString6);
+	p3
 
 }
 
 void operator_equal( void ) {
 
-	p1 RED << "~~~~~~~~~~ OPERATOR ~~~~~~~~~~ " << RESET p2
+	p1 RED << "~~~~~~~~~~ OPERATOR = ~~~~~~~~~~ " << RESET p2
 	p3
 
+	std::string s5[] = {"On ", "va ", "ecrire ", "une ", "longue ", "phrase ", "comme ", "ca ", "c'est ", "ok !"}; // 10
 
-
+	LIBRARY::vector< std::string >	vctString1;
+	LIBRARY::vector< std::string >	vctString2;
+	for (size_t i = 0 ; i < 10 ; i++)
+		vctString1.push_back(s5[i]);
+	printVector("vctString1", vctString1);
+	p1 "vctString2 before operator = " p2
+	printVector("vctString2", vctString2);
+	vctString2 = vctString1;
+	p1 "vctString2 after operator = " p2
+	printVector("vctString2", vctString2);
+	p3
 
 }
 
@@ -41,17 +90,16 @@ void getteurs( void ) {
 	p1 RED << "~~~~~~~~~~ GETTERS ~~~~~~~~~~ " << RESET p2
 	p3
 
+	int i1[] = {42, 0, -111, 666, 1337, -222, 4, -9, 9}; // 9
+
 	LIBRARY::vector< int >	vctInt1;
 	LIBRARY::vector< int >	vctInt2;
 	for (int i = 0 ; i < 9 ; i++)
 		vctInt2.push_back(i1[i]);
-
 	p1 GREEN << "Getters vector empty -> " << RESET p2
 	p1 "\tSize = " << vctInt1.size() p2
 	p1 "\tCapacity = " << vctInt1.capacity() p2
 	p1 "\tEmpty = " << vctInt1.empty() p2
-
-
 	p1 GREEN << "Getters vector full -> " << RESET p2
 	p1 "\tSize = " << vctInt2.size() p2
 	p1 "\tCapacity = " << vctInt2.capacity() p2
@@ -63,8 +111,11 @@ void getteurs( void ) {
 void iterators( void ) {
 
 	p1 RED << "~~~~~~~~~~ ITERATORS ~~~~~~~~~~ " << RESET p2
+	p3
+
+	char c1[] = {'L', 'i', 'e', 'n', 'a'}; // 
+
 	p1 YELLOW << "~~~~~ ACCESSORS ~~~~~ " << RESET p2
-	
 	LIBRARY::vector< char >	vctChar1;
 	for (size_t i = 0 ; i < 2 ; i++)
 		vctChar1.push_back(c1[i]);
@@ -97,7 +148,6 @@ void iterators( void ) {
 		test.push_back(11111);
 		LIBRARY::vector< int >::iterator		first = test.begin();
 		LIBRARY::vector< int >::iterator		second = test.begin() + 1;
-		// LIBRARY::vector< int >::iterator		third = test.begin() + 2;
 		LIBRARY::vector< int >::iterator		last = test.begin() + 3;
 
 		for (size_t i = 0 ; i < test.size() ; i++)
@@ -131,9 +181,6 @@ void iterators( void ) {
 	p1 YELLOW << "~~~~~ REVERSE ~~~~~ " << RESET p2
 	{
 		LIBRARY::vector< int >	test;
-		// test.push_back("C'est ");
-		// test.push_back("en ");
-		// test.push_back("desordre.");
 		test.push_back(1);
 		test.push_back(6);
 		test.push_back(4);
@@ -177,8 +224,11 @@ void reserve_and_resize( void ) {
 
 	p1 RED << "~~~~~~~~~~ MEMORY ~~~~~~~~~~ " << RESET p2
 	p3
-	p1 YELLOW << "~~~~~ RESERVE ~~~~~ " << RESET p2
 
+	int i1[] = {42, 0, -111, 666, 1337, -222, 4, -9, 9}; // 9
+	int i2[] = {-4, -3, -2, -1, 0, 1, 2, 3, 4}; // 9
+
+	p1 YELLOW << "~~~~~ RESERVE ~~~~~ " << RESET p2
 	LIBRARY::vector< int >	vctInt1;
 	vctInt1.reserve(9);
 	for (size_t i = 0 ; i < 9 ; i++)
@@ -197,9 +247,7 @@ void reserve_and_resize( void ) {
 	vctInt1.reserve(0);
 	printVector("vctInt1", vctInt1);
 
-	
 	p1 YELLOW << "~~~~~ RESIZE ~~~~~ " << RESET p2
-
 	LIBRARY::vector< int >	vctInt2;
 	for (int i = 0 ; i < 9 ; i++)
 		vctInt2.push_back(i1[i]);
@@ -231,18 +279,22 @@ void add_values( void ) {
 	p1 RED << "~~~~~~~~~~ ADD VALUES ~~~~~~~~~~ " << RESET p2
 	p3
 
+	std::string	s1[] = {"stp, ", "me met ", " pas faux", " :("}; // 4
+	std::string s2[] = {"Une ", "serie ", "de ", "phrases..."}; // 4
+	std::string s3[] = {"Et puis encore une...", " (tant qu'a faire)"}; // 2
+
 	p1 YELLOW << "~~~~~ PUSH_BACK ~~~~~ " << RESET p2
 	LIBRARY::vector< std::string >	vctString1;
 	p1 GREEN << "vctString1 before -> " << RESET p2
 	printVector("vctString1", vctString1);
-	for (size_t i = 0 ; i < s1->size() ; i++)
+	for (size_t i = 0 ; i < 4 ; i++)
 		vctString1.push_back(s1[i]);
 	p1 GREEN << "vctString1 after -> " << RESET p2
 	printVector("vctString1", vctString1);
 	LIBRARY::vector< std::string >	vctString2;
 	p1 GREEN << "vctString2 before -> " << RESET p2
 	printVector("vctString2", vctString2);
-	for (size_t i = 0 ; i < s2->size() ; i++)
+	for (size_t i = 0 ; i < 4 ; i++)
 		vctString2.push_back(s2[i]);
 	p1 GREEN << "vctString2 after -> " << RESET p2
 	printVector("vctString2", vctString2);
@@ -260,7 +312,7 @@ void add_values( void ) {
 	p1 YELLOW << "~~~~~ INSERT WITH POSITION AND VALUE ~~~~~ " << RESET p2
 	LIBRARY::vector< std::string >	vctString3;
 	p1 GREEN << "vctString3 before -> " << RESET p2
-	for (size_t i = 0 ; i < s3->size() ; i++)
+	for (size_t i = 0 ; i < 2 ; i++)
 		vctString1.push_back(s3[i]);
 	printVector("vctString3", vctString3);
 	vctString3.insert(vctString3.begin(), "EN PREMIER - ");
@@ -297,6 +349,10 @@ void modifiers( void ) {
 
 	p1 RED << "~~~~~~~~~~ MODIFIERS ~~~~~~~~~~ " << RESET p2
 	p3
+
+	int i1[] = {42, 0, -111, 666, 1337, -222, 4, -9, 9}; // 9
+	int i2[] = {-4, -3, -2, -1, 0, 1, 2, 3, 4}; // 9
+	int i4[] = {1, 2, 4, 8, 16, 32, 64, 128, 256}; // 9
 
 	p1 YELLOW << "~~~~~ SWAP ~~~~~ " << RESET p2
 	LIBRARY::vector< int >	vctInt1;
@@ -341,6 +397,11 @@ void data_acces( void ) {
 
 	p1 RED << "~~~~~~~~~~ DATA ACCESS ~~~~~~~~~~ " << RESET p2
 	p3
+
+	std::string	s1[] = {"stp, ", "me met ", " pas faux", " :("}; // 4
+	std::string s2[] = {"Une ", "serie ", "de ", "phrases..."}; // 4
+	std::string s3[] = {"Et puis encore une...", " (tant qu'a faire)"}; // 2
+	std::string s4[] = {"Et ", "un ", "bonjour ", "a ", "tous !"}; // 5
 
 	p1 YELLOW << "~~~~~ [] ~~~~~ " << RESET p2
 	LIBRARY::vector< std::string >	vctString1;
@@ -399,6 +460,9 @@ void clean ( void ) {
 	p1 RED << "~~~~~~~~~~ CLEAN ~~~~~~~~~~ " << RESET p2
 	p3
 
+	std::string s4[] = {"Et ", "un ", "bonjour ", "a ", "tous !"}; // 5
+	std::string s5[] = {"On ", "va ", "ecrire ", "une ", "longue ", "phrase ", "comme ", "ca ", "c'est ", "ok !"}; // 10
+
 	LIBRARY::vector< std::string >	vctString1;
 	for (size_t i = 0 ; i < 10 ; i++)
 		vctString1.push_back(s5[i]);
@@ -440,7 +504,10 @@ void operator_relationnal( void ) {
 
 	p1 RED << "~~~~~~~~~~ OPERATOR RELATIONNAL ~~~~~~~~~~ " << RESET p2
 	p3
-	
+
+	char c2[] = {'C', 'o', 'n', 't', 'a', 'i', 'n', 'e', 'r', 's'}; // 10
+	char c3[] = {'l', 'd', 'e', 'r', 'm', 'i', 'g', 'n'}; // 8
+
 	LIBRARY::vector< char >	vctChar1(c2, c2 + 10);
 	LIBRARY::vector< char >	vctChar2(c3, c3 + 8);
 	printVector("vctChar1", vctChar1);

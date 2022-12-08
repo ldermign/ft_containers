@@ -1,0 +1,135 @@
+
+[31m	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[31m	~~~~~~~~~~~~~~~~~~~~ STACK CONTAINER ~~~~~~~~~~~~~~~~~~~~~
+
+[31m	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m
+[31m~~~~~~~~~~ CONSTRUCTOR ~~~~~~~~~~ [0m
+
+constructor = 
+size = 0
+empty = 1
+[34mstack stackInt1[0m = 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+constructor copy = 
+size = 9
+empty = 0
+[34mstack stackInt2[0m = 256 128 64 32 16 8 4 2 1 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+constructor template vector
+size = 8
+empty = 0
+[34mstack stackInt3[0m = n g i m r e d l 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+constructor operator = 
+before = 
+size = 0
+empty = 1
+[34mstack stackInt4[0m = 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+after = 
+size = 9
+empty = 0
+[34mstack stackInt4[0m = 256 128 64 32 16 8 4 2 1 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+[31m~~~~~~~~~~ TOP ~~~~~~~~~~ [0m
+
+top = 4
+const top = 4
+
+[31m~~~~~~~~~~ PUSH AND POP ~~~~~~~~~~ [0m
+
+push 0
+top = On 
+push 1
+top = va 
+push 2
+top = ecrire 
+push 3
+top = une 
+push 4
+top = longue 
+push 5
+top = phrase 
+push 6
+top = comme 
+push 7
+top = ca 
+push 8
+top = c'est 
+pop 0
+top = ca 
+pop 1
+top = comme 
+pop 2
+top = phrase 
+pop 3
+top = longue 
+pop 4
+top = une 
+pop 5
+top = ecrire 
+pop 6
+top = va 
+pop 7
+top = On 
+pop 8
+
+[31m~~~~~~~~~~ OPERATOR RELATIONNAL ~~~~~~~~~~ [0m
+
+size = 18
+empty = 0
+[34mstack stackChar1[0m = n g i m r e d l s r e n i a t n o C 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+size = 0
+empty = 1
+[34mstack stackChar2[0m = 
+size = 0
+empty = 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[33m~~~~~ == ~~~~~ [0m
+1
+0
+[33m~~~~~ != ~~~~~ [0m
+0
+1
+[33m~~~~~ < ~~~~~ [0m
+0
+0
+[33m~~~~~ > ~~~~~ [0m
+0
+1
+[33m~~~~~ <= ~~~~~ [0m
+1
+0
+[33m~~~~~ >= ~~~~~ [0m
+1
+1
+
+
+
+
+[1m[35m ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ END TESTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+[0m
+
