@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/07 15:41:35 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:42:33 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ public:
 /* ~~~~~ ACCESSORS ~~~~~ */
 
 	Node	*getCurrent( void ) const { return (this->_current); }
-
 
 	reference
 	operator*( void ) const {

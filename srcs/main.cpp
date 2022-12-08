@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:43:22 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/08 20:36:17 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 21:39:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 int main( void ) {
 
 	// test_vector();
-	test_stack();
-	// test_map();
+	// test_stack();
+	test_map();
 	// test_set();
 
 	p3 p3

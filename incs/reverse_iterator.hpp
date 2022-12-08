@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:42:12 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/07 10:23:22 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 23:42:58 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ public:
 	reverse_iterator( const reverse_iterator< U > &lhs )
 		: _current(lhs.base()) {}
 
-	reverse_iterator( const reverse_iterator &lh )
-		: _current(lh.base()) {}
+	reverse_iterator( const reverse_iterator &lhs )
+		: _current(lhs.base()) {}
 
 	operator	reverse_iterator< const iterator_type >() const {
 		return (reverse_iterator< const iterator_type >(this->_current));
