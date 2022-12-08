@@ -13,10 +13,10 @@ OBJSDIR		= objs/
 FTSRCS		= ${FTDIR}main.cpp \
 
 # tests
-FTSRCS		+=	${TESTDIR}test_vector_iterator.cpp \
-				${TESTDIR}test_vector.cpp \
+FTSRCS		+=	${TESTDIR}test_vector.cpp \
 				${TESTDIR}test_stack.cpp \
-				${TESTDIR}test_map.cpp
+				${TESTDIR}test_map.cpp \
+				${TESTDIR}test_set.cpp
 # ${TESTDIR}test_vector_reverse_iterator.cpp \
 
 # stack

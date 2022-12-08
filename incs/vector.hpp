@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:45:47 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/07 20:49:41 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:44:00 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -546,7 +546,8 @@ typedef	typename allocator_type::difference_type	difference_type;
 
 /* ~~~~~ ERASE ~~~~~ */
 
-	iterator	erase( iterator position ) {
+	iterator
+	erase( iterator position ) {
 		
 		size_t	pos = position - this->begin();
 
@@ -564,7 +565,8 @@ typedef	typename allocator_type::difference_type	difference_type;
 		return (position);		
 	}
 
-	iterator	erase( iterator first, iterator last ) {
+	iterator
+	erase( iterator first, iterator last ) {
 		
 		while (first != last) {
 			this->erase(first);

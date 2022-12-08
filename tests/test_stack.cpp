@@ -6,11 +6,10 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:49:17 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/04 17:03:32 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:24:41 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <list>
 #include <stack>
 #include <vector>
@@ -18,47 +17,91 @@
 #include "stack.hpp"
 #include <iostream>
 
+#include "test_utils.hpp"
+
+void constructor( void ) {
+
+	p1 RED << "~~~~~~~~~~ CONSTRUCTOR ~~~~~~~~~~ " << RESET p2
+	p3
+
+	LIBRARY::stack< int >	stackInt1;
+	LIBRARY::stack< int >	stackInt2;
+
+	printStack("stackInt1", stackInt1);
+
+}
+
+void getteurs( void ) {
+
+	p1 RED << "~~~~~~~~~~ GETTERS ~~~~~~~~~~ " << RESET p2
+	p3
+
+	LIBRARY::vector< int >	vctInt1;
+	LIBRARY::vector< int >	vctInt2;
+	for (int i = 0 ; i < 9 ; i++)
+		vctInt2.push_back(i1[i]);
+
+	p1 GREEN << "Getters vector empty -> " << RESET p2
+	p1 "\tSize = " << vctInt1.size() p2
+	p1 "\tCapacity = " << vctInt1.capacity() p2
+	p1 "\tEmpty = " << vctInt1.empty() p2
 
 
+	p1 GREEN << "Getters vector full -> " << RESET p2
+	p1 "\tSize = " << vctInt2.size() p2
+	p1 "\tCapacity = " << vctInt2.capacity() p2
+	p1 "\tEmpty = " << vctInt2.empty() p2
+
+	p3
+}
+
+void operator_relationnal( void ) {
+
+	p1 RED << "~~~~~~~~~~ OPERATOR RELATIONNAL ~~~~~~~~~~ " << RESET p2
+	p3
+	
+	LIBRARY::vector< char >	vctChar1(c2, c2 + 10);
+	LIBRARY::vector< char >	vctChar2(c3, c3 + 8);
+	printVector("vctChar1", vctChar1);
+	printVector("vctChar2", vctChar2);
+
+	p1 YELLOW << "~~~~~ == ~~~~~ " << RESET p2
+	p1 (vctChar1 == vctChar1) p2
+	p1 (vctChar1 == vctChar2) p2
+
+	p1 YELLOW << "~~~~~ != ~~~~~ " << RESET p2
+	p1 (vctChar1 != vctChar1) p2
+	p1 (vctChar1 != vctChar2) p2
+
+	p1 YELLOW << "~~~~~ < ~~~~~ " << RESET p2
+	p1 (vctChar1 < vctChar1) p2
+	p1 (vctChar1 < vctChar2) p2
+
+	p1 YELLOW << "~~~~~ > ~~~~~ " << RESET p2
+	p1 (vctChar1 > vctChar1) p2
+	p1 (vctChar1 > vctChar2) p2
+
+	p1 YELLOW << "~~~~~ <= ~~~~~ " << RESET p2
+	p1 (vctChar1 <= vctChar1) p2
+	p1 (vctChar1 <= vctChar2) p2
+
+	p1 YELLOW << "~~~~~ >= ~~~~~ " << RESET p2
+	p1 (vctChar1 >= vctChar1) p2
+	p1 (vctChar1 >= vctChar2) p2
+	p3
+}
 
 void	test_stack( void ) {
 
 	p3
-		
-	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
-	p1 "\t~~~~~~~~~~ STACK CONTAINER ~~~~~~~~~~\n" p2
-	p1 "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
 
-	LIBRARY::stack<float>								other_stack;
-	LIBRARY::vector<std::string>							lst;
+	p1 RED << "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" p2
+	p1 RED << "\t~~~~~~~~~~~~~~~~~~~~ STACK CONTAINER ~~~~~~~~~~~~~~~~~~~~~\n" p2
+	p1 RED << "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" << RESET p2
 
-	lst.push_back("salut");
-	lst.push_back("tu vas bien?");
-	lst.push_back("super");
-	lst.push_back("et toi?");
-
-	LIBRARY::stack<std::string, LIBRARY::vector<std::string> >	my_stack(lst);
-
-	p1 std::boolalpha << other_stack.empty() p2;
-	other_stack.push(8.5); // 8.5;
-	// other_stack.push(42.4242); // 8.5; 42.4242;
-	// p1 other_stack.size() p2; // 2
-	// other_stack.pop(); // 8.5;
-	// p1 other_stack.size() p2; // 1
-	// other_stack.push(78541.987); // 8.5; 78541.987;
-	// p1 other_stack.size() p2; // 2
-	// p1 other_stack.top() p2; //78541.987
-	// p1 std::boolalpha << other_stack.empty() p2;
-
-	// const std::string const_top = my_stack.top();
-
-	// p1 "const top: " << const_top p2;
-
-	// while (!my_stack.empty())
-	// {
-	// 	p1 my_stack.top() p2;
-	// 	my_stack.pop();
-	// }
+	constructor();
+	// getteurs();
+	// operator_relationnal();
 
 
 
