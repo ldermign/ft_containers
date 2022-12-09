@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 11:56:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/09 00:11:37 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:23:06 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,34 @@
 #include <iostream>
 #include <iomanip>
 
-template <typename T>
-std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
-{(void)nl;
+template< typename T >
+std::string	printPair( const T &iterator, std::ostream &o = std::cout )
+{
 	o << "key: " << iterator->first << " | value: " << iterator->second;
-	// if (nl)
-	// 	o << std::endl;
 	return ("");
 }
 
+template< class Key, class T >
+void	printMap( std::string name, LIBRARY::map< Key, T > &tmp ) {
 
-using namespace LIBRARY;
-template <class Key, class T>
-void	printMap(std::string name, LIBRARY::map<Key, T>& lst)
-{
 	p1 BLUE << "map " << name << RESET << " = ";
 	p3
-	for (typename LIBRARY::map<Key, T>::iterator it = lst.begin(); it != lst.end(); it++)
+	p1 "empty = " << tmp.empty() p2
+	p1 "size = " << tmp.size() p2
+	p1 "max_size = " << tmp.max_size() p2
+	for (typename LIBRARY::map< Key, T >::iterator it = tmp.begin(); it != tmp.end(); it++)
 		p1 it->first << " => " << it->second p2
 }
 
-template <typename T_MAP>
-void	printSize(T_MAP const &mp, bool print_content = 1)
-{
-	std::cout << "size: " << mp.size() << std::endl;
-	std::cout << "max_size: " << mp.max_size() << std::endl;
-	if (print_content)
-	{
-		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
-		std::cout << std::endl << "Content is:" << std::endl;
-		for (; it != ite; ++it)
-			std::cout << "- " << printPair(it, false) << std::endl;
-	}
-	std::cout << "###############################################" << std::endl;
-}
+template< class T >
+void	cmp( const T &lhs, const T &rhs ) {
 
-
-template <class MAP>
-void	cmp(const MAP &lhs, const MAP &rhs)
-{
 	static int i = 0;
 
-	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
-	std::cout << "equal -> " << (lhs == rhs) << " | different -> " << (lhs != rhs) << std::endl;
-	std::cout << "inferior -> " << (lhs < rhs) << " | inferior and equal -> " << (lhs <= rhs) << std::endl;
-	std::cout << "greater -> " << (lhs > rhs) << " | greater and equal -> " << (lhs >= rhs) << std::endl;
+	p1 "############### [" << i++ << "] ###############" p2
+	p1 "equal -> " << (lhs == rhs) << " | different -> " << (lhs != rhs) p2
+	p1 "inferior -> " << (lhs < rhs) << " | inferior and equal -> " << (lhs <= rhs) p2
+	p1 "greater -> " << (lhs > rhs) << " | greater and equal -> " << (lhs >= rhs) p2
 }
 
 struct classCompare {
@@ -106,7 +89,6 @@ void map_constructor( void ) {
 	p3
 
 }
-
 
 void map_iterators( void ) {
 
@@ -216,7 +198,6 @@ void map_capacity( void ) {
 	map1[5] = ' ';
 	map1[6] = ':';
 	map1[7] = ')';
-	// printMap("map1", map1);
 
 	p1 "map full" p2
 	p1 "empty = " << map1.empty() p2
@@ -310,77 +291,119 @@ void map_modifiers( void ) {
 	printMap("map1", map1);
 
 	p3
-
 }
 
+void map_key_and_value_comp( void ) {
+
+	p1 RED << "~~~~~~~~~~ KEY AND VALUE COMP ~~~~~~~~~~ " << RESET p2
+	p3
+
+	LIBRARY::map< char, int >					map1;
+	LIBRARY::map< char, int >::key_compare		map1Key = map1.key_comp();
+	LIBRARY::map< char, int >::value_compare	map1Val = map1.value_comp();
+	map1['a'] = 1;
+	map1['c'] = 3;
+	map1['l'] = 12;
+	map1['z'] = 26;
+	printMap("map1", map1);
+	char 						low = map1.begin()->first;
+	LIBRARY::pair< char, int >	high = *map1.rbegin();
+	
+
+	p1 YELLOW << "~~~~~ KEY COMP ~~~~~ " << RESET p2
+	LIBRARY::map< char, int >::iterator		it = map1.begin();
+	for (; it != map1.end() && map1Key(it->first, low) ; it++) {
+		p1 it->first << " is greater than " << low p2
+	}
+	if (it != map1.end())
+		p1 it->first << " is not lower than " << low p2
+
+	p3
+	p1 YELLOW << "~~~~~ VALUE COMP ~~~~~ " << RESET p2
+	LIBRARY::map< char, int >::iterator		it2 = map1.begin();
+	for (; it2 != map1.end() && map1Val(*it2, high) ; it2++) {
+		p1 it2->first << " is greater than " << high.second p2
+	}
+	if (it2 != map1.end())
+		p1 it2->first << " is not higher than " << high.second p2
+	p3
+}
 
 void map_operations( void ) {
 
 	p1 RED << "~~~~~~~~~~ OPERATIONS ~~~~~~~~~~ " << RESET p2
 	p3
 
-	// std::string	s1[] = {"stp, ", "me met ", " pas faux", " :("}; // 4
-	// std::string s2[] = {"Une ", "serie ", "de ", "phrases..."}; // 4
-	// std::string s3[] = {"Et puis encore une...", " (tant qu'a faire)"}; // 2
+	LIBRARY::map< std::string, int >	amis;
+	amis["Elisa"] = 1;
+	amis["Sirine"] = 1;
+	amis["Sarra"] = 1;
+	amis["Delphine"] = 1;
+	amis["Lenny"] = 1;
+	amis["Roxane"] = 1;
+	amis["Joan"] = 0;
+	amis["Matthieu"] = 0;
+	amis["Mathias"] = 0;
+	amis["Benji"] = 0;
+	amis["Xavier"] = 0;
+	LIBRARY::map< std::string, int >::iterator			it;
+	LIBRARY::map< std::string, int >::iterator			itNON;
+	LIBRARY::map< std::string, int >::const_iterator	itC;
+	LIBRARY::map< std::string, int >::const_iterator	itCNON;
+	printMap("amis", amis);
 
-	// p1 YELLOW << "~~~~~ PUSH_BACK ~~~~~ " << RESET p2
-	// LIBRARY::map< std::string >	mapString1;
-	// p1 GREEN << "mapString1 before -> " << RESET p2
-	// printmap("mapString1", mapString1);
-	// for (size_t i = 0 ; i < 4 ; i++)
-	// 	mapString1.push_back(s1[i]);
-	// p1 GREEN << "mapString1 after -> " << RESET p2
-	// printmap("mapString1", mapString1);
-	// LIBRARY::map< std::string >	mapString2;
-	// p1 GREEN << "mapString2 before -> " << RESET p2
-	// printmap("mapString2", mapString2);
-	// for (size_t i = 0 ; i < 4 ; i++)
-	// 	mapString2.push_back(s2[i]);
-	// p1 GREEN << "mapString2 after -> " << RESET p2
-	// printmap("mapString2", mapString2);
-	// p3
+	p1 YELLOW << "~~~~~ FIND ~~~~~ " << RESET p2
+	p1 "iterator = " p2
+	it = amis.find("Elisa");
+	itNON = amis.find("Elise");
+	p1 "const_iterator = " p2
+	itC = amis.find("Lenny");
+	itCNON = amis.find("Lennie");
 
-	// p1 YELLOW << "~~~~~ POP_BACK ~~~~~ " << RESET p2
-	// p1 GREEN << "mapString1 before -> " << RESET p2
-	// printmap("mapString1", mapString1);
-	// for (size_t i = 0 ; i < 2 ; i++)
-	// 	mapString1.pop_back();
-	// p1 GREEN << "mapString1 after -> " << RESET p2
-	// printmap("mapString1", mapString1);
-	// p3
+	p1 YELLOW << "~~~~~ COUNT ~~~~~ " << RESET p2
+	p1 "count = " << amis.count("Joan") p2
+	p1 "count = " << amis.count("Jean") p2
 
-	// p1 YELLOW << "~~~~~ INSERT WITH POSITION AND VALUE ~~~~~ " << RESET p2
-	// LIBRARY::map< std::string >	mapString3;
-	// p1 GREEN << "mapString3 before -> " << RESET p2
-	// for (size_t i = 0 ; i < 2 ; i++)
-	// 	mapString1.push_back(s3[i]);
-	// printmap("mapString3", mapString3);
-	// mapString3.insert(mapString3.begin(), "EN PREMIER - ");
-	// printmap("mapString3", mapString3);
-	// mapString3.insert(mapString3.end() - 1, "EN AVANT DERNIER");
-	// printmap("mapString3", mapString3);
-	// p3
 
-	// p1 YELLOW << "~~~~~ INSERT WITH POSITION, LENGTH AND VALUE ~~~~~ " << RESET p2
-	// p1 GREEN << "mapString2 before -> " << RESET p2
-	// printmap("mapString2", mapString2);
-	// mapString2.insert(mapString2.begin() + 2, 2, " et une fois !");
-	// p1 GREEN << "mapString2 after -> " << RESET p2
-	// printmap("mapString2", mapString2);
-	// mapString2.insert(mapString2.end(), 1, " et de deux !");
-	// p1 GREEN << "mapString2 after second call -> " << RESET p2
-	// printmap("mapString2", mapString2);
-	// p3
+	LIBRARY::map< std::string, std::string >	pays;
+	pays["France"] = "Paris";
+	pays["Espagne"] = "Madrid";
+	pays["Angleterre"] = "Londres";
+	pays["Italie"] = "Rome";
+	pays["Chypres"] = "Nicosie";
+	pays["Malte"] = "La Valette";
+	pays["Suisse"] = "Berne";
+	pays["Allemagne"] = "Berlin";
+	const LIBRARY::map< std::string, std::string >	pays2(pays);
+	printMap("pays", pays);
 
-	// p1 YELLOW << "~~~~~ INSERT WITH RANGE ITERATOR ~~~~~ " << RESET p2
-	// LIBRARY::map< std::string >	mapString4;
-	// p1 GREEN << "mapString4 before -> " << RESET p2
-	// printmap("mapString4", mapString4);
-	// mapString4.insert(mapString4.begin(), mapString2.begin(), mapString2.begin() + 2);
-	// mapString4.insert(mapString4.begin() + 1, mapString1.begin() + 3, mapString1.end());
-	// p1 GREEN << "mapString2 after 2 insert range -> " << RESET p2
-	// printmap("mapString2", mapString2);
-	// p3
+	p1 YELLOW << "~~~~~ LOWER BOUND ~~~~~ " << RESET p2
+	p1 "lower_bound(\"Malte\")->first = " << pays.lower_bound("Malte")->first p2
+	p1 "lower_bound(\"Inde\")->first = " << pays.lower_bound("Inde")->first p2
+	p1 "lower_bound(\"Espagne\")->first = " << pays.lower_bound("Espagne")->first p2
+	p1 "const -> " p2
+	p1 "lower_bound(\"Malte\")->first = " << pays2.lower_bound("Malte")->first p2
+	p1 "lower_bound(\"Inde\")->first = " << pays2.lower_bound("Inde")->first p2
+	p1 "lower_bound(\"Espagne\")->first = " << pays2.lower_bound("Espagne")->first p2
+	p3
+
+	p1 YELLOW << "~~~~~ UPPER BOUND ~~~~~ " << RESET p2
+	p1 "upper_bound(\"Malte\")->first = " << pays.upper_bound("Malte")->first p2
+	p1 "upper_bound(\"Inde\")->first = " << pays.upper_bound("Inde")->first p2
+	p1 "upper_bound(\"Espagne\")->first = " << pays.upper_bound("Espagne")->first p2
+	p1 "const -> " p2
+	p1 "upper_bound(\"Malte\")->first = " << pays2.upper_bound("Malte")->first p2
+	p1 "upper_bound(\"Inde\")->first = " << pays2.upper_bound("Inde")->first p2
+	p1 "upper_bound(\"Espagne\")->first = " << pays2.upper_bound("Espagne")->first p2
+	p3
+
+	p1 YELLOW << "~~~~~ EQUAL RANGE ~~~~~ " << RESET p2
+	LIBRARY::pair< LIBRARY::map< std::string, std::string >::iterator, LIBRARY::map< std::string, std::string >::iterator > ret;
+	LIBRARY::pair< LIBRARY::map< std::string, std::string >::iterator, LIBRARY::map< std::string, std::string >::iterator > ret2;
+	ret = pays.equal_range("France");
+	ret2 = pays.equal_range("Pologne");
+	p1 "equal range ok = " << ret.first->first p2
+	p1 "equal range not ok = " << ret2.first->first p2
 
 	p3
 }
@@ -390,60 +413,22 @@ void map_allocator( void ) {
 	p1 RED << "~~~~~~~~~~ ALLOCATOR ~~~~~~~~~~ " << RESET p2
 	p3
 
-	// std::string	s1[] = {"stp, ", "me met ", " pas faux", " :("}; // 4
-	// std::string s2[] = {"Une ", "serie ", "de ", "phrases..."}; // 4
-	// std::string s3[] = {"Et puis encore une...", " (tant qu'a faire)"}; // 2
-	// std::string s4[] = {"Et ", "un ", "bonjour ", "a ", "tous !"}; // 5
+	LIBRARY::map< int, std::string >		map;
+	LIBRARY::pair< const int, std::string >	*ptr_pair;
+	LIBRARY::pair< const int, std::string >	pair;
+	printMap("map", map);
 
-	// p1 YELLOW << "~~~~~ [] ~~~~~ " << RESET p2
-	// LIBRARY::map< std::string >	mapString1;
-	// for (size_t i = 0 ; i < 5 ; i++)
-	// 	mapString1.push_back(s4[i]);
-	// printmap("mapString1", mapString1);
-	// p1 "reference at = " p2
-	// p1 "[1] = " << mapString1[1] << " [4] = " << mapString1[4] p2
-	// const LIBRARY::map< std::string >	mapString1cpy(s2, s2 + 3);
-	// printmap("mapString1cpy", mapString1cpy);
-	// p1 "const reference [] = " p2
-	// p1 "[1] = " << mapString1cpy[1] << " [4] = " << mapString1cpy[4] p2
-	// p3
-
-	// p1 YELLOW << "~~~~~ AT ~~~~~ " << RESET p2
-	// p1 "reference at = " p2
-	// try {
-	// 	p1 mapString1.at(mapString1.size() - 1) p2
-	// 	p1 mapString1.at(mapString1.size() + 1) p2
-	// }
-	// catch (const std::exception &e) {
-	// 	p1 e.what() p2
-	// }
-	// p1 "const reference at = " p2
-	// try {
-	// 	p1 mapString1cpy.at(mapString1cpy.size() - 1) p2
-	// 	p1 mapString1cpy.at(mapString1cpy.size() + 1) p2
-	// }
-	// catch (const std::exception &e) {
-	// 	p1 e.what() p2
-	// }
-	// p3
-
-	// p1 YELLOW << "~~~~~ FRONT ~~~~~ " << RESET p2
-	// LIBRARY::map< std::string >			mapString2(s1, s1 + 4);
-	// LIBRARY::map< std::string >			mapString3(s2, s2 + 4);
-	// const LIBRARY::map< std::string >	mapString4(s3, s3 + 2);
-	// const LIBRARY::map< std::string >	mapString5(s4, s4 + 5);
-	// p1 "front mapString2 = " << mapString2.front() p2
-	// p1 "front mapString3 = " << mapString3.front() p2
-	// p1 "const front mapString2 = " << mapString2.front() p2
-	// p1 "const front mapString3 = " << mapString3.front() p2
-
-	// p3
-
-	// p1 YELLOW << "~~~~~ BACK ~~~~~ " << RESET p2
-	// p1 "back mapString2 = " << mapString2.back() p2
-	// p1 "back mapString3 = " << mapString3.back() p2
-	// p1 "const back mapString4 = " << mapString4.back() p2
-	// p1 "const back mapString5 = " << mapString5.back() p2
+	p1 "ptr_pair = map.get_allocator().allocate(1)" p2
+	ptr_pair = map.get_allocator().allocate(1);
+	p1 "pair.second = \"one\"" << std::endl;
+	pair.second = "one";
+	p1 "map.get_allocator().construct(ptr_pair, pair)" p2
+	map.get_allocator().construct(ptr_pair, pair);
+	p1 "ptr_pair->second = " << ptr_pair->second p2
+	p1 "map.get_allocator().destroy(ptr_pair)" p2
+	map.get_allocator().destroy(ptr_pair);
+	p1 "map.get_allocator().deallocate(ptr_pair, 1)" p2
+	map.get_allocator().deallocate(ptr_pair, 1);
 	p3
 }
 
@@ -452,44 +437,53 @@ void map_clean ( void ) {
 	p1 RED << "~~~~~~~~~~ CLEAN ~~~~~~~~~~ " << RESET p2
 	p3
 
-	// std::string s4[] = {"Et ", "un ", "bonjour ", "a ", "tous !"}; // 5
-	// std::string s5[] = {"On ", "va ", "ecrire ", "une ", "longue ", "phrase ", "comme ", "ca ", "c'est ", "ok !"}; // 10
-
-	// LIBRARY::map< std::string >	mapString1;
-	// for (size_t i = 0 ; i < 10 ; i++)
-	// 	mapString1.push_back(s5[i]);
+	LIBRARY::map< std::string, std::string >	pays;
+	pays["France"] = "Paris";
+	pays["Espagne"] = "Madrid";
+	pays["Angleterre"] = "Londres";
+	pays["Italie"] = "Rome";
+	pays["Chypres"] = "Nicosie";
+	pays["Malte"] = "La Valette";
+	pays["Suisse"] = "Berne";
+	pays["Allemagne"] = "Berlin";
 
 	p1 YELLOW << "~~~~~ ERASE KEY ~~~~~ " << RESET p2
+	p1 "pays before -> " p2
+	printMap("pays", pays);
+	pays.erase("France");
+	p1 "pays after -> " p2
+	printMap("pays", pays);
 
 	p1 YELLOW << "~~~~~ ERASE ITERATOR POSITION ~~~~~ " << RESET p2
-	// p1 "before erase position = " p2
-	// printmap("mapString1", mapString1);
-	// mapString1.erase(mapString1.begin() + 6);
-	// p1 "after erase position = " p2
-	// printmap("mapString1", mapString1);
+	LIBRARY::map< std::string, std::string >::iterator	second_to_del;
+	second_to_del = pays.begin();
+	second_to_del++;
+	p1 "pays before -> " p2
+	printMap("pays", pays);
+	pays.erase(second_to_del);
+	p1 "pays after -> " p2
+	printMap("pays", pays);
 	
 	p1 YELLOW << "~~~~~ ERASE ITERATOR RANGE ~~~~~ " << RESET p2
-	// p1 "before erase iterator range = " p2
-	// printmap("mapString1", mapString1);
-	// mapString1.erase(mapString1.begin() + 2, mapString1.end());
-	// p1 "after erase iterator range = " p2
-	// printmap("mapString1", mapString1);
-	// p3
+	LIBRARY::map< std::string, std::string >::iterator	second;
+	LIBRARY::map< std::string, std::string >::iterator	before_last;
+	second = pays.begin();
+	second++;
+	before_last = pays.end();
+	before_last--;
+	before_last--;
+	p1 "pays before -> " p2
+	printMap("pays", pays);
+	pays.erase(second, before_last);
+	p1 "pays after -> " p2
+	printMap("pays", pays);
 
 	p1 YELLOW << "~~~~~ CLEAR ~~~~~ " << RESET p2
-	// p1 "before clear = " p2
-	// printmap("mapString1", mapString1);
-	// mapString1.clear();
-	// p1 "after clear = " p2
-	// printmap("mapString1", mapString1);
-	// LIBRARY::map< std::string >	mapString2;
-	// for (size_t i = 0 ; i < 5 ; i++)
-	// 	mapString2.push_back(s4[i]);
-	// p1 "before clear = " p2
-	// printmap("mapString2", mapString2);
-	// mapString2.clear();
-	// p1 "after clear = " p2
-	// printmap("mapString2", mapString2);
+	p1 "pays before -> " p2
+	printMap("pays", pays);
+	pays.clear();
+	p1 "pays after -> " p2
+	printMap("pays", pays);
 	p3
 
 }
@@ -499,40 +493,30 @@ void map_relationnal_operator( void ) {
 	p1 RED << "~~~~~~~~~~ RELATIONNAL OPERATOR ~~~~~~~~~~ " << RESET p2
 	p3
 
-	// char c2[] = {'C', 'o', 'n', 't', 'a', 'i', 'n', 'e', 'r', 's'}; // 10
-	// char c3[] = {'l', 'd', 'e', 'r', 'm', 'i', 'g', 'n'}; // 8
+	LIBRARY::map< std::string, std::string >	pays;
+	pays["France"] = "Paris";
+	pays["Espagne"] = "Madrid";
+	pays["Angleterre"] = "Londres";
+	pays["Italie"] = "Rome";
+	pays["Chypres"] = "Nicosie";
+	pays["Malte"] = "La Valette";
+	pays["Suisse"] = "Berne";
+	pays["Allemagne"] = "Berlin";
+	LIBRARY::map< std::string, std::string >	pays2;
+	pays["Portugal"] = "Lisbonne";
+	pays["Inde"] = "New Dehli";
+	pays["Australie"] = "Canberra";
+	pays["Etats-Unis"] = "Washington";
+	pays["Canada"] = "Ottawa";
+	pays["Japon"] = "Tokyo";
+	pays["Bresil"] = "Brasilia";
+	pays["Luxembourg"] = "Luxembourg";
 
-	// LIBRARY::map< char >	mapChar1(c2, c2 + 10);
-	// LIBRARY::map< char >	mapChar2(c3, c3 + 8);
-	// printmap("mapChar1", mapChar1);
-	// printmap("mapChar2", mapChar2);
-
-	// p1 YELLOW << "~~~~~ == ~~~~~ " << RESET p2
-	// p1 (mapChar1 == mapChar1) p2
-	// p1 (mapChar1 == mapChar2) p2
-
-	// p1 YELLOW << "~~~~~ != ~~~~~ " << RESET p2
-	// p1 (mapChar1 != mapChar1) p2
-	// p1 (mapChar1 != mapChar2) p2
-
-	// p1 YELLOW << "~~~~~ < ~~~~~ " << RESET p2
-	// p1 (mapChar1 < mapChar1) p2
-	// p1 (mapChar1 < mapChar2) p2
-
-	// p1 YELLOW << "~~~~~ > ~~~~~ " << RESET p2
-	// p1 (mapChar1 > mapChar1) p2
-	// p1 (mapChar1 > mapChar2) p2
-
-	// p1 YELLOW << "~~~~~ <= ~~~~~ " << RESET p2
-	// p1 (mapChar1 <= mapChar1) p2
-	// p1 (mapChar1 <= mapChar2) p2
-
-	// p1 YELLOW << "~~~~~ >= ~~~~~ " << RESET p2
-	// p1 (mapChar1 >= mapChar1) p2
-	// p1 (mapChar1 >= mapChar2) p2
+	cmp(pays, pays2);
+	cmp(pays, pays);
+	cmp(pays2, pays2);
 	p3
 }
-
 
 void	test_map( void ) {
 
@@ -547,7 +531,7 @@ void	test_map( void ) {
 	map_capacity();
 	map_element_access();
 	map_modifiers();
-
+	map_key_and_value_comp();
 	map_operations();
 	map_allocator();
 	map_clean();

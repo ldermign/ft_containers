@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:23:36 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/08 23:42:33 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:25:05 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ public:
 
 	typedef typename ft::iterator< std::bidirectional_iterator_tag, T >::pointer	pointer;
 	typedef typename ft::iterator< std::bidirectional_iterator_tag, T >::reference	reference;
-	
 
 private:
 
@@ -65,7 +64,7 @@ public:
 
 		return (this->_current->data);
 	}
-	
+
 	pointer
 	operator->( void ) const {
 

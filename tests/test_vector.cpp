@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:44:31 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/08 20:12:10 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:03:47 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void iterators( void ) {
 		vctChar1.push_back(c1[i]);
 	LIBRARY::vector< char >::iterator		it1 = vctChar1.begin();
 	LIBRARY::vector< char >::const_iterator	it2 = vctChar1.begin();
-	LIBRARY::vector< char >::iterator		it3 = vctChar1.end();
-	LIBRARY::vector< char >::const_iterator	it4 = vctChar1.end();
+	LIBRARY::vector< char >::iterator		it3 = vctChar1.end() - 1;
+	LIBRARY::vector< char >::const_iterator	it4 = vctChar1.end() - 1;
 	LIBRARY::vector< char >::reverse_iterator		it5 = vctChar1.rbegin();
 	LIBRARY::vector< char >::const_reverse_iterator	it6 = vctChar1.rbegin();
 	LIBRARY::vector< char >::reverse_iterator		it7 = vctChar1.rend();
