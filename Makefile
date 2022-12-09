@@ -64,7 +64,7 @@ ${STDOBJS}:	${OBJSDIR}%_std.o:%.cpp
 			${CC} -I ${INCSDIR} -MMD -MP -DLIBRARY=std -o $@ -c $< ${CFLAGS}
 
 clean:
-			${RM} ${FTOBJS} ${STDOBJS} ${OBJSDIR} ${OBJSDIR} ${FTDEPS} ${STDDEPS}
+			${RM} ft.txt std.txt results.txt ${FTOBJS} ${STDOBJS} ${OBJSDIR} ${OBJSDIR} ${FTDEPS} ${STDDEPS}
 
 fclean:		clean
 			${RM} ${NAMEFT} ${NAMESTD}
