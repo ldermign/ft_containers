@@ -6,7 +6,7 @@
 /*   By: ldermign <ldermign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:27:33 by ldermign          #+#    #+#             */
-/*   Updated: 2022/12/08 22:51:42 by ldermign         ###   ########.fr       */
+/*   Updated: 2022/12/26 15:28:20 by ldermign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ public:
 		if (&rhs == this)
 			return (*this);
 
-		rhs.data = this->data;
-		rhs.color = this->color;
-		rhs.parent = this->parent;
-		rhs.left = this->left;
-		rhs.right = this->right;
+		this->data = rhs.data;
+		this->color = rhs.color;
+		this->parent = rhs.parent;
+		this->left = rhs.left;
+		this->right = rhs.right;
 
 		return (*this);
 	}
